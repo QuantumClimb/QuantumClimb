@@ -1,0 +1,19 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Global project styles */
+body {
+  @apply bg-light text-primary font-sans min-h-screen;
+  margin: 0;
+}
+
+/* Optional: Clean up anchor tags */
+a {
+  @apply font-medium text-blue-600 hover:text-blue-800 transition-colors;
+}
+
+/* Optional: Button baseline */
+button {
+  @apply rounded px-4 py-2 font-medium transition-colors;
+}

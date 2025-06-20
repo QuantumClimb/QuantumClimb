@@ -1,0 +1,41 @@
+{
+  "short_name": "QuantumClimb",
+  "name": "Quantum Climb | Progressive Web Apps for Small Businesses",
+  "description": "We build installable Progressive Web Apps that help small businesses move faster, smarter, and simpler.",
+  "icons": [
+    {
+      "src": "/favicon.ico",
+      "sizes": "64x64 32x32 24x24 16x16",
+      "type": "image/x-icon"
+    },
+    {
+      "src": "/images/logo_icon.png",
+      "type": "image/png",
+      "sizes": "192x192",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/images/logo.png",
+      "type": "image/png",
+      "sizes": "512x512",
+      "purpose": "any maskable"
+    }
+  ],
+  "start_url": "/",
+  "display": "standalone",
+  "theme_color": "#000000",
+  "background_color": "#ffffff",
+  "orientation": "portrait-primary",
+  "scope": "/",
+  "lang": "en",
+  "categories": ["business", "productivity", "technology"],
+  "shortcuts": [
+    {
+      "name": "Contact Us",
+      "short_name": "Contact",
+      "description": "Get in touch with Quantum Climb",
+      "url": "/contact",
+      "icons": [{ "src": "/images/logo_icon.png", "sizes": "96x96" }]
+    }
+  ]
+} 
