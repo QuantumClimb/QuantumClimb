@@ -3,6 +3,30 @@
   "private": true,
   "version": "0.0.0",
   "type": "module",
+  "description": "Quantum Climb crafts high performance Progressive Web Apps (PWAs) that help businesses move faster, smarter, and simpler.",
+  "homepage": "https://quantumclimb.vercel.app",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/QuantumClimb/QuantumClimb.git"
+  },
+  "bugs": {
+    "url": "https://github.com/QuantumClimb/QuantumClimb/issues"
+  },
+  "author": {
+    "name": "QuantumClimb",
+    "email": "QuantumClimb@users.noreply.github.com",
+    "url": "https://quantumclimb.vercel.app"
+  },
+  "keywords": [
+    "progressive-web-app",
+    "pwa",
+    "react",
+    "typescript",
+    "vite",
+    "small-business",
+    "automation",
+    "quantum-climb"
+  ],
   "scripts": {
     "dev": "vite",
     "build": "tsc -b && vite build",
@@ -15,6 +39,7 @@
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
     "react-icons": "^5.5.0",
+    "react-router-dom": "^7.9.5",
     "react-swipeable": "^7.0.2"
   },
   "devDependencies": {
