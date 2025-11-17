@@ -1,0 +1,685 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Social Media Automation</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script> window.FontAwesomeConfig = { autoReplaceSvg: 'nest'};</script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/js/all.min.js" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Playfair+Display:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.plot.ly/plotly-3.1.1.min.js"></script>
+    <style>
+        ::-webkit-scrollbar { display: none;}
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #0a0e27 0%, #1a1f3a 50%, #0f1428 100%);
+        }
+        .gradient-text {
+            background: linear-gradient(90deg, #60a5fa 0%, #a855f7 50%, #ec4899 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .glass-card {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        .neon-border {
+            box-shadow: 0 0 20px rgba(168, 85, 247, 0.4), 0 0 40px rgba(96, 165, 250, 0.2);
+        }
+        .glow-icon {
+            filter: drop-shadow(0 0 8px rgba(168, 85, 247, 0.6));
+        }
+        .hover-lift {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .hover-lift:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 40px rgba(168, 85, 247, 0.3);
+        }
+        .pulse-glow {
+            animation: pulse 2s ease-in-out infinite;
+        }
+        @keyframes pulse {
+            0%, 100% { box-shadow: 0 0 20px rgba(168, 85, 247, 0.4); }
+            50% { box-shadow: 0 0 40px rgba(168, 85, 247, 0.8); }
+        }
+        .flow-line {
+            position: relative;
+        }
+        .flow-line::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            right: -40px;
+            width: 40px;
+            height: 2px;
+            background: linear-gradient(90deg, #a855f7, transparent);
+        }
+    </style>
+</head>
+<body class="text-white">
+
+<header id="header" class="fixed w-full z-50 bg-black/40 backdrop-blur-md border-b border-white/10">
+    <div class="container mx-auto px-6 py-4 flex justify-between items-center">
+        <a href="index.html" class="text-2xl font-bold tracking-wider">
+            <span class="gradient-text">QUANTUM CLIMB</span>
+        </a>
+        <nav class="hidden md:flex space-x-8">
+            <a href="index.html#services" class="text-white/80 hover:text-purple-400 transition-colors">Services</a>
+            <a href="index.html#case-studies" class="text-white/80 hover:text-purple-400 transition-colors">Case Studies</a>
+            <a href="index.html#portfolio" class="text-white/80 hover:text-purple-400 transition-colors">Portfolio</a>
+            <a href="index.html#contact" class="px-6 py-2 bg-gradient-to-r from-purple-600 to-pink-600 rounded-full hover:shadow-lg hover:shadow-purple-500/50 transition-all">
+                Start Your AI Transformation
+            </a>
+        </nav>
+        <button class="md:hidden text-white">
+            <i class="fa-solid fa-bars text-2xl"></i>
+        </button>
+    </div>
+</header>
+
+<section id="automation-hero" class="relative h-[700px] flex items-center justify-center overflow-hidden pt-20">
+    <div class="absolute inset-0 bg-gradient-to-br from-purple-900/20 via-pink-900/20 to-blue-900/20"></div>
+    <div class="absolute inset-0 opacity-10">
+        <div class="absolute top-20 left-10 w-64 h-64 bg-purple-500 rounded-full blur-3xl"></div>
+        <div class="absolute bottom-20 right-10 w-96 h-96 bg-pink-500 rounded-full blur-3xl"></div>
+    </div>
+    
+    <div class="container mx-auto px-6 relative z-10 text-center">
+        <div class="mb-6">
+            <span class="px-4 py-2 bg-purple-600/20 border border-purple-500/30 rounded-full text-purple-300 text-sm font-semibold">
+                SOCIAL MEDIA AUTOMATION ENGINE
+            </span>
+        </div>
+        <h1 class="font-['Playfair_Display'] text-6xl md:text-7xl font-bold mb-6 leading-tight">
+            <span class="gradient-text">Fully Automated</span><br/>
+            <span class="text-white">Content Engine</span>
+        </h1>
+        <p class="text-xl text-gray-300 mb-8 max-w-3xl mx-auto">
+            From ideation to publishing, your content runs on autopilot.<br/>
+            <span class="text-purple-400 font-semibold">Zero effort. Maximum impact. Pure AI magic.</span>
+        </p>
+        <div class="flex justify-center space-x-4">
+            <a href="#dashboard-preview" class="px-8 py-4 bg-gradient-to-r from-purple-600 to-pink-600 rounded-full font-semibold hover:shadow-2xl hover:shadow-purple-500/50 transition-all neon-border">
+                View Dashboard
+            </a>
+            <a href="#content-flow" class="px-8 py-4 glass-card rounded-full font-semibold hover:bg-white/10 transition-all">
+                See How It Works
+            </a>
+        </div>
+    </div>
+</section>
+
+<section id="content-flow" class="py-24">
+    <div class="container mx-auto px-6">
+        <div class="text-center mb-16">
+            <h2 class="font-['Playfair_Display'] text-5xl font-bold mb-4">
+                <span class="gradient-text">The Complete Automation Flow</span>
+            </h2>
+            <p class="text-gray-400 text-lg">Every step handled by AI, from spark to publish</p>
+        </div>
+        
+        <div class="max-w-7xl mx-auto">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8 mb-16">
+                <div id="flow-ideation" class="glass-card rounded-3xl p-8 text-center hover-lift pulse-glow">
+                    <div class="w-24 h-24 bg-gradient-to-br from-blue-500 to-purple-600 rounded-full flex items-center justify-center mx-auto mb-6 glow-icon">
+                        <i class="fa-solid fa-lightbulb text-4xl"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold mb-3 gradient-text">AI Ideation</h3>
+                    <p class="text-gray-400 mb-4">Trending topics analyzed</p>
+                    <ul class="text-sm text-gray-500 space-y-2">
+                        <li><i class="fa-solid fa-check text-purple-400 mr-2"></i>Trend monitoring</li>
+                        <li><i class="fa-solid fa-check text-purple-400 mr-2"></i>Audience insights</li>
+                        <li><i class="fa-solid fa-check text-purple-400 mr-2"></i>Content angles</li>
+                        <li><i class="fa-solid fa-check text-purple-400 mr-2"></i>Viral potential scoring</li>
+                    </ul>
+                </div>
+                
+                <div id="flow-scripting" class="glass-card rounded-3xl p-8 text-center hover-lift pulse-glow">
+                    <div class="w-24 h-24 bg-gradient-to-br from-purple-500 to-pink-600 rounded-full flex items-center justify-center mx-auto mb-6 glow-icon">
+                        <i class="fa-solid fa-file-lines text-4xl"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold mb-3 gradient-text">Script Generation</h3>
+                    <p class="text-gray-400 mb-4">Brand voice maintained</p>
+                    <ul class="text-sm text-gray-500 space-y-2">
+                        <li><i class="fa-solid fa-check text-purple-400 mr-2"></i>Hook optimization</li>
+                        <li><i class="fa-solid fa-check text-purple-400 mr-2"></i>Story structure</li>
+                        <li><i class="fa-solid fa-check text-purple-400 mr-2"></i>CTA integration</li>
+                        <li><i class="fa-solid fa-check text-purple-400 mr-2"></i>Tone matching</li>
+                    </ul>
+                </div>
+                
+                <div id="flow-editing" class="glass-card rounded-3xl p-8 text-center hover-lift pulse-glow">
+                    <div class="w-24 h-24 bg-gradient-to-br from-pink-500 to-purple-600 rounded-full flex items-center justify-center mx-auto mb-6 glow-icon">
+                        <i class="fa-solid fa-video text-4xl"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold mb-3 gradient-text">Auto Editing</h3>
+                    <p class="text-gray-400 mb-4">Professional quality</p>
+                    <ul class="text-sm text-gray-500 space-y-2">
+                        <li><i class="fa-solid fa-check text-purple-400 mr-2"></i>Smart cuts</li>
+                        <li><i class="fa-solid fa-check text-purple-400 mr-2"></i>B-roll insertion</li>
+                        <li><i class="fa-solid fa-check text-purple-400 mr-2"></i>Music sync</li>
+                        <li><i class="fa-solid fa-check text-purple-400 mr-2"></i>Caption generation</li>
+                    </ul>
+                </div>
+                
+                <div id="flow-posting" class="glass-card rounded-3xl p-8 text-center hover-lift pulse-glow">
+                    <div class="w-24 h-24 bg-gradient-to-br from-purple-600 to-blue-600 rounded-full flex items-center justify-center mx-auto mb-6 glow-icon">
+                        <i class="fa-solid fa-rocket text-4xl"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold mb-3 gradient-text">Smart Publishing</h3>
+                    <p class="text-gray-400 mb-4">Optimal timing</p>
+                    <ul class="text-sm text-gray-500 space-y-2">
+                        <li><i class="fa-solid fa-check text-purple-400 mr-2"></i>Peak time posting</li>
+                        <li><i class="fa-solid fa-check text-purple-400 mr-2"></i>Multi-platform</li>
+                        <li><i class="fa-solid fa-check text-purple-400 mr-2"></i>Hashtag optimization</li>
+                        <li><i class="fa-solid fa-check text-purple-400 mr-2"></i>Cross-posting</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="glass-card rounded-3xl p-10 neon-border">
+                <div class="flex items-center justify-between mb-8">
+                    <h3 class="text-3xl font-bold gradient-text">Complete Automation Pipeline</h3>
+                    <span class="px-4 py-2 bg-green-600/20 border border-green-500/30 rounded-full text-green-300 text-sm font-semibold">
+                        <i class="fa-solid fa-circle-check mr-2"></i>ACTIVE
+                    </span>
+                </div>
+                <div class="bg-black/40 rounded-2xl p-8">
+                    <div class="flex items-center justify-between">
+                        <div class="text-center flex-1">
+                            <div class="text-4xl mb-2"><i class="fa-solid fa-brain text-blue-400"></i></div>
+                            <p class="text-sm text-gray-400">Analyze Trends</p>
+                        </div>
+                        <div class="text-purple-400 text-2xl"><i class="fa-solid fa-arrow-right"></i></div>
+                        <div class="text-center flex-1">
+                            <div class="text-4xl mb-2"><i class="fa-solid fa-wand-magic-sparkles text-purple-400"></i></div>
+                            <p class="text-sm text-gray-400">Generate Ideas</p>
+                        </div>
+                        <div class="text-purple-400 text-2xl"><i class="fa-solid fa-arrow-right"></i></div>
+                        <div class="text-center flex-1">
+                            <div class="text-4xl mb-2"><i class="fa-solid fa-pen-fancy text-pink-400"></i></div>
+                            <p class="text-sm text-gray-400">Write Scripts</p>
+                        </div>
+                        <div class="text-purple-400 text-2xl"><i class="fa-solid fa-arrow-right"></i></div>
+                        <div class="text-center flex-1">
+                            <div class="text-4xl mb-2"><i class="fa-solid fa-film text-purple-400"></i></div>
+                            <p class="text-sm text-gray-400">Edit Content</p>
+                        </div>
+                        <div class="text-purple-400 text-2xl"><i class="fa-solid fa-arrow-right"></i></div>
+                        <div class="text-center flex-1">
+                            <div class="text-4xl mb-2"><i class="fa-solid fa-paper-plane text-blue-400"></i></div>
+                            <p class="text-sm text-gray-400">Auto Publish</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section id="brand-voice" class="py-24 bg-gradient-to-b from-transparent to-purple-900/10">
+    <div class="container mx-auto px-6">
+        <div class="max-w-6xl mx-auto">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+                <div>
+                    <h2 class="font-['Playfair_Display'] text-5xl font-bold mb-6">
+                        <span class="gradient-text">AI-Driven Brand Voice</span>
+                    </h2>
+                    <p class="text-xl text-gray-300 mb-8">
+                        Your unique voice, perfectly replicated across every piece of content. Our AI learns your style, tone, and personality to create content that sounds authentically you.
+                    </p>
+                    
+                    <div class="space-y-6">
+                        <div class="glass-card rounded-2xl p-6">
+                            <div class="flex items-start">
+                                <div class="w-12 h-12 bg-gradient-to-br from-blue-500 to-purple-600 rounded-xl flex items-center justify-center mr-4 flex-shrink-0 glow-icon">
+                                    <i class="fa-solid fa-microphone-lines text-xl"></i>
+                                </div>
+                                <div>
+                                    <h4 class="text-lg font-bold mb-2">Voice Analysis</h4>
+                                    <p class="text-gray-400 text-sm">Deep learning models analyze your existing content to understand your unique communication patterns</p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="glass-card rounded-2xl p-6">
+                            <div class="flex items-start">
+                                <div class="w-12 h-12 bg-gradient-to-br from-purple-500 to-pink-600 rounded-xl flex items-center justify-center mr-4 flex-shrink-0 glow-icon">
+                                    <i class="fa-solid fa-palette text-xl"></i>
+                                </div>
+                                <div>
+                                    <h4 class="text-lg font-bold mb-2">Tone Matching</h4>
+                                    <p class="text-gray-400 text-sm">Maintains consistent personality across all platforms while adapting to platform-specific best practices</p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="glass-card rounded-2xl p-6">
+                            <div class="flex items-start">
+                                <div class="w-12 h-12 bg-gradient-to-br from-pink-500 to-purple-600 rounded-xl flex items-center justify-center mr-4 flex-shrink-0 glow-icon">
+                                    <i class="fa-solid fa-chart-line text-xl"></i>
+                                </div>
+                                <div>
+                                    <h4 class="text-lg font-bold mb-2">Continuous Learning</h4>
+                                    <p class="text-gray-400 text-sm">AI improves with every post, learning from engagement data to refine your voice over time</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div id="voice-demo" class="glass-card rounded-3xl p-8 neon-border">
+                    <h3 class="text-2xl font-bold mb-6 text-center gradient-text">Brand Voice Settings</h3>
+                    <div class="space-y-6">
+                        <div>
+                            <label class="block text-sm font-semibold mb-3 text-gray-300">Tone Profile</label>
+                            <div class="flex items-center justify-between mb-2">
+                                <span class="text-sm text-gray-400">Professional</span>
+                                <span class="text-sm text-purple-400 font-semibold">75%</span>
+                            </div>
+                            <div class="w-full bg-black/40 rounded-full h-2">
+                                <div class="bg-gradient-to-r from-purple-600 to-pink-600 h-2 rounded-full" style="width: 75%"></div>
+                            </div>
+                        </div>
+                        
+                        <div>
+                            <div class="flex items-center justify-between mb-2">
+                                <span class="text-sm text-gray-400">Casual</span>
+                                <span class="text-sm text-purple-400 font-semibold">60%</span>
+                            </div>
+                            <div class="w-full bg-black/40 rounded-full h-2">
+                                <div class="bg-gradient-to-r from-blue-600 to-purple-600 h-2 rounded-full" style="width: 60%"></div>
+                            </div>
+                        </div>
+                        
+                        <div>
+                            <div class="flex items-center justify-between mb-2">
+                                <span class="text-sm text-gray-400">Humorous</span>
+                                <span class="text-sm text-purple-400 font-semibold">85%</span>
+                            </div>
+                            <div class="w-full bg-black/40 rounded-full h-2">
+                                <div class="bg-gradient-to-r from-pink-600 to-purple-600 h-2 rounded-full" style="width: 85%"></div>
+                            </div>
+                        </div>
+                        
+                        <div>
+                            <div class="flex items-center justify-between mb-2">
+                                <span class="text-sm text-gray-400">Educational</span>
+                                <span class="text-sm text-purple-400 font-semibold">90%</span>
+                            </div>
+                            <div class="w-full bg-black/40 rounded-full h-2">
+                                <div class="bg-gradient-to-r from-purple-600 to-blue-600 h-2 rounded-full" style="width: 90%"></div>
+                            </div>
+                        </div>
+                        
+                        <div class="pt-4 border-t border-white/10">
+                            <h4 class="text-sm font-semibold mb-3 text-gray-300">Vocabulary Preferences</h4>
+                            <div class="flex flex-wrap gap-2">
+                                <span class="px-3 py-1 bg-purple-600/20 border border-purple-500/30 rounded-full text-xs">Technical</span>
+                                <span class="px-3 py-1 bg-blue-600/20 border border-blue-500/30 rounded-full text-xs">Storytelling</span>
+                                <span class="px-3 py-1 bg-pink-600/20 border border-pink-500/30 rounded-full text-xs">Action-oriented</span>
+                                <span class="px-3 py-1 bg-purple-600/20 border border-purple-500/30 rounded-full text-xs">Conversational</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section id="dashboard-preview" class="py-24">
+    <div class="container mx-auto px-6">
+        <div class="text-center mb-16">
+            <h2 class="font-['Playfair_Display'] text-5xl font-bold mb-4">
+                <span class="gradient-text">Weekly Automation Insights</span>
+            </h2>
+            <p class="text-gray-400 text-lg">Real-time analytics and performance tracking dashboard</p>
+        </div>
+        
+        <div class="max-w-7xl mx-auto">
+            <div class="glass-card rounded-3xl p-8 neon-border mb-8">
+                <div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
+                    <div id="metric-posts" class="bg-gradient-to-br from-blue-600/20 to-purple-600/20 rounded-2xl p-6 border border-blue-500/30">
+                        <div class="flex items-center justify-between mb-4">
+                            <div class="w-12 h-12 bg-blue-600/30 rounded-xl flex items-center justify-center glow-icon">
+                                <i class="fa-solid fa-file-alt text-2xl text-blue-400"></i>
+                            </div>
+                            <span class="text-green-400 text-sm font-semibold"><i class="fa-solid fa-arrow-up mr-1"></i>12%</span>
+                        </div>
+                        <h3 class="text-3xl font-bold mb-1">247</h3>
+                        <p class="text-gray-400 text-sm">Posts Generated</p>
+                    </div>
+                    
+                    <div id="metric-engagement" class="bg-gradient-to-br from-purple-600/20 to-pink-600/20 rounded-2xl p-6 border border-purple-500/30">
+                        <div class="flex items-center justify-between mb-4">
+                            <div class="w-12 h-12 bg-purple-600/30 rounded-xl flex items-center justify-center glow-icon">
+                                <i class="fa-solid fa-heart text-2xl text-purple-400"></i>
+                            </div>
+                            <span class="text-green-400 text-sm font-semibold"><i class="fa-solid fa-arrow-up mr-1"></i>28%</span>
+                        </div>
+                        <h3 class="text-3xl font-bold mb-1">89.4K</h3>
+                        <p class="text-gray-400 text-sm">Total Engagement</p>
+                    </div>
+                    
+                    <div id="metric-reach" class="bg-gradient-to-br from-pink-600/20 to-purple-600/20 rounded-2xl p-6 border border-pink-500/30">
+                        <div class="flex items-center justify-between mb-4">
+                            <div class="w-12 h-12 bg-pink-600/30 rounded-xl flex items-center justify-center glow-icon">
+                                <i class="fa-solid fa-eye text-2xl text-pink-400"></i>
+                            </div>
+                            <span class="text-green-400 text-sm font-semibold"><i class="fa-solid fa-arrow-up mr-1"></i>34%</span>
+                        </div>
+                        <h3 class="text-3xl font-bold mb-1">1.2M</h3>
+                        <p class="text-gray-400 text-sm">Total Reach</p>
+                    </div>
+                    
+                    <div id="metric-time" class="bg-gradient-to-br from-purple-600/20 to-blue-600/20 rounded-2xl p-6 border border-purple-500/30">
+                        <div class="flex items-center justify-between mb-4">
+                            <div class="w-12 h-12 bg-purple-600/30 rounded-xl flex items-center justify-center glow-icon">
+                                <i class="fa-solid fa-clock text-2xl text-purple-400"></i>
+                            </div>
+                            <span class="text-purple-400 text-sm font-semibold">Saved</span>
+                        </div>
+                        <h3 class="text-3xl font-bold mb-1">142hrs</h3>
+                        <p class="text-gray-400 text-sm">Time Automated</p>
+                    </div>
+                </div>
+                
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                    <div id="chart-engagement" class="bg-black/40 rounded-2xl p-6">
+                        <h4 class="text-xl font-bold mb-4 gradient-text">Weekly Engagement Trends</h4>
+                        <div style="height: 300px"></div>
+                    </div>
+                    
+                    <div id="chart-content" class="bg-black/40 rounded-2xl p-6">
+                        <h4 class="text-xl font-bold mb-4 gradient-text">Content Performance</h4>
+                        <div style="height: 300px"></div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <div id="upcoming-posts" class="glass-card rounded-3xl p-8">
+                    <h3 class="text-2xl font-bold mb-6 gradient-text">Scheduled Content</h3>
+                    <div class="space-y-4">
+                        <div class="bg-black/40 rounded-xl p-4 flex items-center justify-between">
+                            <div class="flex items-center">
+                                <div class="w-12 h-12 bg-gradient-to-br from-blue-500 to-purple-600 rounded-lg mr-4 flex items-center justify-center">
+                                    <i class="fa-brands fa-instagram text-xl"></i>
+                                </div>
+                                <div>
+                                    <h5 class="font-semibold">5 AI Trends for 2024</h5>
+                                    <p class="text-sm text-gray-400">Today, 3:00 PM</p>
+                                </div>
+                            </div>
+                            <span class="px-3 py-1 bg-green-600/20 border border-green-500/30 rounded-full text-xs text-green-300">Ready</span>
+                        </div>
+                        
+                        <div class="bg-black/40 rounded-xl p-4 flex items-center justify-between">
+                            <div class="flex items-center">
+                                <div class="w-12 h-12 bg-gradient-to-br from-purple-500 to-pink-600 rounded-lg mr-4 flex items-center justify-center">
+                                    <i class="fa-brands fa-tiktok text-xl"></i>
+                                </div>
+                                <div>
+                                    <h5 class="font-semibold">Behind the Automation</h5>
+                                    <p class="text-sm text-gray-400">Tomorrow, 10:00 AM</p>
+                                </div>
+                            </div>
+                            <span class="px-3 py-1 bg-blue-600/20 border border-blue-500/30 rounded-full text-xs text-blue-300">Editing</span>
+                        </div>
+                        
+                        <div class="bg-black/40 rounded-xl p-4 flex items-center justify-between">
+                            <div class="flex items-center">
+                                <div class="w-12 h-12 bg-gradient-to-br from-pink-500 to-purple-600 rounded-lg mr-4 flex items-center justify-center">
+                                    <i class="fa-brands fa-youtube text-xl"></i>
+                                </div>
+                                <div>
+                                    <h5 class="font-semibold">Complete AI Guide</h5>
+                                    <p class="text-sm text-gray-400">Tomorrow, 6:00 PM</p>
+                                </div>
+                            </div>
+                            <span class="px-3 py-1 bg-purple-600/20 border border-purple-500/30 rounded-full text-xs text-purple-300">Scripting</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div id="platform-stats" class="glass-card rounded-3xl p-8">
+                    <h3 class="text-2xl font-bold mb-6 gradient-text">Platform Breakdown</h3>
+                    <div class="space-y-6">
+                        <div>
+                            <div class="flex items-center justify-between mb-2">
+                                <div class="flex items-center">
+                                    <i class="fa-brands fa-instagram text-pink-400 text-xl mr-3"></i>
+                                    <span class="font-semibold">Instagram</span>
+                                </div>
+                                <span class="text-sm text-purple-400">42%</span>
+                            </div>
+                            <div class="w-full bg-black/40 rounded-full h-2">
+                                <div class="bg-gradient-to-r from-pink-600 to-purple-600 h-2 rounded-full" style="width: 42%"></div>
+                            </div>
+                        </div>
+                        
+                        <div>
+                            <div class="flex items-center justify-between mb-2">
+                                <div class="flex items-center">
+                                    <i class="fa-brands fa-tiktok text-white text-xl mr-3"></i>
+                                    <span class="font-semibold">TikTok</span>
+                                </div>
+                                <span class="text-sm text-purple-400">35%</span>
+                            </div>
+                            <div class="w-full bg-black/40 rounded-full h-2">
+                                <div class="bg-gradient-to-r from-purple-600 to-blue-600 h-2 rounded-full" style="width: 35%"></div>
+                            </div>
+                        </div>
+                        
+                        <div>
+                            <div class="flex items-center justify-between mb-2">
+                                <div class="flex items-center">
+                                    <i class="fa-brands fa-youtube text-red-400 text-xl mr-3"></i>
+                                    <span class="font-semibold">YouTube</span>
+                                </div>
+                                <span class="text-sm text-purple-400">23%</span>
+                            </div>
+                            <div class="w-full bg-black/40 rounded-full h-2">
+                                <div class="bg-gradient-to-r from-blue-600 to-purple-600 h-2 rounded-full" style="width: 23%"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section id="features-grid" class="py-24 bg-gradient-to-b from-purple-900/10 to-transparent">
+    <div class="container mx-auto px-6">
+        <div class="text-center mb-16">
+            <h2 class="font-['Playfair_Display'] text-5xl font-bold mb-4">
+                <span class="gradient-text">Powerful Features</span>
+            </h2>
+            <p class="text-gray-400 text-lg">Everything you need for effortless content creation</p>
+        </div>
+        
+        <div class="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            <div class="glass-card rounded-2xl p-6 hover-lift">
+                <div class="w-14 h-14 bg-gradient-to-br from-blue-500 to-purple-600 rounded-xl flex items-center justify-center mb-4 glow-icon">
+                    <i class="fa-solid fa-calendar-check text-2xl"></i>
+                </div>
+                <h4 class="text-xl font-bold mb-3">Smart Scheduling</h4>
+                <p class="text-gray-400">AI determines optimal posting times based on audience activity patterns</p>
+            </div>
+            
+            <div class="glass-card rounded-2xl p-6 hover-lift">
+                <div class="w-14 h-14 bg-gradient-to-br from-purple-500 to-pink-600 rounded-xl flex items-center justify-center mb-4 glow-icon">
+                    <i class="fa-solid fa-hashtag text-2xl"></i>
+                </div>
+                <h4 class="text-xl font-bold mb-3">Hashtag Intelligence</h4>
+                <p class="text-gray-400">Automatically generates and optimizes hashtags for maximum reach</p>
+            </div>
+            
+            <div class="glass-card rounded-2xl p-6 hover-lift">
+                <div class="w-14 h-14 bg-gradient-to-br from-pink-500 to-purple-600 rounded-xl flex items-center justify-center mb-4 glow-icon">
+                    <i class="fa-solid fa-images text-2xl"></i>
+                </div>
+                <h4 class="text-xl font-bold mb-3">Visual Generation</h4>
+                <p class="text-gray-400">Creates stunning visuals and thumbnails tailored to your brand</p>
+            </div>
+            
+            <div class="glass-card rounded-2xl p-6 hover-lift">
+                <div class="w-14 h-14 bg-gradient-to-br from-purple-600 to-blue-600 rounded-xl flex items-center justify-center mb-4 glow-icon">
+                    <i class="fa-solid fa-chart-mixed text-2xl"></i>
+                </div>
+                <h4 class="text-xl font-bold mb-3">Performance Analytics</h4>
+                <p class="text-gray-400">Deep insights into what content resonates with your audience</p>
+            </div>
+            
+            <div class="glass-card rounded-2xl p-6 hover-lift">
+                <div class="w-14 h-14 bg-gradient-to-br from-blue-500 to-purple-600 rounded-xl flex items-center justify-center mb-4 glow-icon">
+                    <i class="fa-solid fa-globe text-2xl"></i>
+                </div>
+                <h4 class="text-xl font-bold mb-3">Multi-Platform Sync</h4>
+                <p class="text-gray-400">Seamless posting across all major social media platforms</p>
+            </div>
+            
+            <div class="glass-card rounded-2xl p-6 hover-lift">
+                <div class="w-14 h-14 bg-gradient-to-br from-purple-500 to-pink-600 rounded-xl flex items-center justify-center mb-4 glow-icon">
+                    <i class="fa-solid fa-shield-halved text-2xl"></i>
+                </div>
+                <h4 class="text-xl font-bold mb-3">Brand Safety</h4>
+                <p class="text-gray-400">Content moderation ensures all posts align with your brand guidelines</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section id="cta-section" class="py-24">
+    <div class="container mx-auto px-6">
+        <div class="max-w-5xl mx-auto glass-card rounded-3xl p-12 neon-border text-center">
+            <h2 class="font-['Playfair_Display'] text-5xl font-bold mb-6">
+                <span class="gradient-text">Ready to Automate?</span>
+            </h2>
+            <p class="text-xl text-gray-300 mb-8 max-w-2xl mx-auto">
+                Join hundreds of creators who've reclaimed their time with our fully automated content engine. Start your AI-powered journey today.
+            </p>
+            <div class="flex justify-center space-x-4">
+                <a href="#contact" class="px-10 py-4 bg-gradient-to-r from-purple-600 to-pink-600 rounded-full font-semibold text-lg hover:shadow-2xl hover:shadow-purple-500/50 transition-all">
+                    Start Free Trial
+                </a>
+                <a href="#dashboard-preview" class="px-10 py-4 glass-card rounded-full font-semibold text-lg hover:bg-white/10 transition-all">
+                    View Demo
+                </a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<footer id="footer" class="py-12 border-t border-white/10">
+    <div class="container mx-auto px-6">
+        <div class="flex flex-col md:flex-row justify-between items-center">
+            <div class="mb-6 md:mb-0">
+                <a href="index.html" class="text-3xl font-bold tracking-wider">
+                    <span class="gradient-text">QUANTUM CLIMB</span>
+                </a>
+                <p class="text-gray-400 mt-2">AI First Agency</p>
+            </div>
+            
+            <div class="flex space-x-8">
+                <a href="index.html#services" class="text-gray-400 hover:text-purple-400 transition-colors">Services</a>
+                <a href="index.html#case-studies" class="text-gray-400 hover:text-purple-400 transition-colors">Case Studies</a>
+                <a href="index.html#portfolio" class="text-gray-400 hover:text-purple-400 transition-colors">Portfolio</a>
+                <a href="index.html#contact" class="text-gray-400 hover:text-purple-400 transition-colors">Contact</a>
+            </div>
+            
+            <div class="flex space-x-4 mt-6 md:mt-0">
+                <a href="#" class="w-10 h-10 glass-card rounded-full flex items-center justify-center hover:bg-purple-600 transition-all">
+                    <i class="fa-brands fa-twitter"></i>
+                </a>
+                <a href="#" class="w-10 h-10 glass-card rounded-full flex items-center justify-center hover:bg-purple-600 transition-all">
+                    <i class="fa-brands fa-linkedin"></i>
+                </a>
+                <a href="#" class="w-10 h-10 glass-card rounded-full flex items-center justify-center hover:bg-purple-600 transition-all">
+                    <i class="fa-brands fa-github"></i>
+                </a>
+            </div>
+        </div>
+        
+        <div class="mt-8 pt-8 border-t border-white/10 text-center text-gray-400 text-sm">
+            <p>&copy; 2024 Quantum Climb. All rights reserved.</p>
+        </div>
+    </div>
+</footer>
+
+<script>
+window.addEventListener('load', function() {
+    try {
+        var engagementData = [{
+            type: 'scatter',
+            mode: 'lines',
+            name: 'Likes',
+            x: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
+            y: [12500, 15200, 18900, 16400, 21300, 24800, 22100],
+            line: { color: '#a855f7', width: 3 },
+            fill: 'tozeroy',
+            fillcolor: 'rgba(168, 85, 247, 0.1)'
+        }, {
+            type: 'scatter',
+            mode: 'lines',
+            name: 'Comments',
+            x: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
+            y: [3200, 4100, 5300, 4800, 6200, 7100, 6800],
+            line: { color: '#ec4899', width: 3 }
+        }, {
+            type: 'scatter',
+            mode: 'lines',
+            name: 'Shares',
+            x: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
+            y: [1800, 2300, 2900, 2600, 3400, 4200, 3900],
+            line: { color: '#60a5fa', width: 3 }
+        }];
+        
+        var engagementLayout = {
+            margin: { t: 20, r: 20, b: 40, l: 50 },
+            plot_bgcolor: 'rgba(0, 0, 0, 0.4)',
+            paper_bgcolor: 'transparent',
+            showlegend: true,
+            legend: { font: { color: '#9ca3af' } },
+            xaxis: { color: '#9ca3af', gridcolor: 'rgba(255, 255, 255, 0.05)' },
+            yaxis: { color: '#9ca3af', gridcolor: 'rgba(255, 255, 255, 0.05)' }
+        };
+        
+        Plotly.newPlot('chart-engagement', engagementData, engagementLayout, {responsive: true, displayModeBar: false, displaylogo: false});
+        
+        var contentData = [{
+            type: 'bar',
+            x: ['Reels', 'Stories', 'Posts', 'Videos', 'Carousels'],
+            y: [89, 76, 92, 85, 78],
+            marker: {
+                color: ['#a855f7', '#ec4899', '#60a5fa', '#8b5cf6', '#d946ef']
+            }
+        }];
+        
+        var contentLayout = {
+            margin: { t: 20, r: 20, b: 60, l: 50 },
+            plot_bgcolor: 'rgba(0, 0, 0, 0.4)',
+            paper_bgcolor: 'transparent',
+            showlegend: false,
+            xaxis: { color: '#9ca3af', gridcolor: 'rgba(255, 255, 255, 0.05)' },
+            yaxis: { title: 'Engagement Score', color: '#9ca3af', gridcolor: 'rgba(255, 255, 255, 0.05)' }
+        };
+        
+        Plotly.newPlot('chart-content', contentData, contentLayout, {responsive: true, displayModeBar: false, displaylogo: false});
+    } catch(e) {
+        document.getElementById('chart-engagement').innerHTML = '<div class="flex items-center justify-center h-full text-gray-500"><i class="fa-solid fa-chart-line text-4xl"></i></div>';
+        document.getElementById('chart-content').innerHTML = '<div class="flex items-center justify-center h-full text-gray-500"><i class="fa-solid fa-chart-bar text-4xl"></i></div>';
+    }
+});
+</script>
+
+</body>
+</html>

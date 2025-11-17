@@ -1,0 +1,618 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Services</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script> window.FontAwesomeConfig = { autoReplaceSvg: 'nest'};</script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/js/all.min.js" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Playfair+Display:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        ::-webkit-scrollbar { display: none;}
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #0a0e27 0%, #1a1f3a 50%, #0f1428 100%);
+        }
+        .gradient-text {
+            background: linear-gradient(90deg, #60a5fa 0%, #a855f7 50%, #ec4899 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .glass-card {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        .neon-border {
+            box-shadow: 0 0 20px rgba(168, 85, 247, 0.4), 0 0 40px rgba(96, 165, 250, 0.2);
+        }
+        .glow-icon {
+            filter: drop-shadow(0 0 8px rgba(168, 85, 247, 0.6));
+        }
+        .hover-lift {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .hover-lift:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 40px rgba(168, 85, 247, 0.3);
+        }
+        .metallic-accent {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+        .animate-float {
+            animation: float 6s ease-in-out infinite;
+        }
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+        }
+        .feature-icon-glow {
+            animation: pulse-glow 3s ease-in-out infinite;
+        }
+        @keyframes pulse-glow {
+            0%, 100% { box-shadow: 0 0 20px rgba(168, 85, 247, 0.4); }
+            50% { box-shadow: 0 0 40px rgba(168, 85, 247, 0.8), 0 0 60px rgba(96, 165, 250, 0.4); }
+        }
+    </style>
+</head>
+<body class="text-white">
+
+<header id="header" class="fixed w-full z-50 bg-black/40 backdrop-blur-md border-b border-white/10">
+    <div class="container mx-auto px-6 py-4 flex justify-between items-center">
+        <a href="#" class="text-2xl font-bold tracking-wider">
+            <span class="gradient-text">QUANTUM CLIMB</span>
+        </a>
+        <nav class="hidden md:flex space-x-8">
+            <a href="#services" class="text-white/80 hover:text-purple-400 transition-colors">Services</a>
+            <a href="#case-studies" class="text-white/80 hover:text-purple-400 transition-colors">Case Studies</a>
+            <a href="#portfolio" class="text-white/80 hover:text-purple-400 transition-colors">Portfolio</a>
+            <a href="#contact" class="px-6 py-2 bg-gradient-to-r from-purple-600 to-pink-600 rounded-full hover:shadow-lg hover:shadow-purple-500/50 transition-all">
+                Start Your AI Transformation
+            </a>
+        </nav>
+        <button class="md:hidden text-white">
+            <i class="fa-solid fa-bars text-2xl"></i>
+        </button>
+    </div>
+</header>
+
+<section id="services-hero" class="relative h-[600px] flex items-center justify-center pt-20">
+    <div class="absolute inset-0 bg-gradient-to-br from-blue-900/20 via-purple-900/20 to-pink-900/20"></div>
+    <div class="absolute inset-0 opacity-10">
+        <div class="absolute top-20 left-20 w-96 h-96 bg-purple-500 rounded-full blur-3xl"></div>
+        <div class="absolute bottom-10 right-20 w-96 h-96 bg-blue-500 rounded-full blur-3xl"></div>
+    </div>
+    
+    <div class="container mx-auto px-6 relative z-10 text-center">
+        <h1 class="font-['Playfair_Display'] text-7xl font-bold mb-6">
+            <span class="gradient-text">Our Services</span>
+        </h1>
+        <p class="text-2xl text-gray-300 max-w-3xl mx-auto mb-8">
+            Comprehensive AI-first solutions to automate, transform, and elevate your business
+        </p>
+        <div class="flex justify-center space-x-6">
+            <div class="glass-card px-6 py-3 rounded-full">
+                <span class="text-purple-400 font-semibold">AI-First SaaS</span>
+            </div>
+            <div class="glass-card px-6 py-3 rounded-full">
+                <span class="text-purple-400 font-semibold">Automation Solutions</span>
+            </div>
+            <div class="glass-card px-6 py-3 rounded-full">
+                <span class="text-purple-400 font-semibold">App Generators</span>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section id="service-webapps-detail" class="py-24">
+    <div class="container mx-auto px-6">
+        <div class="max-w-7xl mx-auto">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center mb-24">
+                <div>
+                    <div class="inline-block glass-card px-4 py-2 rounded-full mb-6">
+                        <span class="text-purple-400 font-semibold text-sm">SERVICE 01</span>
+                    </div>
+                    <h2 class="font-['Playfair_Display'] text-5xl font-bold mb-6">
+                        <span class="gradient-text">Webapps & AI Products</span>
+                    </h2>
+                    <p class="text-xl text-gray-300 mb-8">
+                        Build cutting-edge AI-first SaaS platforms, custom app generators, and end-to-end product solutions. We transform your ideas into secure, scalable, and lightning-fast applications.
+                    </p>
+                    <div class="space-y-4 mb-8">
+                        <div class="flex items-start">
+                            <div class="w-12 h-12 bg-gradient-to-br from-blue-500 to-purple-600 rounded-xl flex items-center justify-center mr-4 flex-shrink-0 glow-icon">
+                                <i class="fa-solid fa-rocket text-xl"></i>
+                            </div>
+                            <div>
+                                <h4 class="text-lg font-bold mb-1">Custom AI SaaS Platforms</h4>
+                                <p class="text-gray-400">Tailored AI-powered software solutions built from the ground up for your unique business needs</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start">
+                            <div class="w-12 h-12 bg-gradient-to-br from-purple-500 to-pink-600 rounded-xl flex items-center justify-center mr-4 flex-shrink-0 glow-icon">
+                                <i class="fa-solid fa-wand-magic-sparkles text-xl"></i>
+                            </div>
+                            <div>
+                                <h4 class="text-lg font-bold mb-1">Automated App Generators</h4>
+                                <p class="text-gray-400">Intelligent systems that generate functional applications based on your specifications and requirements</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start">
+                            <div class="w-12 h-12 bg-gradient-to-br from-pink-500 to-purple-600 rounded-xl flex items-center justify-center mr-4 flex-shrink-0 glow-icon">
+                                <i class="fa-solid fa-layer-group text-xl"></i>
+                            </div>
+                            <div>
+                                <h4 class="text-lg font-bold mb-1">Full-Stack Development</h4>
+                                <p class="text-gray-400">Complete development lifecycle from ideation and UX design to deployment and maintenance</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start">
+                            <div class="w-12 h-12 bg-gradient-to-br from-blue-500 to-purple-600 rounded-xl flex items-center justify-center mr-4 flex-shrink-0 glow-icon">
+                                <i class="fa-solid fa-shield-halved text-xl"></i>
+                            </div>
+                            <div>
+                                <h4 class="text-lg font-bold mb-1">Secure & Scalable Architecture</h4>
+                                <p class="text-gray-400">Enterprise-grade security and infrastructure designed to scale with your business growth</p>
+                            </div>
+                        </div>
+                    </div>
+                    <a href="#contact" class="inline-block px-8 py-4 bg-gradient-to-r from-purple-600 to-pink-600 rounded-full font-semibold hover:shadow-2xl hover:shadow-purple-500/50 transition-all">
+                        Build Your AI Product
+                    </a>
+                </div>
+                <div class="relative">
+                    <div class="glass-card rounded-3xl p-8 neon-border">
+                        <div class="h-[500px] overflow-hidden rounded-2xl">
+                            <img class="w-full h-full object-cover" src="https://storage.googleapis.com/uxpilot-auth.appspot.com/7f59ca9c5e-5c1a2cb77a83e1fdda42.png" alt="futuristic AI SaaS dashboard interface with 3D elements, purple and blue gradients, modern UI cards, dark theme, isometric view" />
+                        </div>
+                    </div>
+                    <div class="absolute -bottom-6 -right-6 w-32 h-32 bg-gradient-to-br from-purple-500 to-pink-600 rounded-full blur-3xl opacity-50"></div>
+                </div>
+            </div>
+
+            <div class="glass-card rounded-3xl p-12 mb-24">
+                <h3 class="text-3xl font-bold mb-8 text-center gradient-text">Technology Stack</h3>
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-6">
+                    <div class="bg-black/40 rounded-2xl p-6 text-center hover-lift">
+                        <i class="fa-brands fa-react text-5xl text-blue-400 mb-4"></i>
+                        <p class="font-semibold">React & Next.js</p>
+                    </div>
+                    <div class="bg-black/40 rounded-2xl p-6 text-center hover-lift">
+                        <i class="fa-brands fa-python text-5xl text-yellow-400 mb-4"></i>
+                        <p class="font-semibold">Python & AI</p>
+                    </div>
+                    <div class="bg-black/40 rounded-2xl p-6 text-center hover-lift">
+                        <i class="fa-brands fa-node text-5xl text-green-400 mb-4"></i>
+                        <p class="font-semibold">Node.js</p>
+                    </div>
+                    <div class="bg-black/40 rounded-2xl p-6 text-center hover-lift">
+                        <i class="fa-brands fa-aws text-5xl text-orange-400 mb-4"></i>
+                        <p class="font-semibold">Cloud Infrastructure</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section id="service-social-detail" class="py-24 bg-gradient-to-b from-purple-900/10 to-transparent">
+    <div class="container mx-auto px-6">
+        <div class="max-w-7xl mx-auto">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center mb-24">
+                <div class="order-2 lg:order-1 relative">
+                    <div class="glass-card rounded-3xl p-8 neon-border">
+                        <div class="h-[500px] overflow-hidden rounded-2xl">
+                            <img class="w-full h-full object-cover" src="https://storage.googleapis.com/uxpilot-auth.appspot.com/13d45f97f5-3a0a4e31f2edf9db6c03.png" alt="social media automation dashboard, content calendar, AI scripting interface, purple gradients, modern analytics, futuristic design" />
+                        </div>
+                    </div>
+                    <div class="absolute -top-6 -left-6 w-32 h-32 bg-gradient-to-br from-blue-500 to-purple-600 rounded-full blur-3xl opacity-50"></div>
+                </div>
+                <div class="order-1 lg:order-2">
+                    <div class="inline-block glass-card px-4 py-2 rounded-full mb-6">
+                        <span class="text-purple-400 font-semibold text-sm">SERVICE 02</span>
+                    </div>
+                    <h2 class="font-['Playfair_Display'] text-5xl font-bold mb-6">
+                        <span class="gradient-text">Social Media Automation</span>
+                    </h2>
+                    <p class="text-xl text-gray-300 mb-8">
+                        Transform your content creation with our zero-effort automation engine. From ideation to posting, let AI handle everything while maintaining your unique brand voice.
+                    </p>
+                    <div class="space-y-4 mb-8">
+                        <div class="flex items-start">
+                            <div class="w-12 h-12 bg-gradient-to-br from-blue-500 to-purple-600 rounded-xl flex items-center justify-center mr-4 flex-shrink-0 glow-icon">
+                                <i class="fa-solid fa-lightbulb text-xl"></i>
+                            </div>
+                            <div>
+                                <h4 class="text-lg font-bold mb-1">AI Content Ideation</h4>
+                                <p class="text-gray-400">Intelligent algorithms generate trending content ideas tailored to your audience and niche</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start">
+                            <div class="w-12 h-12 bg-gradient-to-br from-purple-500 to-pink-600 rounded-xl flex items-center justify-center mr-4 flex-shrink-0 glow-icon">
+                                <i class="fa-solid fa-file-lines text-xl"></i>
+                            </div>
+                            <div>
+                                <h4 class="text-lg font-bold mb-1">Automated Scripting & Editing</h4>
+                                <p class="text-gray-400">AI writes scripts, generates visuals, and edits videos with professional quality automatically</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start">
+                            <div class="w-12 h-12 bg-gradient-to-br from-pink-500 to-purple-600 rounded-xl flex items-center justify-center mr-4 flex-shrink-0 glow-icon">
+                                <i class="fa-solid fa-calendar-check text-xl"></i>
+                            </div>
+                            <div>
+                                <h4 class="text-lg font-bold mb-1">Smart Scheduling & Posting</h4>
+                                <p class="text-gray-400">Content published at optimal times across all platforms without manual intervention</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start">
+                            <div class="w-12 h-12 bg-gradient-to-br from-blue-500 to-purple-600 rounded-xl flex items-center justify-center mr-4 flex-shrink-0 glow-icon">
+                                <i class="fa-solid fa-chart-line text-xl"></i>
+                            </div>
+                            <div>
+                                <h4 class="text-lg font-bold mb-1">Weekly Insights Dashboard</h4>
+                                <p class="text-gray-400">Comprehensive analytics and AI-driven recommendations to optimize your content strategy</p>
+                            </div>
+                        </div>
+                    </div>
+                    <a href="#contact" class="inline-block px-8 py-4 bg-gradient-to-r from-purple-600 to-pink-600 rounded-full font-semibold hover:shadow-2xl hover:shadow-purple-500/50 transition-all">
+                        Automate Your Content
+                    </a>
+                </div>
+            </div>
+
+            <div class="glass-card rounded-3xl p-12">
+                <h3 class="text-3xl font-bold mb-8 text-center gradient-text">Automation Workflow</h3>
+                <div class="flex flex-col md:flex-row items-center justify-between">
+                    <div class="flex-1 text-center mb-8 md:mb-0">
+                        <div class="w-20 h-20 bg-gradient-to-br from-blue-500 to-purple-600 rounded-full flex items-center justify-center mx-auto mb-4 feature-icon-glow">
+                            <i class="fa-solid fa-brain text-3xl"></i>
+                        </div>
+                        <h4 class="text-xl font-bold mb-2">AI Ideation</h4>
+                        <p class="text-gray-400 text-sm">Content ideas<br/>generated daily</p>
+                    </div>
+                    <div class="text-purple-400 text-3xl mb-8 md:mb-0">
+                        <i class="fa-solid fa-arrow-right rotate-90 md:rotate-0"></i>
+                    </div>
+                    <div class="flex-1 text-center mb-8 md:mb-0">
+                        <div class="w-20 h-20 bg-gradient-to-br from-purple-500 to-pink-600 rounded-full flex items-center justify-center mx-auto mb-4 feature-icon-glow">
+                            <i class="fa-solid fa-pen-fancy text-3xl"></i>
+                        </div>
+                        <h4 class="text-xl font-bold mb-2">Script Writing</h4>
+                        <p class="text-gray-400 text-sm">AI writes your<br/>content scripts</p>
+                    </div>
+                    <div class="text-purple-400 text-3xl mb-8 md:mb-0">
+                        <i class="fa-solid fa-arrow-right rotate-90 md:rotate-0"></i>
+                    </div>
+                    <div class="flex-1 text-center mb-8 md:mb-0">
+                        <div class="w-20 h-20 bg-gradient-to-br from-pink-500 to-purple-600 rounded-full flex items-center justify-center mx-auto mb-4 feature-icon-glow">
+                            <i class="fa-solid fa-scissors text-3xl"></i>
+                        </div>
+                        <h4 class="text-xl font-bold mb-2">Auto Editing</h4>
+                        <p class="text-gray-400 text-sm">Professional edits<br/>applied instantly</p>
+                    </div>
+                    <div class="text-purple-400 text-3xl mb-8 md:mb-0">
+                        <i class="fa-solid fa-arrow-right rotate-90 md:rotate-0"></i>
+                    </div>
+                    <div class="flex-1 text-center">
+                        <div class="w-20 h-20 bg-gradient-to-br from-purple-600 to-blue-600 rounded-full flex items-center justify-center mx-auto mb-4 feature-icon-glow">
+                            <i class="fa-solid fa-paper-plane text-3xl"></i>
+                        </div>
+                        <h4 class="text-xl font-bold mb-2">Auto Posting</h4>
+                        <p class="text-gray-400 text-sm">Published across<br/>all platforms</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section id="service-dubbing-detail" class="py-24">
+    <div class="container mx-auto px-6">
+        <div class="max-w-7xl mx-auto">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center mb-24">
+                <div>
+                    <div class="inline-block glass-card px-4 py-2 rounded-full mb-6">
+                        <span class="text-purple-400 font-semibold text-sm">SERVICE 03</span>
+                    </div>
+                    <h2 class="font-['Playfair_Display'] text-5xl font-bold mb-6">
+                        <span class="gradient-text">AI Voice Dubbing + Lip Morphing</span>
+                    </h2>
+                    <p class="text-xl text-gray-300 mb-8">
+                        Revolutionary dubbing technology that doesn't just translate voices, but morphs mouth movements to match the target language. Create truly native-feeling content for global audiences.
+                    </p>
+                    <div class="space-y-4 mb-8">
+                        <div class="flex items-start">
+                            <div class="w-12 h-12 bg-gradient-to-br from-blue-500 to-purple-600 rounded-xl flex items-center justify-center mr-4 flex-shrink-0 glow-icon">
+                                <i class="fa-solid fa-language text-xl"></i>
+                            </div>
+                            <div>
+                                <h4 class="text-lg font-bold mb-1">Perfect Lip Synchronization</h4>
+                                <p class="text-gray-400">Advanced AI morphs mouth movements to match the target language pronunciation</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start">
+                            <div class="w-12 h-12 bg-gradient-to-br from-purple-500 to-pink-600 rounded-xl flex items-center justify-center mr-4 flex-shrink-0 glow-icon">
+                                <i class="fa-solid fa-microphone-lines text-xl"></i>
+                            </div>
+                            <div>
+                                <h4 class="text-lg font-bold mb-1">Natural Voice Cloning</h4>
+                                <p class="text-gray-400">Preserve the speaker's unique tone, emotion, and delivery in any language</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start">
+                            <div class="w-12 h-12 bg-gradient-to-br from-pink-500 to-purple-600 rounded-xl flex items-center justify-center mr-4 flex-shrink-0 glow-icon">
+                                <i class="fa-solid fa-globe text-xl"></i>
+                            </div>
+                            <div>
+                                <h4 class="text-lg font-bold mb-1">Multi-Language Support</h4>
+                                <p class="text-gray-400">Expand to 50+ languages with authentic pronunciation and cultural nuances</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start">
+                            <div class="w-12 h-12 bg-gradient-to-br from-blue-500 to-purple-600 rounded-xl flex items-center justify-center mr-4 flex-shrink-0 glow-icon">
+                                <i class="fa-solid fa-video text-xl"></i>
+                            </div>
+                            <div>
+                                <h4 class="text-lg font-bold mb-1">For All Content Types</h4>
+                                <p class="text-gray-400">Perfect for YouTube, training videos, marketing content, and entertainment</p>
+                            </div>
+                        </div>
+                    </div>
+                    <a href="#contact" class="inline-block px-8 py-4 bg-gradient-to-r from-purple-600 to-pink-600 rounded-full font-semibold hover:shadow-2xl hover:shadow-purple-500/50 transition-all">
+                        Transform Your Videos
+                    </a>
+                </div>
+                <div class="relative">
+                    <div class="glass-card rounded-3xl p-8 neon-border">
+                        <div class="grid grid-cols-2 gap-6">
+                            <div class="bg-black/40 rounded-2xl p-4">
+                                <div class="text-center mb-2">
+                                    <span class="text-gray-400 text-sm font-semibold">BEFORE</span>
+                                </div>
+                                <div class="h-48 overflow-hidden rounded-xl mb-2">
+                                    <img class="w-full h-full object-cover" src="https://storage.googleapis.com/uxpilot-auth.appspot.com/b5aca4daa7-40e6c8d97e7e21e00dd1.png" alt="person speaking in original language, video before AI dubbing, mismatched lip movements" />
+                                </div>
+                                <p class="text-gray-400 text-xs">Standard dubbing</p>
+                            </div>
+                            <div class="bg-gradient-to-br from-purple-900/40 to-pink-900/40 rounded-2xl p-4 neon-border">
+                                <div class="text-center mb-2">
+                                    <span class="text-purple-400 text-sm font-semibold">AFTER</span>
+                                </div>
+                                <div class="h-48 overflow-hidden rounded-xl mb-2">
+                                    <img class="w-full h-full object-cover" src="https://storage.googleapis.com/uxpilot-auth.appspot.com/52fde64f59-f8f4db0af9fc0ba3c36e.png" alt="person speaking with perfect lip sync, AI morphed mouth, target language, futuristic overlay" />
+                                </div>
+                                <p class="text-purple-300 text-xs font-semibold">Perfect lip sync</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="absolute -bottom-6 -right-6 w-32 h-32 bg-gradient-to-br from-purple-500 to-pink-600 rounded-full blur-3xl opacity-50"></div>
+                </div>
+            </div>
+
+            <div class="glass-card rounded-3xl p-12">
+                <h3 class="text-3xl font-bold mb-8 text-center gradient-text">Use Cases</h3>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                    <div class="bg-black/40 rounded-2xl p-6 text-center hover-lift">
+                        <i class="fa-brands fa-youtube text-5xl text-red-500 mb-4"></i>
+                        <h4 class="text-xl font-bold mb-2">Content Creators</h4>
+                        <p class="text-gray-400">Reach global audiences without language barriers</p>
+                    </div>
+                    <div class="bg-black/40 rounded-2xl p-6 text-center hover-lift">
+                        <i class="fa-solid fa-graduation-cap text-5xl text-blue-400 mb-4"></i>
+                        <h4 class="text-xl font-bold mb-2">Training Videos</h4>
+                        <p class="text-gray-400">Localize educational content for worldwide teams</p>
+                    </div>
+                    <div class="bg-black/40 rounded-2xl p-6 text-center hover-lift">
+                        <i class="fa-solid fa-bullhorn text-5xl text-purple-400 mb-4"></i>
+                        <h4 class="text-xl font-bold mb-2">Marketing Campaigns</h4>
+                        <p class="text-gray-400">One video, unlimited market reach with native feel</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section id="service-cold-outreach-detail" class="py-24 bg-gradient-to-b from-purple-900/10 to-transparent">
+    <div class="container mx-auto px-6">
+        <div class="max-w-7xl mx-auto">
+            <div class="text-center mb-16">
+                <div class="inline-block glass-card px-4 py-2 rounded-full mb-6">
+                    <span class="text-purple-400 font-semibold text-sm">SERVICE 04</span>
+                </div>
+                <h2 class="font-['Playfair_Display'] text-5xl font-bold mb-6">
+                    <span class="gradient-text">Cold Outreach Automation</span>
+                </h2>
+                <p class="text-xl text-gray-300 max-w-3xl mx-auto mb-4">
+                    Ultra-personalized AI cold email engine with domain warming, lead scoring, and one-click campaign launches
+                </p>
+                <p class="text-purple-400 text-lg font-semibold">QC@quantum-climb.com</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-16">
+                <div class="glass-card rounded-3xl p-8 hover-lift">
+                    <div class="w-16 h-16 bg-gradient-to-br from-blue-500 to-purple-600 rounded-2xl flex items-center justify-center mb-6 glow-icon">
+                        <i class="fa-solid fa-wand-magic-sparkles text-3xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3">AI Personalization</h3>
+                    <p class="text-gray-400">Each email uniquely crafted for every prospect using advanced AI models</p>
+                </div>
+                <div class="glass-card rounded-3xl p-8 hover-lift">
+                    <div class="w-16 h-16 bg-gradient-to-br from-purple-500 to-pink-600 rounded-2xl flex items-center justify-center mb-6 glow-icon">
+                        <i class="fa-solid fa-fire text-3xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3">Domain Warming</h3>
+                    <p class="text-gray-400">Automated warming sequences ensure high deliverability and inbox placement</p>
+                </div>
+                <div class="glass-card rounded-3xl p-8 hover-lift">
+                    <div class="w-16 h-16 bg-gradient-to-br from-pink-500 to-purple-600 rounded-2xl flex items-center justify-center mb-6 glow-icon">
+                        <i class="fa-solid fa-star text-3xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3">Lead Scoring</h3>
+                    <p class="text-gray-400">AI-powered scoring prioritizes your hottest prospects automatically</p>
+                </div>
+                <div class="glass-card rounded-3xl p-8 hover-lift">
+                    <div class="w-16 h-16 bg-gradient-to-br from-purple-600 to-blue-600 rounded-2xl flex items-center justify-center mb-6 glow-icon">
+                        <i class="fa-solid fa-bolt text-3xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3">One-Click Launch</h3>
+                    <p class="text-gray-400">Complete campaigns deployed instantly with full automation</p>
+                </div>
+            </div>
+
+            <div class="glass-card rounded-3xl p-12 neon-border">
+                <h3 class="text-3xl font-bold mb-8 text-center gradient-text">Complete Outreach System</h3>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-8">
+                    <div class="bg-black/40 rounded-2xl p-6">
+                        <div class="text-purple-400 text-4xl font-bold mb-2">01</div>
+                        <h4 class="text-xl font-bold mb-3">AI Writes</h4>
+                        <p class="text-gray-400">Prospect research and ultra-personalized email generation powered by advanced AI</p>
+                    </div>
+                    <div class="bg-black/40 rounded-2xl p-6">
+                        <div class="text-purple-400 text-4xl font-bold mb-2">02</div>
+                        <h4 class="text-xl font-bold mb-3">AI Sends</h4>
+                        <p class="text-gray-400">Automated sending with optimal timing, follow-ups, and sequence management</p>
+                    </div>
+                    <div class="bg-black/40 rounded-2xl p-6">
+                        <div class="text-purple-400 text-4xl font-bold mb-2">03</div>
+                        <h4 class="text-xl font-bold mb-3">AI Optimizes</h4>
+                        <p class="text-gray-400">Continuous learning from responses to improve conversion rates over time</p>
+                    </div>
+                </div>
+                <div class="text-center">
+                    <a href="#contact" class="inline-block px-10 py-4 bg-gradient-to-r from-purple-600 to-pink-600 rounded-full font-semibold text-lg hover:shadow-2xl hover:shadow-purple-500/50 transition-all">
+                        Start Your Automated Deal Flow
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section id="pricing-overview" class="py-24">
+    <div class="container mx-auto px-6">
+        <div class="max-w-6xl mx-auto text-center">
+            <h2 class="font-['Playfair_Display'] text-5xl font-bold mb-6">
+                <span class="gradient-text">Flexible Pricing</span>
+            </h2>
+            <p class="text-xl text-gray-300 mb-12">
+                Choose the perfect plan for your business needs
+            </p>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div class="glass-card rounded-3xl p-8 hover-lift">
+                    <h3 class="text-2xl font-bold mb-4">Starter</h3>
+                    <div class="text-4xl font-bold mb-6 gradient-text">Custom</div>
+                    <p class="text-gray-400 mb-6">Perfect for small businesses and startups</p>
+                    <ul class="space-y-3 mb-8 text-left">
+                        <li class="flex items-center"><i class="fa-solid fa-check text-purple-400 mr-3"></i>Single service focus</li>
+                        <li class="flex items-center"><i class="fa-solid fa-check text-purple-400 mr-3"></i>Basic automation</li>
+                        <li class="flex items-center"><i class="fa-solid fa-check text-purple-400 mr-3"></i>Email support</li>
+                        <li class="flex items-center"><i class="fa-solid fa-check text-purple-400 mr-3"></i>Monthly reporting</li>
+                    </ul>
+                    <a href="#contact" class="block w-full py-3 bg-white/10 rounded-full font-semibold hover:bg-white/20 transition-all">
+                        Get Started
+                    </a>
+                </div>
+                <div class="glass-card rounded-3xl p-8 hover-lift neon-border">
+                    <div class="inline-block bg-gradient-to-r from-purple-600 to-pink-600 px-4 py-1 rounded-full text-sm font-semibold mb-4">POPULAR</div>
+                    <h3 class="text-2xl font-bold mb-4">Professional</h3>
+                    <div class="text-4xl font-bold mb-6 gradient-text">Custom</div>
+                    <p class="text-gray-400 mb-6">For growing businesses ready to scale</p>
+                    <ul class="space-y-3 mb-8 text-left">
+                        <li class="flex items-center"><i class="fa-solid fa-check text-purple-400 mr-3"></i>Multiple services</li>
+                        <li class="flex items-center"><i class="fa-solid fa-check text-purple-400 mr-3"></i>Advanced automation</li>
+                        <li class="flex items-center"><i class="fa-solid fa-check text-purple-400 mr-3"></i>Priority support</li>
+                        <li class="flex items-center"><i class="fa-solid fa-check text-purple-400 mr-3"></i>Weekly reporting</li>
+                        <li class="flex items-center"><i class="fa-solid fa-check text-purple-400 mr-3"></i>Custom integrations</li>
+                    </ul>
+                    <a href="#contact" class="block w-full py-3 bg-gradient-to-r from-purple-600 to-pink-600 rounded-full font-semibold hover:shadow-lg hover:shadow-purple-500/50 transition-all">
+                        Get Started
+                    </a>
+                </div>
+                <div class="glass-card rounded-3xl p-8 hover-lift">
+                    <h3 class="text-2xl font-bold mb-4">Enterprise</h3>
+                    <div class="text-4xl font-bold mb-6 gradient-text">Custom</div>
+                    <p class="text-gray-400 mb-6">For large organizations with complex needs</p>
+                    <ul class="space-y-3 mb-8 text-left">
+                        <li class="flex items-center"><i class="fa-solid fa-check text-purple-400 mr-3"></i>Unlimited services</li>
+                        <li class="flex items-center"><i class="fa-solid fa-check text-purple-400 mr-3"></i>Full automation suite</li>
+                        <li class="flex items-center"><i class="fa-solid fa-check text-purple-400 mr-3"></i>Dedicated support team</li>
+                        <li class="flex items-center"><i class="fa-solid fa-check text-purple-400 mr-3"></i>Real-time reporting</li>
+                        <li class="flex items-center"><i class="fa-solid fa-check text-purple-400 mr-3"></i>White-label options</li>
+                        <li class="flex items-center"><i class="fa-solid fa-check text-purple-400 mr-3"></i>SLA guarantees</li>
+                    </ul>
+                    <a href="#contact" class="block w-full py-3 bg-white/10 rounded-full font-semibold hover:bg-white/20 transition-all">
+                        Contact Sales
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section id="cta-section" class="py-24 bg-gradient-to-b from-purple-900/10 to-transparent">
+    <div class="container mx-auto px-6">
+        <div class="max-w-4xl mx-auto text-center">
+            <div class="glass-card rounded-3xl p-12 neon-border">
+                <h2 class="font-['Playfair_Display'] text-5xl font-bold mb-6">
+                    <span class="gradient-text">Ready to Transform Your Business?</span>
+                </h2>
+                <p class="text-xl text-gray-300 mb-8">
+                    Let's discuss how our AI-first solutions can automate and elevate your operations
+                </p>
+                <div class="flex flex-col sm:flex-row justify-center gap-4">
+                    <a href="#contact" class="px-10 py-4 bg-gradient-to-r from-purple-600 to-pink-600 rounded-full font-semibold text-lg hover:shadow-2xl hover:shadow-purple-500/50 transition-all">
+                        Start Your AI Transformation
+                    </a>
+                    <a href="#case-studies" class="px-10 py-4 glass-card rounded-full font-semibold text-lg hover:bg-white/10 transition-all">
+                        View Case Studies
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<footer id="footer" class="py-12 border-t border-white/10">
+    <div class="container mx-auto px-6">
+        <div class="flex flex-col md:flex-row justify-between items-center">
+            <div class="mb-6 md:mb-0">
+                <a href="#" class="text-3xl font-bold tracking-wider">
+                    <span class="gradient-text">QUANTUM CLIMB</span>
+                </a>
+                <p class="text-gray-400 mt-2">AI First Agency</p>
+            </div>
+            
+            <div class="flex space-x-8">
+                <a href="#services" class="text-gray-400 hover:text-purple-400 transition-colors">Services</a>
+                <a href="#case-studies" class="text-gray-400 hover:text-purple-400 transition-colors">Case Studies</a>
+                <a href="#portfolio" class="text-gray-400 hover:text-purple-400 transition-colors">Portfolio</a>
+                <a href="#contact" class="text-gray-400 hover:text-purple-400 transition-colors">Contact</a>
+            </div>
+            
+            <div class="flex space-x-4 mt-6 md:mt-0">
+                <a href="#" class="w-10 h-10 glass-card rounded-full flex items-center justify-center hover:bg-purple-600 transition-all">
+                    <i class="fa-brands fa-twitter"></i>
+                </a>
+                <a href="#" class="w-10 h-10 glass-card rounded-full flex items-center justify-center hover:bg-purple-600 transition-all">
+                    <i class="fa-brands fa-linkedin"></i>
+                </a>
+                <a href="#" class="w-10 h-10 glass-card rounded-full flex items-center justify-center hover:bg-purple-600 transition-all">
+                    <i class="fa-brands fa-github"></i>
+                </a>
+            </div>
+        </div>
+        
+        <div class="mt-8 pt-8 border-t border-white/10 text-center text-gray-400 text-sm">
+            <p>&copy; 2024 Quantum Climb. All rights reserved.</p>
+        </div>
+    </div>
+</footer>
+
+</body>
+</html>
