@@ -1,11 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { 
   Play, 
-  Globe, 
   Zap, 
   Shield, 
-  BarChart3, 
-  Users, 
   ArrowRight, 
   Check, 
   X, 
@@ -14,18 +11,9 @@ import {
   Volume2,
   Video,
   Languages,
-  Clock,
-  Twitter,
-  Linkedin,
-  Github,
   Cpu,
   Layers,
-  MessageSquare,
-  Search,
-  Menu,
-  Monitor,
-  Smartphone,
-  MousePointer2
+  Smartphone
 } from "lucide-react";
 import { motion, AnimatePresence } from "motion/react";
 
@@ -41,7 +29,6 @@ const Reveal = ({
   className?: string; 
   type?: "fade-up" | "mask" | "fold";
   delay?: number;
-  key?: React.Key;
 }) => {
   const variants = {
     "fade-up": {
@@ -92,7 +79,7 @@ const ContactModal = ({ isOpen, onClose }: { isOpen: boolean; onClose: () => voi
   return (
     <AnimatePresence>
       {isOpen && (
-        <div className="fixed inset-0 z-[100] flex items-center justify-center p-6">
+        <div className="fixed inset-0 z-100 flex items-center justify-center p-6">
           <motion.div 
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
@@ -129,21 +116,21 @@ const ContactModal = ({ isOpen, onClose }: { isOpen: boolean; onClose: () => voi
             <form className="space-y-6" onSubmit={(e) => e.preventDefault()}>
               <div className="grid md:grid-cols-2 gap-6">
                 <div className="space-y-2">
-                  <label className="text-[10px] font-mono uppercase tracking-widest text-zinc-500">Full Name</label>
-                  <input type="text" className="w-full bg-black border border-white/10 px-4 py-3 text-white focus:border-purple-600 outline-none transition-colors" placeholder="John Doe" />
+                  <label htmlFor="contact-name" className="text-[10px] font-mono uppercase tracking-widest text-zinc-500">Full Name</label>
+                  <input id="contact-name" type="text" className="w-full bg-black border border-white/10 px-4 py-3 text-white focus:border-purple-600 outline-none transition-colors" placeholder="John Doe" />
                 </div>
                 <div className="space-y-2">
-                  <label className="text-[10px] font-mono uppercase tracking-widest text-zinc-500">Work Email</label>
-                  <input type="email" className="w-full bg-black border border-white/10 px-4 py-3 text-white focus:border-purple-600 outline-none transition-colors" placeholder="john@studio.com" />
+                  <label htmlFor="contact-email" className="text-[10px] font-mono uppercase tracking-widest text-zinc-500">Work Email</label>
+                  <input id="contact-email" type="email" className="w-full bg-black border border-white/10 px-4 py-3 text-white focus:border-purple-600 outline-none transition-colors" placeholder="john@studio.com" />
                 </div>
               </div>
               <div className="space-y-2">
-                <label className="text-[10px] font-mono uppercase tracking-widest text-zinc-500">Company / Studio</label>
-                <input type="text" className="w-full bg-black border border-white/10 px-4 py-3 text-white focus:border-purple-600 outline-none transition-colors" placeholder="Quantum Media" />
+                <label htmlFor="contact-company" className="text-[10px] font-mono uppercase tracking-widest text-zinc-500">Company / Studio</label>
+                <input id="contact-company" type="text" className="w-full bg-black border border-white/10 px-4 py-3 text-white focus:border-purple-600 outline-none transition-colors" placeholder="Quantum Media" />
               </div>
               <div className="space-y-2">
-                <label className="text-[10px] font-mono uppercase tracking-widest text-zinc-500">Message</label>
-                <textarea rows={4} className="w-full bg-black border border-white/10 px-4 py-3 text-white focus:border-purple-600 outline-none transition-colors resize-none" placeholder="Tell us about your project..."></textarea>
+                <label htmlFor="contact-message" className="text-[10px] font-mono uppercase tracking-widest text-zinc-500">Message</label>
+                <textarea id="contact-message" rows={4} className="w-full bg-black border border-white/10 px-4 py-3 text-white focus:border-purple-600 outline-none transition-colors resize-none" placeholder="Tell us about your project..."></textarea>
               </div>
               <button className="w-full py-5 bg-purple-600 text-white font-bold tracking-tight hover:bg-white hover:text-black transition-all duration-300 uppercase text-sm">
                 Send Inquiry
@@ -231,7 +218,7 @@ const Hero = ({ onContactClick }: { onContactClick: () => void }) => {
           </Reveal>
 
           <Reveal type="fold" delay={0.4} className="relative group max-w-6xl mx-auto">
-            <div className="absolute -inset-1 bg-gradient-to-r from-purple-600/20 to-blue-500/20 blur opacity-25 group-hover:opacity-50 transition duration-1000"></div>
+            <div className="absolute -inset-1 bg-linear-to-r from-purple-600/20 to-blue-500/20 blur opacity-25 group-hover:opacity-50 transition duration-1000"></div>
             <div className="relative bg-zinc-900 border border-white/10 aspect-video flex items-center justify-center overflow-hidden">
               <img 
                 src="https://picsum.photos/seed/quantum_hero/1920/1080" 
@@ -240,12 +227,14 @@ const Hero = ({ onContactClick }: { onContactClick: () => void }) => {
                 referrerPolicy="no-referrer"
               />
               <div className="absolute inset-0 flex items-center justify-center">
-                <div 
+                <button 
+                  type="button"
                   onClick={onContactClick}
+                  aria-label="Request a demo"
                   className="w-24 h-24 bg-purple-600 flex items-center justify-center cursor-pointer hover:scale-110 transition-transform duration-300"
                 >
                   <Play size={32} fill="white" className="ml-1" />
-                </div>
+                </button>
               </div>
               
               {/* Stats Overlay */}
@@ -325,8 +314,8 @@ const AIFirstSection = () => {
                 { title: "Autonomous Workflows", desc: "Intelligent systems that handle complex localization tasks without manual intervention." },
                 { title: "Generative Precision", desc: "Beyond simple processing: we generate new, culturally relevant content dynamically." },
                 { title: "Infinite Scalability", desc: "Our AI-native infrastructure scales instantly to meet the demands of global releases." }
-              ].map((item, i) => (
-                <Reveal key={i} type="fade-up" delay={0.1 * i}>
+              ].map((item, index) => (
+                <Reveal key={item.title} type="fade-up" delay={0.1 * index}>
                   <h4 className="text-white font-medium mb-2">{item.title}</h4>
                   <p className="text-zinc-500 text-sm leading-relaxed">{item.desc}</p>
                 </Reveal>
@@ -342,13 +331,13 @@ const AIFirstSection = () => {
               <h3 className="text-3xl font-medium text-white mb-4 tracking-tighter">Quantum Neural Engine</h3>
               <p className="text-zinc-500 text-sm font-mono uppercase tracking-[0.3em]">Version 4.2.0-Alpha</p>
               <div className="mt-12 w-full space-y-4">
-                {[80, 95, 70].map((width, i) => (
-                  <div key={i} className="h-1 w-full bg-white/5 overflow-hidden">
+                {[80, 95, 70].map((width, index) => (
+                  <div key={width} className="h-1 w-full bg-white/5 overflow-hidden">
                     <motion.div 
                       className="h-full bg-purple-600"
                       initial={{ width: 0 }}
                       whileInView={{ width: `${width}%` }}
-                      transition={{ duration: 1.5, delay: 0.5 + (i * 0.2) }}
+                      transition={{ duration: 1.5, delay: 0.5 + (index * 0.2) }}
                     />
                   </div>
                 ))}
@@ -378,8 +367,8 @@ const CoreValueProp = () => {
                 { title: "Neural Voice Cloning", desc: "Zero-shot cloning that maintains the speaker's unique vocal signature with 99.9% fidelity." },
                 { title: "Dynamic Lip-Sync", desc: "Frame-accurate visual alignment for a truly native viewing experience in any aspect ratio." },
                 { title: "Cultural Adaptation", desc: "Beyond translation: we adapt idioms, slang, and cultural nuances automatically." }
-              ].map((item, i) => (
-                <Reveal key={i} type="fade-up" delay={0.1 * i} className="flex gap-6 group">
+              ].map((item, index) => (
+                <Reveal key={item.title} type="fade-up" delay={0.1 * index} className="flex gap-6 group">
                   <div className="mt-1 w-6 h-6 border border-purple-600/30 flex items-center justify-center group-hover:bg-purple-600 transition-colors">
                     <Check size={14} className="text-purple-600 group-hover:text-white" />
                   </div>
@@ -479,8 +468,8 @@ const InteractiveDemo = () => {
               { icon: <Zap size={24} />, title: "Real-time Lip Sync", desc: "AI-driven visual alignment that matches the speaker's mouth movements with sub-frame precision." },
               { icon: <Volume2 size={24} />, title: "Emotion Preservation", desc: "Maintains the original tone, pitch, and emotional weight of the performance across every language." },
               { icon: <Shield size={24} />, title: "Enterprise Security", desc: "SOC2 Type II compliant processing with end-to-end encryption for your high-value media assets." }
-            ].map((item, i) => (
-              <Reveal key={i} type="fade-up" delay={0.1 * i} className="p-8 border border-white/5 bg-zinc-900/50">
+            ].map((item, index) => (
+              <Reveal key={item.title} type="fade-up" delay={0.1 * index} className="p-8 border border-white/5 bg-zinc-900/50">
                 <div className="text-purple-600 mb-6">{item.icon}</div>
                 <h4 className="text-xl font-medium text-white mb-3">{item.title}</h4>
                 <p className="text-zinc-500 text-sm leading-relaxed">{item.desc}</p>
@@ -512,8 +501,8 @@ const BenefitsGrid = () => {
           subtitle="Our platform outperforms traditional dubbing and other AI solutions in every key metric."
         />
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-px bg-white/5 border border-white/5">
-          {benefits.map((benefit, i) => (
-            <Reveal key={i} type="fade-up" delay={0.05 * i} className="bg-zinc-950 p-12 hover:bg-zinc-900 transition-colors duration-500">
+          {benefits.map((benefit, index) => (
+            <Reveal key={benefit.label} type="fade-up" delay={0.05 * index} className="bg-zinc-950 p-12 hover:bg-zinc-900 transition-colors duration-500">
               <div className="text-6xl font-medium text-purple-600 mb-6 tracking-tighter">{benefit.stat}</div>
               <h4 className="text-xl font-medium text-white mb-3">{benefit.label}</h4>
               <p className="text-zinc-500 text-sm leading-relaxed">{benefit.desc}</p>
@@ -544,8 +533,8 @@ const FeaturesGrid = () => {
           subtitle="A comprehensive suite of tools designed to streamline your international media workflow."
         />
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-12">
-          {features.map((feature, i) => (
-            <Reveal key={i} type="fade-up" delay={0.1 * i} className="group">
+          {features.map((feature, index) => (
+            <Reveal key={feature.title} type="fade-up" delay={0.1 * index} className="group">
               <div className="w-12 h-12 border border-purple-600/30 flex items-center justify-center text-purple-600 mb-8 group-hover:bg-purple-600 group-hover:text-white transition-all duration-300">
                 {feature.icon}
               </div>
@@ -569,6 +558,21 @@ const TechnicalEdge = () => {
     { feature: "Cultural Adaptation", quantum: "AI-Assisted", traditional: "Manual" }
   ];
 
+  const renderComparisonValue = (
+    value: boolean | string,
+    trueClassName: string,
+    falseClassName: string,
+    textClassName: string,
+  ) => {
+    if (typeof value === "boolean") {
+      const Icon = value ? Check : X;
+
+      return <Icon className={value ? trueClassName : falseClassName} size={24} />;
+    }
+
+    return <span className={textClassName}>{value}</span>;
+  };
+
   return (
     <section className="py-32 border-b border-white/5">
       <div className="container mx-auto px-6">
@@ -587,22 +591,14 @@ const TechnicalEdge = () => {
               </tr>
             </thead>
             <tbody>
-              {rows.map((row, i) => (
-                <tr key={i} className="border-b border-white/5 hover:bg-white/5 transition-colors">
+              {rows.map((row) => (
+                <tr key={row.feature} className="border-b border-white/5 hover:bg-white/5 transition-colors">
                   <td className="p-8 text-white font-medium">{row.feature}</td>
                   <td className="p-8">
-                    {typeof row.quantum === "boolean" ? (
-                      row.quantum ? <Check className="text-purple-600" size={24} /> : <X className="text-zinc-600" size={24} />
-                    ) : (
-                      <span className="text-purple-600 font-medium text-lg">{row.quantum}</span>
-                    )}
+                    {renderComparisonValue(row.quantum, "text-purple-600", "text-zinc-600", "text-purple-600 font-medium text-lg")}
                   </td>
                   <td className="p-8">
-                    {typeof row.traditional === "boolean" ? (
-                      row.traditional ? <Check className="text-zinc-400" size={24} /> : <X className="text-zinc-700" size={24} />
-                    ) : (
-                      <span className="text-zinc-500 text-lg">{row.traditional}</span>
-                    )}
+                    {renderComparisonValue(row.traditional, "text-zinc-400", "text-zinc-700", "text-zinc-500 text-lg")}
                   </td>
                 </tr>
               ))}
@@ -630,9 +626,9 @@ const HowItWorks = () => {
           title="The Enterprise Workflow"
         />
         <div className="grid md:grid-cols-3 gap-16">
-          {steps.map((step, i) => (
-            <Reveal key={i} type="fade-up" delay={0.1 * i} className="relative">
-              <div className="text-8xl font-medium text-white/5 absolute -top-10 -left-6 z-0">{i + 1}</div>
+          {steps.map((step, index) => (
+            <Reveal key={step.title} type="fade-up" delay={0.1 * index} className="relative">
+              <div className="text-8xl font-medium text-white/5 absolute -top-10 -left-6 z-0">{index + 1}</div>
               <div className="relative z-10">
                 <h4 className="text-2xl font-medium text-white mb-4">{step.title}</h4>
                 <p className="text-zinc-500 leading-relaxed">{step.desc}</p>
@@ -664,9 +660,9 @@ const IndustryUseCases = () => {
           subtitle="From independent creators to Fortune 500 companies, Quantum Climb powers global communication."
         />
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {industries.map((industry, i) => (
-            <Reveal key={i} type="fold" delay={0.1 * i} className="group cursor-pointer">
-              <div className="relative aspect-[4/3] overflow-hidden border border-white/10 mb-6">
+          {industries.map((industry, index) => (
+            <Reveal key={industry.title} type="fold" delay={0.1 * index} className="group cursor-pointer">
+              <div className="relative aspect-4/3 overflow-hidden border border-white/10 mb-6">
                 <img 
                   src={industry.img} 
                   alt={industry.title} 
@@ -700,8 +696,8 @@ const ImpactCaseStudies = () => {
           title="Real Results, Real Impact"
         />
         <div className="grid md:grid-cols-3 gap-px bg-white/5 border border-white/5">
-          {cases.map((c, i) => (
-            <Reveal key={i} type="fade-up" delay={0.1 * i} className="bg-zinc-950 p-12 hover:bg-zinc-900 transition-colors duration-500">
+          {cases.map((c, index) => (
+            <Reveal key={c.title} type="fade-up" delay={0.1 * index} className="bg-zinc-950 p-12 hover:bg-zinc-900 transition-colors duration-500">
               <div className="text-purple-600 font-mono text-[10px] uppercase tracking-widest mb-6">{c.title}</div>
               <div className="text-6xl font-medium text-white mb-2 tracking-tighter">{c.result}</div>
               <div className="text-zinc-400 font-medium mb-6">{c.label}</div>
@@ -735,9 +731,9 @@ const BlogSection = () => {
           </button>
         </div>
         <div className="grid md:grid-cols-3 gap-8">
-          {posts.map((post, i) => (
-            <Reveal key={i} type="fold" delay={0.1 * i} className="group cursor-pointer">
-              <div className="aspect-[16/10] overflow-hidden border border-white/10 mb-6">
+          {posts.map((post, index) => (
+            <Reveal key={post.title} type="fold" delay={0.1 * index} className="group cursor-pointer">
+              <div className="aspect-16/10 overflow-hidden border border-white/10 mb-6">
                 <img 
                   src={post.img} 
                   alt={post.title} 
@@ -802,8 +798,8 @@ const InteractiveAIHuman = ({ onContactClick }: { onContactClick: () => void }) 
             { stat: "52.0%", label: "Engagement Increase", desc: "Users stay longer with interactive human avatars." },
             { stat: "98.4%", label: "Accuracy Rate", desc: "Near-perfect comprehension of complex queries." },
             { stat: "0.5sec", label: "Response Latency", desc: "Instantaneous real-time conversational feedback." }
-          ].map((item, i) => (
-            <Reveal key={i} type="fade-up" delay={0.1 * i}>
+          ].map((item, index) => (
+            <Reveal key={item.label} type="fade-up" delay={0.1 * index}>
               <div className="text-6xl font-medium text-white mb-3 tracking-tighter">{item.stat}</div>
               <div className="text-purple-600 font-mono text-[10px] uppercase tracking-[0.2em] mb-6">{item.label}</div>
               <p className="text-zinc-500 text-sm leading-relaxed">{item.desc}</p>
@@ -830,8 +826,8 @@ const InteractiveFeatures = () => {
           title="Features of Quantum Interactive"
         />
         <div className="grid md:grid-cols-3 gap-12">
-          {features.map((f, i) => (
-            <Reveal key={i} type="fade-up" delay={0.1 * i} className="p-10 border border-white/5 bg-zinc-900/50">
+          {features.map((f, index) => (
+            <Reveal key={f.title} type="fade-up" delay={0.1 * index} className="p-10 border border-white/5 bg-zinc-900/50">
               <h4 className="text-2xl font-medium text-white mb-6">{f.title}</h4>
               <p className="text-zinc-500 leading-relaxed">{f.desc}</p>
             </Reveal>
@@ -860,8 +856,8 @@ const SecuritySection = ({ onContactClick }: { onContactClick: () => void }) => 
           subtitle="Your intellectual property is protected by the highest industry standards. We process your media in a secure, isolated environment."
         />
         <div className="grid md:grid-cols-4 gap-8">
-          {certifications.map((cert, i) => (
-            <Reveal key={i} type="fade-up" delay={0.1 * i} className="p-8 border border-white/5 bg-zinc-900/30 text-center group hover:border-purple-600/30 transition-colors">
+          {certifications.map((cert, index) => (
+            <Reveal key={cert.name} type="fade-up" delay={0.1 * index} className="p-8 border border-white/5 bg-zinc-900/30 text-center group hover:border-purple-600/30 transition-colors">
               <div className="w-16 h-16 mx-auto mb-6 border border-white/10 flex items-center justify-center text-purple-600 group-hover:bg-purple-600 group-hover:text-white transition-all">
                 <Shield size={24} />
               </div>
@@ -893,14 +889,14 @@ const GlobalPartners = () => {
   );
 };
 
-const FAQ = () => {
-  const [openIndex, setOpenIndex] = useState<number | null>(0);
+const Faq = () => {
   const faqs = [
     { q: "What languages does Quantum Climb support?", a: "We currently support over 120 languages and dialects, with new ones added monthly. Our neural engine handles regional accents and technical terminology with native-level precision." },
     { q: "How secure is my content?", a: "Security is our priority. We are SOC2 Type II compliant. All data is encrypted at rest and in transit, and we offer private cloud deployments for enterprise clients with strict data sovereignty requirements." },
     { q: "Can I edit the AI-generated scripts?", a: "Yes. Our platform includes a full-featured collaborative editor where you can refine translations, adjust timing, and manage cultural nuances before final rendering." },
     { q: "Does it work with existing video platforms?", a: "Absolutely. We offer direct integrations with YouTube, Vimeo, and major CMS platforms, as well as a robust API for custom workflows." }
   ];
+  const [openQuestion, setOpenQuestion] = useState<string | null>(faqs[0]?.q ?? null);
 
   return (
     <section className="py-32 border-b border-white/5">
@@ -911,17 +907,17 @@ const FAQ = () => {
             subtitle="Everything you need to know about the Quantum Climb platform."
           />
           <div className="space-y-4">
-            {faqs.map((faq, i) => (
-              <div key={i} className="border border-white/10 bg-zinc-900/30">
+            {faqs.map((faq) => (
+              <div key={faq.q} className="border border-white/10 bg-zinc-900/30">
                 <button 
-                  onClick={() => setOpenIndex(openIndex === i ? null : i)}
+                  onClick={() => setOpenQuestion(openQuestion === faq.q ? null : faq.q)}
                   className="w-full p-6 flex items-center justify-between text-left hover:bg-white/5 transition-colors"
                 >
                   <span className="text-lg font-medium text-white">{faq.q}</span>
-                  {openIndex === i ? <ChevronUp size={20} className="text-purple-600" /> : <ChevronDown size={20} className="text-zinc-500" />}
+                  {openQuestion === faq.q ? <ChevronUp size={20} className="text-purple-600" /> : <ChevronDown size={20} className="text-zinc-500" />}
                 </button>
                 <AnimatePresence>
-                  {openIndex === i && (
+                  {openQuestion === faq.q && (
                     <motion.div 
                       initial={{ height: 0, opacity: 0 }}
                       animate={{ height: "auto", opacity: 1 }}
@@ -991,9 +987,9 @@ const Footer = () => {
               The enterprise standard for AI video localization and interactive conversational humans. Built for scale.
             </p>
             <div className="flex gap-6">
-              <Twitter size={20} className="text-zinc-500 hover:text-purple-600 cursor-pointer transition-colors" />
-              <Linkedin size={20} className="text-zinc-500 hover:text-purple-600 cursor-pointer transition-colors" />
-              <Github size={20} className="text-zinc-500 hover:text-purple-600 cursor-pointer transition-colors" />
+              <span className="text-zinc-500 transition-colors">X</span>
+              <span className="text-zinc-500 transition-colors">LinkedIn</span>
+              <span className="text-zinc-500 transition-colors">GitHub</span>
             </div>
           </div>
           <div>
@@ -1110,7 +1106,7 @@ export default function App() {
           subtitle="Join the world's most innovative companies using Quantum Climb to break language barriers."
           onContactClick={openContactModal}
         />
-        <FAQ />
+        <Faq />
         <FinalCTA onContactClick={openContactModal} />
       </main>
 
