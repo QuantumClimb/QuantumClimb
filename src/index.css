@@ -65,7 +65,7 @@
   }
 
   .section-container {
-    @apply max-w-[1200px] mx-auto px-8 py-16 md:py-32;
+    @apply max-w-300 mx-auto px-8 py-16 md:py-32;
   }
 
   .sharp-card {
