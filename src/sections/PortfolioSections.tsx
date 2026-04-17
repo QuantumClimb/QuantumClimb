@@ -80,6 +80,10 @@ const websiteProjects = [
 
 function sortItems(items: PortfolioItem[]) {
   return [...items].sort((left, right) => {
+    if (left.is_featured !== right.is_featured) {
+      return left.is_featured ? -1 : 1;
+    }
+
     if (left.sort_order !== right.sort_order) {
       return left.sort_order - right.sort_order;
     }
