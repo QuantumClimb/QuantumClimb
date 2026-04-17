@@ -37,27 +37,59 @@ import {
   VideoGallerySection,
   WebsiteLinksSection,
 } from "../sections/PortfolioSections";
+import {
+  AdminDashboardSection,
+  type EditablePortfolioItem,
+} from "../sections/AdminSections";
+import type { PortfolioItem } from "../lib/supabase";
 
 type AppShellProps = Readonly<{
-  currentPage: "home" | "portfolio";
+  currentPage: "home" | "portfolio" | "admin";
   isScrolled: boolean;
   isContactModalOpen: boolean;
+  isAdmin: boolean;
+  isSupabaseConfigured: boolean;
+  isPortfolioLoading: boolean;
+  portfolioItems: PortfolioItem[];
+  userEmail?: string;
   onOpenContactModal: () => void;
   onCloseContactModal: () => void;
   onNavigateHome: () => void;
   onNavigatePortfolio: () => void;
+  onNavigateAdmin: () => void;
+  onSignIn: (email: string, password: string) => Promise<string>;
+  onSignUp: (email: string, password: string) => Promise<string>;
+  onSignOut: () => Promise<void>;
+  onClaimAdmin: () => Promise<string>;
+  onSaveItem: (item: EditablePortfolioItem) => Promise<string>;
+  onDeleteItem: (id: string) => Promise<string>;
+  onTogglePublished: (item: PortfolioItem) => Promise<string>;
 }>;
 
 export function AppShell({
   currentPage,
   isScrolled,
   isContactModalOpen,
+  isAdmin,
+  isSupabaseConfigured,
+  isPortfolioLoading,
+  portfolioItems,
+  userEmail,
   onOpenContactModal,
   onCloseContactModal,
   onNavigateHome,
   onNavigatePortfolio,
+  onNavigateAdmin,
+  onSignIn,
+  onSignUp,
+  onSignOut,
+  onClaimAdmin,
+  onSaveItem,
+  onDeleteItem,
+  onTogglePublished,
 }: AppShellProps) {
   const isPortfolioPage = currentPage === "portfolio";
+  const isAdminPage = currentPage === "admin";
 
   return (
     <div className="min-h-screen bg-black text-zinc-300 selection:bg-purple-600 selection:text-white">
@@ -66,61 +98,67 @@ export function AppShell({
       </div>
 
       <nav className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 border-b ${isScrolled ? "bg-black/80 backdrop-blur-md py-5 border-white/10" : "bg-transparent py-7 border-transparent"}`}>
-        <div className="container mx-auto px-6 flex items-center justify-between">
+        <div className="container mx-auto px-6 flex items-center justify-between gap-4">
           <button onClick={onNavigateHome} className="text-2xl font-bold tracking-tighter text-white">
             QUANTUM CLIMB
           </button>
 
           <div className="hidden md:flex items-center gap-6 text-sm text-zinc-300">
-            {isPortfolioPage ? (
-              <>
-                <a href="#video-gallery" className="hover:text-white">Video</a>
-                <a href="#image-gallery" className="hover:text-white">Images</a>
-                <a href="#music-player" className="hover:text-white">Music</a>
-                <a href="#websites" className="hover:text-white">Websites</a>
-              </>
-            ) : (
-              <>
-                <button onClick={onNavigatePortfolio} className="hover:text-white">Portfolio</button>
-                <button onClick={onOpenContactModal} className="hover:text-white">Contact</button>
-              </>
-            )}
+            <button onClick={onNavigateHome} className="hover:text-white">Home</button>
+            <button onClick={onNavigatePortfolio} className="hover:text-white">Portfolio</button>
+            <button onClick={onNavigateAdmin} className="hover:text-white">Admin</button>
+            {!isAdminPage ? <button onClick={onOpenContactModal} className="hover:text-white">Contact</button> : null}
           </div>
 
           <div className="flex items-center gap-3">
-            {isPortfolioPage ? (
-              <button
-                onClick={onNavigateHome}
-                className="border border-white/20 px-5 py-2.5 text-sm font-medium tracking-tight text-white transition-all duration-300 hover:bg-white/10"
-              >
-                Home
-              </button>
-            ) : (
+            {!isPortfolioPage ? (
               <button
                 onClick={onNavigatePortfolio}
                 className="border border-white/20 px-5 py-2.5 text-sm font-medium tracking-tight text-white transition-all duration-300 hover:bg-white/10"
               >
                 View Portfolio
               </button>
+            ) : (
+              <button
+                onClick={onNavigateHome}
+                className="border border-white/20 px-5 py-2.5 text-sm font-medium tracking-tight text-white transition-all duration-300 hover:bg-white/10"
+              >
+                Home
+              </button>
             )}
             <button
-              onClick={onOpenContactModal}
+              onClick={isAdminPage ? onNavigateHome : onNavigateAdmin}
               className="px-5 py-2.5 bg-white text-black text-sm font-medium tracking-tight hover:bg-purple-600 hover:text-white transition-all duration-300"
             >
-              Contact
+              {isAdminPage ? "Exit Admin" : "Admin"}
             </button>
           </div>
         </div>
       </nav>
 
       <main className="relative z-10">
-        {isPortfolioPage ? (
+        {isAdminPage ? (
+          <AdminDashboardSection
+            isConfigured={isSupabaseConfigured}
+            isLoading={isPortfolioLoading}
+            isAdmin={isAdmin}
+            userEmail={userEmail}
+            items={portfolioItems}
+            onSignIn={onSignIn}
+            onSignUp={onSignUp}
+            onSignOut={onSignOut}
+            onClaimAdmin={onClaimAdmin}
+            onSaveItem={onSaveItem}
+            onDeleteItem={onDeleteItem}
+            onTogglePublished={onTogglePublished}
+          />
+        ) : isPortfolioPage ? (
           <>
-            <PortfolioHero onContactClick={onOpenContactModal} />
-            <VideoGallerySection />
-            <ImageGallerySection />
-            <MusicPlayerSection />
-            <WebsiteLinksSection />
+            <PortfolioHero onContactClick={onOpenContactModal} itemCount={portfolioItems.length} />
+            <VideoGallerySection items={portfolioItems} isLoading={isPortfolioLoading} />
+            <ImageGallerySection items={portfolioItems} isLoading={isPortfolioLoading} />
+            <MusicPlayerSection items={portfolioItems} isLoading={isPortfolioLoading} />
+            <WebsiteLinksSection items={portfolioItems} isLoading={isPortfolioLoading} />
           </>
         ) : (
           <>
@@ -165,7 +203,7 @@ export function AppShell({
         )}
       </main>
 
-      {isPortfolioPage ? <PortfolioFooter /> : <Footer />}
+      {isPortfolioPage ? <PortfolioFooter /> : isAdminPage ? null : <Footer />}
 
       <ContactModal isOpen={isContactModalOpen} onClose={onCloseContactModal} />
     </div>
