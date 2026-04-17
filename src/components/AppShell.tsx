@@ -64,6 +64,7 @@ type AppShellProps = Readonly<{
   onSaveItem: (item: EditablePortfolioItem) => Promise<string>;
   onDeleteItem: (id: string) => Promise<string>;
   onTogglePublished: (item: PortfolioItem) => Promise<string>;
+  onUploadFile: (file: File, contentType: PortfolioItem["content_type"], variant: "media" | "thumbnail") => Promise<string>;
 }>;
 
 export function AppShell({
@@ -87,6 +88,7 @@ export function AppShell({
   onSaveItem,
   onDeleteItem,
   onTogglePublished,
+  onUploadFile,
 }: AppShellProps) {
   const isPortfolioPage = currentPage === "portfolio";
   const isAdminPage = currentPage === "admin";
@@ -151,6 +153,7 @@ export function AppShell({
             onSaveItem={onSaveItem}
             onDeleteItem={onDeleteItem}
             onTogglePublished={onTogglePublished}
+            onUploadFile={onUploadFile}
           />
         ) : isPortfolioPage ? (
           <>

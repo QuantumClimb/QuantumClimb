@@ -1,8 +1,10 @@
 import { createClient } from "@supabase/supabase-js";
 
+export type PortfolioContentType = "video" | "image" | "music" | "website";
+
 export type PortfolioItem = {
   id: string;
-  content_type: "video" | "image" | "music" | "website";
+  content_type: PortfolioContentType;
   title: string;
   slug: string | null;
   description: string | null;
@@ -32,3 +34,19 @@ export const supabase = hasSupabaseEnv
       },
     })
   : null;
+
+export function getBucketForContentType(contentType: PortfolioContentType) {
+  if (contentType === "image") {
+    return "portfolio-images";
+  }
+
+  if (contentType === "music") {
+    return "portfolio-audio";
+  }
+
+  return "portfolio-videos";
+}
+
+export function sanitizeFileName(name: string) {
+  return name.toLowerCase().replaceAll(/[^a-z0-9.\-_]+/g, "-").replaceAll(/-+/g, "-");
+}

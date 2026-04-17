@@ -1,17 +1,23 @@
 import { useEffect, useState } from "react";
 import type { Session } from "@supabase/supabase-js";
 import { AppShell } from "./components/AppShell";
-import { hasSupabaseEnv, supabase, type PortfolioItem } from "./lib/supabase";
+import {
+  getBucketForContentType,
+  hasSupabaseEnv,
+  sanitizeFileName,
+  supabase,
+  type PortfolioItem,
+} from "./lib/supabase";
 import type { EditablePortfolioItem } from "./sections/AdminSections";
 
 type PageView = "home" | "portfolio" | "admin";
 
 function getCurrentPage(): PageView {
-  if (typeof window === "undefined") {
+  if (typeof globalThis.window === "undefined") {
     return "home";
   }
 
-  const page = new URLSearchParams(window.location.search).get("page");
+  const page = new URLSearchParams(globalThis.location.search).get("page");
   if (page === "portfolio" || page === "admin") {
     return page;
   }
@@ -23,8 +29,8 @@ function slugify(value: string) {
   return value
     .toLowerCase()
     .trim()
-    .replace(/[^a-z0-9]+/g, "-")
-    .replace(/^-+|-+$/g, "")
+    .replaceAll(/[^a-z0-9]+/g, "-")
+    .replaceAll(/^-+|-+$/g, "")
     .slice(0, 80);
 }
 
@@ -38,15 +44,15 @@ export default function App() {
   const [isPortfolioLoading, setIsPortfolioLoading] = useState(false);
 
   useEffect(() => {
-    const handleScroll = () => setIsScrolled(window.scrollY > 50);
+    const handleScroll = () => setIsScrolled(globalThis.scrollY > 50);
     const handleLocationChange = () => setCurrentPage(getCurrentPage());
 
-    window.addEventListener("scroll", handleScroll);
-    window.addEventListener("popstate", handleLocationChange);
+    globalThis.addEventListener("scroll", handleScroll);
+    globalThis.addEventListener("popstate", handleLocationChange);
 
     return () => {
-      window.removeEventListener("scroll", handleScroll);
-      window.removeEventListener("popstate", handleLocationChange);
+      globalThis.removeEventListener("scroll", handleScroll);
+      globalThis.removeEventListener("popstate", handleLocationChange);
     };
   }, []);
 
@@ -124,7 +130,7 @@ export default function App() {
   const closeContactModal = () => setIsContactModalOpen(false);
 
   const navigateToPage = (page: PageView) => {
-    const url = new URL(window.location.href);
+    const url = new URL(globalThis.location.href);
 
     if (page === "home") {
       url.searchParams.delete("page");
@@ -133,9 +139,9 @@ export default function App() {
       url.searchParams.set("page", page);
     }
 
-    window.history.pushState({}, "", url);
+    globalThis.history.pushState({}, "", url);
     setCurrentPage(page);
-    window.scrollTo({ top: 0, behavior: "smooth" });
+    globalThis.scrollTo({ top: 0, behavior: "smooth" });
   };
 
   const signIn = async (email: string, password: string) => {
@@ -259,6 +265,32 @@ export default function App() {
     return "Portfolio item deleted.";
   };
 
+  const uploadPortfolioFile = async (
+    file: File,
+    contentType: PortfolioItem["content_type"],
+    variant: "media" | "thumbnail",
+  ) => {
+    if (!supabase || !session?.user) {
+      throw new Error("Admin access is required.");
+    }
+
+    const effectiveType = variant === "thumbnail" ? "image" : contentType;
+    const bucket = getBucketForContentType(effectiveType);
+    const filePath = `${session.user.id}/${Date.now()}-${sanitizeFileName(file.name)}`;
+
+    const { error } = await supabase.storage.from(bucket).upload(filePath, file, {
+      cacheControl: "3600",
+      upsert: true,
+    });
+
+    if (error) {
+      throw new Error(error.message);
+    }
+
+    const { data } = supabase.storage.from(bucket).getPublicUrl(filePath);
+    return data.publicUrl;
+  };
+
   const togglePublished = async (item: PortfolioItem) => {
     if (!supabase) {
       throw new Error("Supabase is not configured yet.");
@@ -298,5 +330,6 @@ export default function App() {
     onSaveItem: savePortfolioItem,
     onDeleteItem: deletePortfolioItem,
     onTogglePublished: togglePublished,
+    onUploadFile: uploadPortfolioFile,
   });
 }

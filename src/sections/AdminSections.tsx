@@ -1,6 +1,6 @@
-import { useMemo, useState } from "react";
-import { Lock, LogOut, Pencil, Plus, ShieldCheck, Trash2 } from "lucide-react";
-import type { PortfolioItem } from "../lib/supabase";
+import { useMemo, useRef, useState } from "react";
+import { Lock, LogOut, Pencil, Plus, ShieldCheck, Trash2, Upload } from "lucide-react";
+import type { PortfolioContentType, PortfolioItem } from "../lib/supabase";
 
 type AdminDashboardProps = Readonly<{
   isConfigured: boolean;
@@ -15,11 +15,12 @@ type AdminDashboardProps = Readonly<{
   onSaveItem: (item: EditablePortfolioItem) => Promise<string>;
   onDeleteItem: (id: string) => Promise<string>;
   onTogglePublished: (item: PortfolioItem) => Promise<string>;
+  onUploadFile: (file: File, contentType: PortfolioContentType, variant: "media" | "thumbnail") => Promise<string>;
 }>;
 
 export type EditablePortfolioItem = {
   id?: string;
-  content_type: "video" | "image" | "music" | "website";
+  content_type: PortfolioContentType;
   title: string;
   description: string;
   media_url: string;
@@ -63,6 +64,8 @@ export function AdminDashboardSection({
   const [status, setStatus] = useState<string | null>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [form, setForm] = useState<EditablePortfolioItem>(emptyForm);
+  const mediaInputRef = useRef<HTMLInputElement | null>(null);
+  const thumbnailInputRef = useRef<HTMLInputElement | null>(null);
 
   const groupedCount = useMemo(() => {
     return {
@@ -103,6 +106,25 @@ export function AdminDashboardSection({
   };
 
   const resetForm = () => setForm(emptyForm);
+
+  const handleFileUpload = async (
+    file: File | undefined,
+    variant: "media" | "thumbnail",
+  ) => {
+    if (!file) {
+      return;
+    }
+
+    await handleAction(async () => {
+      const uploadedUrl = await onUploadFile(file, form.content_type, variant);
+      setForm((current) => ({
+        ...current,
+        media_url: variant === "media" ? uploadedUrl : current.media_url,
+        thumbnail_url: variant === "thumbnail" ? uploadedUrl : current.thumbnail_url,
+      }));
+      return `${variant === "media" ? "Media" : "Thumbnail"} uploaded successfully.`;
+    });
+  };
 
   return (
     <section className="border-b border-white/10 pt-32 md:pt-40">
@@ -200,6 +222,36 @@ export function AdminDashboardSection({
                   </select>
                   <input value={form.title} onChange={(e) => setForm((current) => ({ ...current, title: e.target.value }))} placeholder="Title" className="border border-white/10 bg-black px-4 py-3 text-white" />
                   <textarea value={form.description} onChange={(e) => setForm((current) => ({ ...current, description: e.target.value }))} placeholder="Description" rows={4} className="border border-white/10 bg-black px-4 py-3 text-white" />
+
+                  {form.content_type !== "website" ? (
+                    <div className="grid gap-3 border border-white/10 bg-zinc-950/40 p-4">
+                      <div className="flex flex-wrap items-center gap-3">
+                        <button type="button" onClick={() => mediaInputRef.current?.click()} className="inline-flex items-center gap-2 border border-white/20 px-4 py-2 text-sm text-white">
+                          <Upload className="h-4 w-4" />
+                          Upload media file
+                        </button>
+                        <button type="button" onClick={() => thumbnailInputRef.current?.click()} className="inline-flex items-center gap-2 border border-white/20 px-4 py-2 text-sm text-white">
+                          <Upload className="h-4 w-4" />
+                          Upload thumbnail
+                        </button>
+                      </div>
+                      <input
+                        ref={mediaInputRef}
+                        type="file"
+                        className="hidden"
+                        accept={form.content_type === "image" ? "image/*" : form.content_type === "music" ? "audio/*" : "video/*"}
+                        onChange={(e) => void handleFileUpload(e.target.files?.[0], "media")}
+                      />
+                      <input
+                        ref={thumbnailInputRef}
+                        type="file"
+                        className="hidden"
+                        accept="image/*"
+                        onChange={(e) => void handleFileUpload(e.target.files?.[0], "thumbnail")}
+                      />
+                    </div>
+                  ) : null}
+
                   <input value={form.media_url} onChange={(e) => setForm((current) => ({ ...current, media_url: e.target.value }))} placeholder="Media URL" className="border border-white/10 bg-black px-4 py-3 text-white" />
                   <input value={form.thumbnail_url} onChange={(e) => setForm((current) => ({ ...current, thumbnail_url: e.target.value }))} placeholder="Thumbnail URL" className="border border-white/10 bg-black px-4 py-3 text-white" />
                   <input value={form.external_url} onChange={(e) => setForm((current) => ({ ...current, external_url: e.target.value }))} placeholder="External URL" className="border border-white/10 bg-black px-4 py-3 text-white" />
