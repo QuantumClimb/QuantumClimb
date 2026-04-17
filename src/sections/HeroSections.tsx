@@ -3,9 +3,10 @@ import { Reveal } from "../components/Reveal";
 
 type ContactActionProps = Readonly<{
   onContactClick: () => void;
+  onPortfolioClick?: () => void;
 }>;
 
-export function Hero({ onContactClick }: ContactActionProps) {
+export function Hero({ onContactClick, onPortfolioClick }: ContactActionProps) {
   return (
     <section className="relative pt-40 pb-24 overflow-hidden border-b border-white/5">
       <div className="container mx-auto px-6 relative z-10">
@@ -36,6 +37,12 @@ export function Hero({ onContactClick }: ContactActionProps) {
               className="w-full sm:w-auto px-10 py-5 bg-white text-black font-bold tracking-tight hover:bg-purple-600 hover:text-white transition-all duration-300 uppercase text-sm"
             >
               Request Demo
+            </button>
+            <button
+              onClick={onPortfolioClick}
+              className="w-full sm:w-auto px-10 py-5 bg-transparent border border-purple-500/40 text-purple-300 font-bold tracking-tight hover:bg-purple-500/10 transition-colors duration-300 uppercase text-sm"
+            >
+              View Portfolio
             </button>
             <button className="w-full sm:w-auto px-10 py-5 bg-transparent border border-white/20 text-white font-bold tracking-tight hover:bg-white/5 transition-colors duration-300 flex items-center justify-center gap-2 uppercase text-sm">
               <Play size={16} fill="currentColor" />
