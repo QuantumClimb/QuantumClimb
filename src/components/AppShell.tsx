@@ -58,7 +58,6 @@ type AppShellProps = Readonly<{
   onNavigatePortfolio: () => void;
   onNavigateAdmin: () => void;
   onSignIn: (email: string, password: string) => Promise<string>;
-  onSignUp: (email: string, password: string) => Promise<string>;
   onSignOut: () => Promise<void>;
   onClaimAdmin: () => Promise<string>;
   onSaveItem: (item: EditablePortfolioItem) => Promise<string>;
@@ -82,7 +81,6 @@ export function AppShell({
   onNavigatePortfolio,
   onNavigateAdmin,
   onSignIn,
-  onSignUp,
   onSignOut,
   onClaimAdmin,
   onSaveItem,
@@ -147,7 +145,6 @@ export function AppShell({
             userEmail={userEmail}
             items={portfolioItems}
             onSignIn={onSignIn}
-            onSignUp={onSignUp}
             onSignOut={onSignOut}
             onClaimAdmin={onClaimAdmin}
             onSaveItem={onSaveItem}

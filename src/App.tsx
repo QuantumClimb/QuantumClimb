@@ -149,33 +149,48 @@ export default function App() {
       throw new Error("Supabase is not configured yet.");
     }
 
-    const { error } = await supabase.auth.signInWithPassword({
+    const { data, error } = await supabase.auth.signInWithPassword({
       email: email.trim(),
       password,
     });
 
     if (error) {
       throw new Error(error.message);
+    }
+
+    const signedInUserId = data.user?.id;
+    if (!signedInUserId) {
+      throw new Error("Sign-in completed but no user session was returned.");
+    }
+
+    const { count, error: countError } = await supabase
+      .from("admin_users")
+      .select("user_id", { count: "exact", head: true });
+
+    if (countError) {
+      throw new Error(countError.message);
+    }
+
+    const { data: adminRow, error: adminError } = await supabase
+      .from("admin_users")
+      .select("user_id")
+      .eq("user_id", signedInUserId)
+      .maybeSingle();
+
+    if (adminError) {
+      throw new Error(adminError.message);
+    }
+
+    if ((count ?? 0) > 0 && !adminRow) {
+      await supabase.auth.signOut();
+      throw new Error("This email is not on the approved uploader list.");
+    }
+
+    if ((count ?? 0) === 0) {
+      return "Signed in. This is the first admin bootstrap session — claim access below.";
     }
 
     return "Signed in successfully.";
-  };
-
-  const signUp = async (email: string, password: string) => {
-    if (!supabase) {
-      throw new Error("Supabase is not configured yet.");
-    }
-
-    const { error } = await supabase.auth.signUp({
-      email: email.trim(),
-      password,
-    });
-
-    if (error) {
-      throw new Error(error.message);
-    }
-
-    return "Account created. If confirmation is enabled, check your email next.";
   };
 
   const signOut = async () => {
@@ -324,7 +339,6 @@ export default function App() {
     onNavigatePortfolio: () => navigateToPage("portfolio"),
     onNavigateAdmin: () => navigateToPage("admin"),
     onSignIn: signIn,
-    onSignUp: signUp,
     onSignOut: signOut,
     onClaimAdmin: claimAdminAccess,
     onSaveItem: savePortfolioItem,

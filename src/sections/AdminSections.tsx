@@ -24,7 +24,6 @@ type AdminDashboardProps = Readonly<{
   userEmail?: string;
   items: PortfolioItem[];
   onSignIn: (email: string, password: string) => Promise<string>;
-  onSignUp: (email: string, password: string) => Promise<string>;
   onSignOut: () => Promise<void>;
   onClaimAdmin: () => Promise<string>;
   onSaveItem: (item: EditablePortfolioItem) => Promise<string>;
@@ -185,7 +184,6 @@ export function AdminDashboardSection({
   userEmail,
   items,
   onSignIn,
-  onSignUp,
   onSignOut,
   onClaimAdmin,
   onSaveItem,
@@ -338,10 +336,8 @@ export function AdminDashboardSection({
                   <button onClick={() => handleAction(() => onSignIn(email, password))} disabled={isSubmitting} className="bg-white px-5 py-3 text-sm font-semibold text-black">
                     Sign In
                   </button>
-                  <button onClick={() => handleAction(() => onSignUp(email, password))} disabled={isSubmitting} className="border border-white/20 px-5 py-3 text-sm font-semibold text-white">
-                    Create Account
-                  </button>
                 </div>
+                <p className="text-sm text-zinc-500">No public sign-up. Access is limited to manually approved uploader accounts.</p>
               </div>
             </div>
 
