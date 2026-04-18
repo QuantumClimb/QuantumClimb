@@ -170,7 +170,7 @@ export function VideoGallerySection({ items, isLoading }: PortfolioListProps) {
   );
 
   return (
-    <section id="video-gallery" className="border-b border-white/10">
+    <section id="video-gallery" className="border-b border-white/10 pt-32 md:pt-40">
       <div className="mx-auto max-w-7xl px-6 py-16 md:py-24">
         <SectionIntro
           eyebrow="Featured motion"

@@ -33,7 +33,6 @@ import {
   ImageGallerySection,
   MusicPlayerSection,
   PortfolioFooter,
-  PortfolioHero,
   VideoGallerySection,
   WebsiteLinksSection,
 } from "../sections/PortfolioSections";
@@ -159,7 +158,6 @@ export function AppShell({
           />
         ) : isPortfolioPage ? (
           <>
-            <PortfolioHero onContactClick={onOpenContactModal} itemCount={portfolioItems.length} />
             <VideoGallerySection items={portfolioItems} isLoading={isPortfolioLoading} />
             <ImageGallerySection items={portfolioItems} isLoading={isPortfolioLoading} />
             <MusicPlayerSection items={portfolioItems} isLoading={isPortfolioLoading} />
