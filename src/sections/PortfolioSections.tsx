@@ -96,6 +96,18 @@ function isDirectVideoUrl(url?: string | null) {
   return Boolean(url && /\.(mp4|webm|ogg|mov)(\?.*)?$/i.test(url));
 }
 
+function hasRenderableItem(item: PortfolioItem) {
+  if (item.content_type === "website") {
+    return Boolean(item.external_url);
+  }
+
+  if (item.content_type === "image") {
+    return Boolean(item.media_url || item.thumbnail_url || item.external_url);
+  }
+
+  return Boolean(item.media_url || item.external_url);
+}
+
 function SectionIntro({
   eyebrow,
   title,
@@ -152,7 +164,10 @@ export function PortfolioHero({ onContactClick, itemCount = 0 }: ContactClickPro
 }
 
 export function VideoGallerySection({ items, isLoading }: PortfolioListProps) {
-  const videos = useMemo(() => sortItems(items.filter((item) => item.content_type === "video")), [items]);
+  const videos = useMemo(
+    () => sortItems(items.filter((item) => item.content_type === "video" && hasRenderableItem(item))),
+    [items],
+  );
 
   return (
     <section id="video-gallery" className="border-b border-white/10">
@@ -221,7 +236,10 @@ export function VideoGallerySection({ items, isLoading }: PortfolioListProps) {
 }
 
 export function ImageGallerySection({ items, isLoading }: PortfolioListProps) {
-  const images = useMemo(() => sortItems(items.filter((item) => item.content_type === "image")), [items]);
+  const images = useMemo(
+    () => sortItems(items.filter((item) => item.content_type === "image" && hasRenderableItem(item))),
+    [items],
+  );
 
   return (
     <section id="image-gallery" className="border-b border-white/10 bg-zinc-950/40">
@@ -284,7 +302,10 @@ export function ImageGallerySection({ items, isLoading }: PortfolioListProps) {
 }
 
 export function MusicPlayerSection({ items, isLoading }: PortfolioListProps) {
-  const musicItems = useMemo(() => sortItems(items.filter((item) => item.content_type === "music")), [items]);
+  const musicItems = useMemo(
+    () => sortItems(items.filter((item) => item.content_type === "music" && hasRenderableItem(item))),
+    [items],
+  );
   const [activeIndex, setActiveIndex] = useState(0);
 
   useEffect(() => {

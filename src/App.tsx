@@ -13,7 +13,7 @@ import type { EditablePortfolioItem } from "./sections/AdminSections";
 type PageView = "home" | "portfolio" | "admin";
 
 function getCurrentPage(): PageView {
-  if (typeof globalThis.window === "undefined") {
+  if (globalThis.window === undefined) {
     return "home";
   }
 
@@ -32,6 +32,16 @@ function slugify(value: string) {
     .replaceAll(/[^a-z0-9]+/g, "-")
     .replaceAll(/^-+|-+$/g, "")
     .slice(0, 80);
+}
+
+const uploadSizeLimits = {
+  image: 50 * 1024 * 1024,
+  music: 150 * 1024 * 1024,
+  video: 500 * 1024 * 1024,
+} as const;
+
+function formatUploadLimit(bytes: number) {
+  return `${Math.round(bytes / (1024 * 1024))} MB`;
 }
 
 export default function App() {
@@ -232,8 +242,20 @@ export default function App() {
     }
 
     const title = item.title.trim();
+    const mediaUrl = item.media_url.trim();
+    const thumbnailUrl = item.thumbnail_url.trim();
+    const externalUrl = item.external_url.trim();
+
     if (!title) {
       throw new Error("Title is required.");
+    }
+
+    if (item.content_type === "website" && !externalUrl) {
+      throw new Error("Website items need an external URL before they can be saved.");
+    }
+
+    if (item.content_type !== "website" && !mediaUrl && !externalUrl) {
+      throw new Error("Upload the media file or paste an external media link before saving this item.");
     }
 
     const payload = {
@@ -241,9 +263,9 @@ export default function App() {
       title,
       slug: slugify(title),
       description: item.description.trim() || null,
-      media_url: item.media_url.trim() || null,
-      thumbnail_url: item.thumbnail_url.trim() || null,
-      external_url: item.external_url.trim() || null,
+      media_url: mediaUrl || null,
+      thumbnail_url: thumbnailUrl || null,
+      external_url: externalUrl || null,
       tags: item.tags
         .split(",")
         .map((tag) => tag.trim())
@@ -284,6 +306,7 @@ export default function App() {
     file: File,
     contentType: PortfolioItem["content_type"],
     variant: "media" | "thumbnail",
+    onProgress?: (progress: number) => void,
   ) => {
     if (!supabase || !session?.user) {
       throw new Error("Admin access is required.");
@@ -292,14 +315,75 @@ export default function App() {
     const effectiveType = variant === "thumbnail" ? "image" : contentType;
     const bucket = getBucketForContentType(effectiveType);
     const filePath = `${session.user.id}/${Date.now()}-${sanitizeFileName(file.name)}`;
+    const maxSize = uploadSizeLimits[effectiveType as keyof typeof uploadSizeLimits];
+    const normalizedType = file.type?.trim().toLowerCase();
+    const supabaseUrl = import.meta.env.VITE_SUPABASE_URL;
+    const publishableKey = import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY;
 
-    const { error } = await supabase.storage.from(bucket).upload(filePath, file, {
-      cacheControl: "3600",
-      upsert: true,
-    });
+    if (maxSize && file.size > maxSize) {
+      throw new Error(
+        `This ${effectiveType} file is too large (${formatUploadLimit(file.size)}). The limit is ${formatUploadLimit(maxSize)}.`,
+      );
+    }
 
-    if (error) {
-      throw new Error(error.message);
+    if (!supabaseUrl || !publishableKey || !session.access_token) {
+      throw new Error("Your upload session is not ready. Please sign in again and retry.");
+    }
+
+    onProgress?.(0);
+
+    try {
+      await new Promise<void>((resolve, reject) => {
+        const xhr = new XMLHttpRequest();
+        xhr.open("POST", `${supabaseUrl}/storage/v1/object/${bucket}/${filePath}`);
+        xhr.setRequestHeader("apikey", publishableKey);
+        xhr.setRequestHeader("Authorization", `Bearer ${session.access_token}`);
+        xhr.setRequestHeader("x-upsert", "false");
+        xhr.setRequestHeader("cache-control", "3600");
+
+        if (normalizedType) {
+          xhr.setRequestHeader("Content-Type", normalizedType);
+        }
+
+        xhr.upload.onprogress = (event) => {
+          if (event.lengthComputable && event.total > 0) {
+            onProgress?.(Math.min(99, Math.round((event.loaded / event.total) * 100)));
+          }
+        };
+
+        xhr.onerror = () => {
+          reject(new Error("Upload failed due to a network error."));
+        };
+
+        xhr.onload = () => {
+          if (xhr.status >= 200 && xhr.status < 300) {
+            onProgress?.(100);
+            resolve();
+            return;
+          }
+
+          try {
+            const parsed = JSON.parse(xhr.responseText) as { error?: string; message?: string };
+            reject(new Error(parsed.error ?? parsed.message ?? `Upload failed with status ${xhr.status}.`));
+          } catch {
+            reject(new Error(`Upload failed with status ${xhr.status}.`));
+          }
+        };
+
+        xhr.send(file);
+      });
+    } catch (error) {
+      const message = error instanceof Error ? error.message.toLowerCase() : "";
+
+      if (message.includes("mime") || message.includes("content type")) {
+        throw new Error("This file type was blocked by storage rules. Please try the upload again.");
+      }
+
+      if (message.includes("size") || message.includes("large")) {
+        throw new Error(`This ${effectiveType} file is too large for the current upload limit.`);
+      }
+
+      throw new Error(error instanceof Error ? `Upload failed: ${error.message}` : "Upload failed.");
     }
 
     const { data } = supabase.storage.from(bucket).getPublicUrl(filePath);

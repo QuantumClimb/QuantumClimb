@@ -63,7 +63,12 @@ type AppShellProps = Readonly<{
   onSaveItem: (item: EditablePortfolioItem) => Promise<string>;
   onDeleteItem: (id: string) => Promise<string>;
   onTogglePublished: (item: PortfolioItem) => Promise<string>;
-  onUploadFile: (file: File, contentType: PortfolioItem["content_type"], variant: "media" | "thumbnail") => Promise<string>;
+  onUploadFile: (
+    file: File,
+    contentType: PortfolioItem["content_type"],
+    variant: "media" | "thumbnail",
+    onProgress?: (progress: number) => void,
+  ) => Promise<string>;
 }>;
 
 export function AppShell({

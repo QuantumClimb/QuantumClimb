@@ -29,7 +29,12 @@ type AdminDashboardProps = Readonly<{
   onSaveItem: (item: EditablePortfolioItem) => Promise<string>;
   onDeleteItem: (id: string) => Promise<string>;
   onTogglePublished: (item: PortfolioItem) => Promise<string>;
-  onUploadFile: (file: File, contentType: PortfolioContentType, variant: "media" | "thumbnail") => Promise<string>;
+  onUploadFile: (
+    file: File,
+    contentType: PortfolioContentType,
+    variant: "media" | "thumbnail",
+    onProgress?: (progress: number) => void,
+  ) => Promise<string>;
 }>;
 
 export type EditablePortfolioItem = {
@@ -47,6 +52,12 @@ export type EditablePortfolioItem = {
 };
 
 type DropVariant = "media" | "thumbnail";
+
+type UploadState = {
+  variant: DropVariant;
+  fileName: string;
+  progress: number;
+};
 
 const emptyForm: EditablePortfolioItem = {
   content_type: "video",
@@ -197,6 +208,7 @@ export function AdminDashboardSection({
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [form, setForm] = useState<EditablePortfolioItem>(emptyForm);
   const [dragTarget, setDragTarget] = useState<DropVariant | null>(null);
+  const [uploadState, setUploadState] = useState<UploadState | null>(null);
   const mediaInputRef = useRef<HTMLInputElement | null>(null);
   const thumbnailInputRef = useRef<HTMLInputElement | null>(null);
 
@@ -237,8 +249,15 @@ export function AdminDashboardSection({
       return;
     }
 
-    await handleAction(async () => {
-      const uploadedUrl = await onUploadFile(file, form.content_type, variant);
+    try {
+      setIsSubmitting(true);
+      setUploadState({ variant, fileName: file.name, progress: 0 });
+      setStatus(variant === "media" ? `Uploading media: ${file.name}` : `Uploading thumbnail: ${file.name}`);
+
+      const uploadedUrl = await onUploadFile(file, form.content_type, variant, (progress) => {
+        setUploadState({ variant, fileName: file.name, progress });
+      });
+
       setForm((current) => {
         if (variant === "media") {
           return { ...current, media_url: uploadedUrl };
@@ -247,8 +266,17 @@ export function AdminDashboardSection({
         return { ...current, thumbnail_url: uploadedUrl };
       });
 
-      return variant === "media" ? "Media uploaded successfully." : "Thumbnail uploaded successfully.";
-    });
+      setUploadState({ variant, fileName: file.name, progress: 100 });
+      setStatus(variant === "media" ? "Media uploaded successfully." : "Thumbnail uploaded successfully.");
+    } catch (error) {
+      setUploadState(null);
+      setStatus(error instanceof Error ? error.message : "Upload failed.");
+    } finally {
+      setIsSubmitting(false);
+      globalThis.setTimeout(() => {
+        setUploadState((current) => (current?.fileName === file.name ? null : current));
+      }, 1200);
+    }
   };
 
   const quickUpdate = async (item: PortfolioItem, patch: Partial<EditablePortfolioItem>) => {
@@ -257,6 +285,8 @@ export function AdminDashboardSection({
   };
 
   const mediaAccept = getAcceptValue(form.content_type);
+  const requiresUpload = form.content_type !== "website" && !form.media_url.trim() && !form.external_url.trim();
+  const requiresWebsiteLink = form.content_type === "website" && !form.external_url.trim();
 
   const renderUploadZone = (
     variant: DropVariant,
@@ -270,6 +300,7 @@ export function AdminDashboardSection({
     return (
       <button
         type="button"
+        disabled={isSubmitting}
         onClick={() => (variant === "media" ? mediaInputRef.current?.click() : thumbnailInputRef.current?.click())}
         onDragOver={(event) => {
           event.preventDefault();
@@ -284,7 +315,7 @@ export function AdminDashboardSection({
           setDragTarget(null);
           void handleFileUpload(event.dataTransfer.files?.[0], variant);
         }}
-        className={`flex min-h-40 flex-col items-center justify-center gap-3 border px-4 py-6 text-center transition ${isActive ? "border-purple-400 bg-purple-500/10" : "border-white/10 bg-zinc-950/40 hover:border-white/20"}`}
+        className={`flex min-h-40 flex-col items-center justify-center gap-3 border px-4 py-6 text-center transition disabled:cursor-not-allowed disabled:opacity-70 ${isActive ? "border-purple-400 bg-purple-500/10" : "border-white/10 bg-zinc-950/40 hover:border-white/20"}`}
       >
         {previewUrl ? (
           <img src={previewUrl} alt={title} className="mb-2 h-20 w-full object-cover" referrerPolicy="no-referrer" />
@@ -301,7 +332,10 @@ export function AdminDashboardSection({
           type="file"
           className="hidden"
           accept={accept}
-          onChange={(event) => void handleFileUpload(event.target.files?.[0], variant)}
+          onChange={(event) => {
+            void handleFileUpload(event.target.files?.[0], variant);
+            event.target.value = "";
+          }}
         />
       </button>
     );
@@ -463,10 +497,29 @@ export function AdminDashboardSection({
                   <textarea value={form.description} onChange={(event) => setForm((current) => ({ ...current, description: event.target.value }))} placeholder="Description" rows={4} className="border border-white/10 bg-black px-4 py-3 text-white" />
 
                   {form.content_type !== "website" ? (
-                    <div className="grid gap-3 md:grid-cols-2">
-                      {renderUploadZone("media", "Main media", "Upload the primary file for this item.", form.media_url, mediaAccept)}
-                      {renderUploadZone("thumbnail", "Thumbnail", "Add a cover image for cards and previews.", form.thumbnail_url, "image/*")}
-                    </div>
+                    <>
+                      <div className="grid gap-3 md:grid-cols-2">
+                        {renderUploadZone("media", "Main media", "Upload the primary file for this item.", form.media_url, mediaAccept)}
+                        {renderUploadZone("thumbnail", "Thumbnail", "Add a cover image for cards and previews.", form.thumbnail_url, "image/*")}
+                      </div>
+                      {uploadState ? (
+                        <div className="border border-purple-500/30 bg-purple-500/10 p-4">
+                          <div className="flex items-center justify-between gap-3 text-sm">
+                            <p className="font-medium text-white">
+                              {uploadState.variant === "media" ? "Uploading main media" : "Uploading thumbnail"}
+                            </p>
+                            <span className="text-purple-300">{uploadState.progress}%</span>
+                          </div>
+                          <div className="mt-3 h-2 overflow-hidden bg-zinc-900">
+                            <div
+                              className="h-full bg-gradient-to-r from-purple-500 to-fuchsia-400 transition-all duration-200"
+                              style={{ width: `${uploadState.progress}%` }}
+                            />
+                          </div>
+                          <p className="mt-2 text-xs text-zinc-400">{uploadState.fileName}</p>
+                        </div>
+                      ) : null}
+                    </>
                   ) : null}
 
                   <input value={form.media_url} onChange={(event) => setForm((current) => ({ ...current, media_url: event.target.value }))} placeholder="Media URL" className="border border-white/10 bg-black px-4 py-3 text-white" />
@@ -492,14 +545,21 @@ export function AdminDashboardSection({
                     </div>
                   </div>
 
+                  {requiresUpload ? (
+                    <p className="text-sm text-amber-300">Upload the main media file or add an external media link before saving this item.</p>
+                  ) : null}
+                  {requiresWebsiteLink ? (
+                    <p className="text-sm text-amber-300">Add the website URL before saving this item.</p>
+                  ) : null}
+
                   <button
                     onClick={() => handleAction(async () => {
                       const message = await onSaveItem(form);
                       resetForm();
                       return message;
                     })}
-                    disabled={isSubmitting}
-                    className="inline-flex items-center justify-center gap-2 bg-white px-5 py-3 text-sm font-semibold text-black"
+                    disabled={isSubmitting || requiresUpload || requiresWebsiteLink}
+                    className="inline-flex items-center justify-center gap-2 bg-white px-5 py-3 text-sm font-semibold text-black disabled:cursor-not-allowed disabled:bg-zinc-700 disabled:text-zinc-300"
                   >
                     <Plus className="h-4 w-4" />
                     {form.id ? "Save Changes" : "Add Item"}
@@ -515,6 +575,7 @@ export function AdminDashboardSection({
                     <li>• Drag files directly into the upload zones</li>
                     <li>• Use Featured plus a low order number for top placement</li>
                     <li>• Publish only when the preview looks right</li>
+                    <li>• Video, image, and music items need a real media upload or external media link</li>
                   </ul>
                 </div>
               </div>
