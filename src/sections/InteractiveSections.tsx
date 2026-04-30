@@ -32,7 +32,7 @@ export function InteractiveAIHuman({ onContactClick }: Readonly<ContactActionPro
                 onClick={onContactClick}
                 className="px-10 py-5 bg-purple-600 text-white font-medium tracking-tight hover:bg-white hover:text-black transition-colors"
               >
-                Contact Sales
+                Contact Quantum
               </button>
             </Reveal>
           </div>

@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import * as tus from "tus-js-client";
 import type { Session } from "@supabase/supabase-js";
 import { AppShell } from "./components/AppShell";
 import {
@@ -7,10 +8,11 @@ import {
   sanitizeFileName,
   supabase,
   type PortfolioItem,
+  type SiteVideo,
 } from "./lib/supabase";
-import type { EditablePortfolioItem } from "./sections/AdminSections";
+import type { EditablePortfolioItem, EditableSiteVideo } from "./sections/AdminSections";
 
-type PageView = "home" | "portfolio" | "admin";
+type PageView = "home" | "portfolio" | "admin" | "privacy" | "terms" | "cookies";
 
 function getCurrentPage(): PageView {
   if (globalThis.window === undefined) {
@@ -18,8 +20,8 @@ function getCurrentPage(): PageView {
   }
 
   const page = new URLSearchParams(globalThis.location.search).get("page");
-  if (page === "portfolio" || page === "admin") {
-    return page;
+  if (["admin", "privacy", "terms", "cookies"].includes(page ?? "")) {
+    return page as PageView;
   }
 
   return "home";
@@ -40,8 +42,16 @@ const uploadSizeLimits = {
   video: 500 * 1024 * 1024,
 } as const;
 
+const resumableUploadThreshold = 6 * 1024 * 1024;
+const resumableChunkSize = 6 * 1024 * 1024;
+
 function formatUploadLimit(bytes: number) {
   return `${Math.round(bytes / (1024 * 1024))} MB`;
+}
+
+function getStorageResumableEndpoint(projectUrl: string) {
+  const projectRef = new URL(projectUrl).hostname.split(".")[0];
+  return `https://${projectRef}.storage.supabase.co/storage/v1/upload/resumable`;
 }
 
 export default function App() {
@@ -51,6 +61,7 @@ export default function App() {
   const [session, setSession] = useState<Session | null>(null);
   const [isAdmin, setIsAdmin] = useState(false);
   const [portfolioItems, setPortfolioItems] = useState<PortfolioItem[]>([]);
+  const [siteVideos, setSiteVideos] = useState<SiteVideo[]>([]);
   const [isPortfolioLoading, setIsPortfolioLoading] = useState(false);
 
   useEffect(() => {
@@ -116,6 +127,29 @@ export default function App() {
     }
   };
 
+  const refreshSiteVideos = async () => {
+    if (!supabase) {
+      setSiteVideos([]);
+      return;
+    }
+
+    try {
+      const { data, error } = await supabase
+        .from("site_videos")
+        .select("*")
+        .order("section");
+
+      if (error) {
+        throw error;
+      }
+
+      setSiteVideos((data ?? []) as SiteVideo[]);
+    } catch (error) {
+      console.error("Unable to load site videos", error);
+      setSiteVideos([]);
+    }
+  };
+
   useEffect(() => {
     if (!supabase) {
       return;
@@ -124,6 +158,7 @@ export default function App() {
     supabase.auth.getSession().then(({ data }) => {
       setSession(data.session);
       void refreshPortfolioItems(data.session);
+      void refreshSiteVideos();
     });
 
     const {
@@ -131,6 +166,7 @@ export default function App() {
     } = supabase.auth.onAuthStateChange((_event, nextSession) => {
       setSession(nextSession);
       void refreshPortfolioItems(nextSession);
+      void refreshSiteVideos();
     });
 
     return () => subscription.unsubscribe();
@@ -330,60 +366,107 @@ export default function App() {
       throw new Error("Your upload session is not ready. Please sign in again and retry.");
     }
 
-    onProgress?.(0);
-
-    try {
-      await new Promise<void>((resolve, reject) => {
-        const xhr = new XMLHttpRequest();
-        xhr.open("POST", `${supabaseUrl}/storage/v1/object/${bucket}/${filePath}`);
-        xhr.setRequestHeader("apikey", publishableKey);
-        xhr.setRequestHeader("Authorization", `Bearer ${session.access_token}`);
-        xhr.setRequestHeader("x-upsert", "false");
-        xhr.setRequestHeader("cache-control", "3600");
-
-        if (normalizedType) {
-          xhr.setRequestHeader("Content-Type", normalizedType);
-        }
-
-        xhr.upload.onprogress = (event) => {
-          if (event.lengthComputable && event.total > 0) {
-            onProgress?.(Math.min(99, Math.round((event.loaded / event.total) * 100)));
-          }
-        };
-
-        xhr.onerror = () => {
-          reject(new Error("Upload failed due to a network error."));
-        };
-
-        xhr.onload = () => {
-          if (xhr.status >= 200 && xhr.status < 300) {
-            onProgress?.(100);
-            resolve();
-            return;
-          }
-
-          try {
-            const parsed = JSON.parse(xhr.responseText) as { error?: string; message?: string };
-            reject(new Error(parsed.error ?? parsed.message ?? `Upload failed with status ${xhr.status}.`));
-          } catch {
-            reject(new Error(`Upload failed with status ${xhr.status}.`));
-          }
-        };
-
-        xhr.send(file);
-      });
-    } catch (error) {
+    const handleUploadError = (error: unknown) => {
       const message = error instanceof Error ? error.message.toLowerCase() : "";
 
       if (message.includes("mime") || message.includes("content type")) {
         throw new Error("This file type was blocked by storage rules. Please try the upload again.");
       }
 
-      if (message.includes("size") || message.includes("large")) {
-        throw new Error(`This ${effectiveType} file is too large for the current upload limit.`);
+      if (message.includes("payload too large") || message.includes("413") || message.includes("size") || message.includes("large")) {
+        throw new Error(`This ${effectiveType} file is still being rejected as too large by the upload gateway.`);
       }
 
       throw new Error(error instanceof Error ? `Upload failed: ${error.message}` : "Upload failed.");
+    };
+
+    onProgress?.(0);
+
+    try {
+      if (file.size > resumableUploadThreshold) {
+        await new Promise<void>((resolve, reject) => {
+          const upload = new tus.Upload(file, {
+            endpoint: getStorageResumableEndpoint(supabaseUrl),
+            retryDelays: [0, 3000, 5000, 10000, 20000],
+            headers: {
+              authorization: `Bearer ${session.access_token}`,
+              apikey: publishableKey,
+              "x-upsert": "false",
+            },
+            uploadDataDuringCreation: true,
+            removeFingerprintOnSuccess: true,
+            chunkSize: resumableChunkSize,
+            metadata: {
+              bucketName: bucket,
+              objectName: filePath,
+              contentType: normalizedType || file.type || "application/octet-stream",
+              cacheControl: "3600",
+            },
+            onError: (error) => reject(error),
+            onProgress: (bytesUploaded, bytesTotal) => {
+              if (bytesTotal > 0) {
+                onProgress?.(Math.min(99, Math.round((bytesUploaded / bytesTotal) * 100)));
+              }
+            },
+            onSuccess: () => {
+              onProgress?.(100);
+              resolve();
+            },
+          });
+
+          upload.findPreviousUploads()
+            .then((previousUploads) => {
+              if (previousUploads.length > 0) {
+                upload.resumeFromPreviousUpload(previousUploads[0]);
+              }
+
+              upload.start();
+            })
+            .catch(reject);
+        });
+      } else {
+        await new Promise<void>((resolve, reject) => {
+          const xhr = new XMLHttpRequest();
+          xhr.open("POST", `${supabaseUrl}/storage/v1/object/${bucket}/${filePath}`);
+          xhr.setRequestHeader("apikey", publishableKey);
+          xhr.setRequestHeader("Authorization", `Bearer ${session.access_token}`);
+          xhr.setRequestHeader("x-upsert", "false");
+          xhr.setRequestHeader("cache-control", "3600");
+
+          if (normalizedType) {
+            xhr.setRequestHeader("Content-Type", normalizedType);
+          }
+
+          xhr.upload.onprogress = (event) => {
+            if (event.lengthComputable && event.total > 0) {
+              onProgress?.(Math.min(99, Math.round((event.loaded / event.total) * 100)));
+            }
+          };
+
+          xhr.onerror = () => {
+            reject(new Error("Upload failed due to a network error."));
+          };
+
+          xhr.onload = () => {
+            if (xhr.status >= 200 && xhr.status < 300) {
+              onProgress?.(100);
+              resolve();
+              return;
+            }
+
+            try {
+              const parsed = JSON.parse(xhr.responseText) as { error?: string; message?: string };
+              reject(new Error(parsed.error ?? parsed.message ?? `Upload failed with status ${xhr.status}.`));
+            } catch {
+              reject(new Error(`Upload failed with status ${xhr.status}.`));
+            }
+          };
+
+          xhr.send(file);
+        });
+      }
+    } catch (error) {
+      handleUploadError(error);
     }
 
     const { data } = supabase.storage.from(bucket).getPublicUrl(filePath);
@@ -408,6 +491,124 @@ export default function App() {
     return item.is_published ? "Item unpublished." : "Item published.";
   };
 
+  const saveSiteVideo = async (video: EditableSiteVideo) => {
+    if (!supabase || !session?.user) {
+      throw new Error("Admin access is required.");
+    }
+
+    const payload = {
+      section: video.section,
+      video_url: video.video_url || null,
+      thumbnail_url: video.thumbnail_url || null,
+      title: video.title || null,
+      description: video.description || null,
+    };
+
+    if (video.id) {
+      const response = await supabase.from("site_videos").update(payload).eq("id", video.id);
+      if (response.error) {
+        throw new Error(response.error.message);
+      }
+    } else {
+      const response = await supabase.from("site_videos").insert(payload);
+      if (response.error) {
+        throw new Error(response.error.message);
+      }
+    }
+
+    await refreshSiteVideos();
+    return video.id ? "Site video updated." : "Site video saved.";
+  };
+
+  const deleteSiteVideo = async (id: string) => {
+    if (!supabase) {
+      throw new Error("Supabase is not configured yet.");
+    }
+
+    const { error } = await supabase.from("site_videos").delete().eq("id", id);
+    if (error) {
+      throw new Error(error.message);
+    }
+
+    await refreshSiteVideos();
+    return "Site video deleted.";
+  };
+
+  const uploadSiteVideo = async (
+    file: File,
+    section: string,
+    variant: "video" | "thumbnail",
+    onProgress?: (progress: number) => void,
+  ) => {
+    if (!supabase || !session?.user) {
+      throw new Error("Admin access is required.");
+    }
+
+    const bucket = variant === "thumbnail" ? "portfolio-images" : "portfolio-videos";
+    const filePath = `${session.user.id}/site-${section}-${Date.now()}-${sanitizeFileName(file.name)}`;
+    const maxSize = variant === "thumbnail" ? 50 * 1024 * 1024 : 500 * 1024 * 1024;
+    const supabaseUrl = import.meta.env.VITE_SUPABASE_URL;
+    const publishableKey = import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY;
+
+    if (file.size > maxSize) {
+      throw new Error(
+        `This ${variant} file is too large (${formatUploadLimit(file.size)}). The limit is ${formatUploadLimit(maxSize)}.`,
+      );
+    }
+
+    if (!supabaseUrl || !publishableKey || !session.access_token) {
+      throw new Error("Your upload session is not ready. Please sign in again and retry.");
+    }
+
+    if (file.size > resumableUploadThreshold) {
+      // Use resumable upload for large files
+      return new Promise((resolve, reject) => {
+        const upload = new tus.Upload(file, {
+          endpoint: getStorageResumableEndpoint(supabaseUrl),
+          retryDelays: [0, 3000, 5000, 10000, 20000],
+          uploadDataDuringCreation: true,
+          removeFingerprintOnSuccess: true,
+          headers: {
+            authorization: `Bearer ${session.access_token}`,
+            "x-upsert": "false",
+          },
+          chunkSize: resumableChunkSize,
+          metadata: {
+            bucketName: bucket,
+            objectName: filePath,
+            contentType: file.type,
+            cacheControl: "3600",
+          },
+          onError: (error) => {
+            reject(new Error(`Upload failed: ${error.message}`));
+          },
+          onProgress: (bytesUploaded, bytesTotal) => {
+            onProgress?.(Math.round((bytesUploaded / bytesTotal) * 100));
+          },
+          onSuccess: () => {
+            const { data } = supabase.storage.from(bucket).getPublicUrl(filePath);
+            resolve(data.publicUrl);
+          },
+        });
+
+        upload.start();
+      });
+    } else {
+      // Use standard upload for small files
+      const { error } = await supabase.storage.from(bucket).upload(filePath, file, {
+        cacheControl: "3600",
+        upsert: false,
+      });
+
+      if (error) {
+        throw new Error(error.message);
+      }
+
+      const { data } = supabase.storage.from(bucket).getPublicUrl(filePath);
+      return data.publicUrl;
+    }
+  };
+
   return AppShell({
     currentPage,
     isScrolled,
@@ -416,12 +617,16 @@ export default function App() {
     isSupabaseConfigured: hasSupabaseEnv,
     isPortfolioLoading,
     portfolioItems,
+    siteVideos,
     userEmail: session?.user.email,
     onOpenContactModal: openContactModal,
     onCloseContactModal: closeContactModal,
     onNavigateHome: () => navigateToPage("home"),
     onNavigatePortfolio: () => navigateToPage("portfolio"),
     onNavigateAdmin: () => navigateToPage("admin"),
+    onNavigatePrivacy: () => navigateToPage("privacy"),
+    onNavigateTerms: () => navigateToPage("terms"),
+    onNavigateCookies: () => navigateToPage("cookies"),
     onSignIn: signIn,
     onSignOut: signOut,
     onClaimAdmin: claimAdminAccess,
@@ -429,5 +634,8 @@ export default function App() {
     onDeleteItem: deletePortfolioItem,
     onTogglePublished: togglePublished,
     onUploadFile: uploadPortfolioFile,
+    onSaveSiteVideo: saveSiteVideo,
+    onDeleteSiteVideo: deleteSiteVideo,
+    onUploadSiteVideo: uploadSiteVideo,
   });
 }

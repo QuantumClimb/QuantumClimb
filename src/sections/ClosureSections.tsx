@@ -76,13 +76,7 @@ export function FinalCTA({ onContactClick }: Readonly<ContactActionProps>) {
             onClick={onContactClick}
             className="w-full sm:w-auto px-12 py-6 bg-white text-black font-medium tracking-tight hover:bg-black hover:text-white transition-colors text-lg"
           >
-            Request Demo
-          </button>
-          <button
-            onClick={onContactClick}
-            className="w-full sm:w-auto px-12 py-6 bg-transparent border border-white/20 text-white font-medium tracking-tight hover:bg-white hover:text-black transition-colors text-lg"
-          >
-            Contact Sales
+            Contact Quantum
           </button>
         </Reveal>
       </div>
@@ -90,7 +84,7 @@ export function FinalCTA({ onContactClick }: Readonly<ContactActionProps>) {
   );
 }
 
-export function Footer() {
+export function Footer({ onAdminClick, onPrivacyClick, onTermsClick, onCookiesClick }: { onAdminClick: () => void; onPrivacyClick: () => void; onTermsClick: () => void; onCookiesClick: () => void }) {
   return (
     <footer className="py-24 bg-black border-t border-white/5">
       <div className="container mx-auto px-6">
@@ -102,44 +96,32 @@ export function Footer() {
             </p>
             <div className="flex gap-6">
               <span className="text-zinc-500 transition-colors">X</span>
-              <span className="text-zinc-500 transition-colors">LinkedIn</span>
-              <span className="text-zinc-500 transition-colors">GitHub</span>
+              <a href="https://www.linkedin.com/in/quantumclimb/?isSelfProfile=true" target="_blank" rel="noreferrer" className="text-zinc-500 hover:text-white transition-colors">LinkedIn</a>
+              <span className="text-zinc-500 transition-colors">Instagram</span>
             </div>
-          </div>
-          <div>
-            <h4 className="text-white font-medium mb-8">Product</h4>
-            <ul className="space-y-5 text-sm text-zinc-500">
-              <li className="hover:text-purple-600 cursor-pointer transition-colors">AI Dubbing</li>
-              <li className="hover:text-purple-600 cursor-pointer transition-colors">Lip Sync</li>
-              <li className="hover:text-purple-600 cursor-pointer transition-colors">Voice Cloning</li>
-              <li className="hover:text-purple-600 cursor-pointer transition-colors">Interactive Humans</li>
-            </ul>
           </div>
           <div>
             <h4 className="text-white font-medium mb-8">India Office</h4>
             <ul className="space-y-4 text-xs text-zinc-500 leading-relaxed">
-              <li>Quantum Climb India Pvt Ltd</li>
-              <li>Level 5, Prestige Blue Chip,</li>
-              <li>Hosur Road, Bangalore, 560029</li>
-              <li className="text-purple-600 font-medium">WhatsApp: +91 98765 43210</li>
+              <li>DLF Garden City</li>
+              <li className="text-purple-600 font-medium">+91 98840 50857</li>
             </ul>
           </div>
           <div>
             <h4 className="text-white font-medium mb-8">Malaysia Office</h4>
             <ul className="space-y-4 text-xs text-zinc-500 leading-relaxed">
-              <li>Quantum Climb Malaysia Sdn Bhd</li>
-              <li>Level 28, Menara Maxis,</li>
-              <li>KLCC, 50088 Kuala Lumpur</li>
-              <li className="text-purple-600 font-medium">WhatsApp: +60 12-345 6789</li>
+              <li>Koi Kinrara</li>
+              <li className="text-purple-600 font-medium">+60 11-6424 2145</li>
             </ul>
           </div>
         </div>
         <div className="flex flex-col md:flex-row justify-between items-center pt-10 border-t border-white/5 text-[10px] font-mono text-zinc-600 uppercase tracking-[0.3em]">
           <div>© 2026 QUANTUM CLIMB INC. ALL RIGHTS RESERVED.</div>
-          <div className="flex gap-10 mt-6 md:mt-0">
-            <span className="hover:text-white cursor-pointer transition-colors">PRIVACY POLICY</span>
-            <span className="hover:text-white cursor-pointer transition-colors">TERMS OF SERVICE</span>
-            <span className="hover:text-white cursor-pointer transition-colors">COOKIE SETTINGS</span>
+          <div className="flex gap-10 mt-6 md:mt-0 items-center">
+            <button onClick={onAdminClick} className="text-zinc-600 hover:text-white transition-colors">Admin</button>
+            <button onClick={onPrivacyClick} className="text-zinc-600 hover:text-white transition-colors">PRIVACY POLICY</button>
+            <button onClick={onTermsClick} className="text-zinc-600 hover:text-white transition-colors">TERMS OF SERVICE</button>
+            <button onClick={onCookiesClick} className="text-zinc-600 hover:text-white transition-colors">COOKIE SETTINGS</button>
           </div>
         </div>
       </div>

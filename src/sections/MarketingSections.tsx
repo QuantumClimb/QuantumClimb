@@ -4,12 +4,12 @@ import { SectionHeader } from "../components/SectionHeader";
 
 export function IndustryUseCases() {
   const industries = [
-    { title: "Content Creators", desc: "Scale your YouTube or TikTok channel to every language instantly.", img: "https://picsum.photos/seed/creator/800/600" },
-    { title: "E-Learning", desc: "Localize educational courses with perfect technical terminology.", img: "https://picsum.photos/seed/learning/800/600" },
-    { title: "Enterprise", desc: "Internal communications and training for global workforces.", img: "https://picsum.photos/seed/corp/800/600" },
-    { title: "E-Commerce", desc: "Product demos that speak the customer's language natively.", img: "https://picsum.photos/seed/shop/800/600" },
-    { title: "Marketing Agencies", desc: "Global ad campaigns with localized voiceovers in record time.", img: "https://picsum.photos/seed/agency/800/600" },
-    { title: "Media & Entertainment", desc: "Film and TV localization that preserves the actor's performance.", img: "https://picsum.photos/seed/media/800/600" },
+    { title: "Content Creators", desc: "Scale your YouTube or TikTok channel to every language instantly.", img: "/Content Creators.png" },
+    { title: "E-Learning", desc: "Localize educational courses with perfect technical terminology.", img: "/E-Learning.png" },
+    { title: "Enterprise", desc: "Internal communications and training for global workforces.", img: "/Enterprise.png" },
+    { title: "E-Commerce", desc: "Product demos that speak the customer's language natively.", img: "/E-Commerce.png" },
+    { title: "Marketing Agencies", desc: "Global ad campaigns with localized voiceovers in record time.", img: "/Marketing Agencies.png" },
+    { title: "Media & Entertainment", desc: "Film and TV localization that preserves the actor's performance.", img: "/Media & Entertainment.png" },
   ];
 
   return (
@@ -22,17 +22,16 @@ export function IndustryUseCases() {
         />
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
           {industries.map((industry, index) => (
-            <Reveal key={industry.title} type="fold" delay={0.1 * index} className="group cursor-pointer">
+            <Reveal key={industry.title} type="fold" delay={0.1 * index}>
               <div className="relative aspect-4/3 overflow-hidden border border-white/10 mb-6">
                 <img
                   src={industry.img}
                   alt={industry.title}
-                  className="w-full h-full object-cover grayscale group-hover:grayscale-0 group-hover:scale-105 transition-all duration-700"
+                  className="w-full h-full object-cover"
                   referrerPolicy="no-referrer"
                 />
-                <div className="absolute inset-0 bg-black/40 group-hover:bg-black/10 transition-colors"></div>
               </div>
-              <h4 className="text-2xl font-medium text-white mb-2 group-hover:text-purple-600 transition-colors">{industry.title}</h4>
+              <h4 className="text-2xl font-medium text-white mb-2">{industry.title}</h4>
               <p className="text-zinc-500 text-sm leading-relaxed">{industry.desc}</p>
             </Reveal>
           ))}

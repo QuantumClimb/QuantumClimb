@@ -3,8 +3,12 @@ import { Check, Cpu, Play, Shield, Volume2, Zap } from "lucide-react";
 import { motion } from "motion/react";
 import { Reveal } from "../components/Reveal";
 import { SectionHeader } from "../components/SectionHeader";
+import { extractYouTubeVideoId, getYouTubeEmbedUrl } from "../lib/supabase";
+import type { SiteVideo } from "../lib/supabase";
 
-export function AIFirstSection() {
+export function AIFirstSection({ siteVideos }: { siteVideos: SiteVideo[] }) {
+  const quantumShiftVideo = siteVideos.find(v => v.section === 'quantum_shift');
+
   return (
     <section className="py-32 bg-zinc-950 border-b border-white/5">
       <div className="container mx-auto px-6">
@@ -58,7 +62,9 @@ export function AIFirstSection() {
   );
 }
 
-export function CoreValueProp() {
+export function CoreValueProp({ siteVideos }: { siteVideos: SiteVideo[] }) {
+  const quantumShiftVideo = siteVideos.find((video) => video.section === "quantum_shift");
+
   return (
     <section className="py-32 border-b border-white/5">
       <div className="container mx-auto px-6">
@@ -90,12 +96,24 @@ export function CoreValueProp() {
           </div>
           <Reveal type="fold" className="bg-zinc-900 border border-white/10 p-3">
             <div className="aspect-square bg-black relative overflow-hidden">
-              <img
-                src="https://picsum.photos/seed/neural_voice/1000/1000"
-                alt="Neural Processing"
-                className="w-full h-full object-cover opacity-40"
-                referrerPolicy="no-referrer"
-              />
+              {quantumShiftVideo?.video_url && extractYouTubeVideoId(quantumShiftVideo.video_url) ? (
+                <iframe
+                  width="100%"
+                  height="100%"
+                  src={getYouTubeEmbedUrl(extractYouTubeVideoId(quantumShiftVideo.video_url)!)}
+                  title={quantumShiftVideo.title || "Quantum Shift Video"}
+                  frameBorder="0"
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope"
+                  className="w-full h-full opacity-40"
+                />
+              ) : (
+                <img
+                  src="https://picsum.photos/seed/neural_voice/1000/1000"
+                  alt="Neural Processing"
+                  className="w-full h-full object-cover opacity-40"
+                  referrerPolicy="no-referrer"
+                />
+              )}
               <div className="absolute inset-0 flex flex-col items-center justify-center p-16 text-center">
                 <div className="w-full h-1 bg-white/10 mb-10 relative overflow-hidden">
                   <motion.div
@@ -115,7 +133,7 @@ export function CoreValueProp() {
   );
 }
 
-export function InteractiveDemo() {
+export function InteractiveDemo({ siteVideos }: { siteVideos: SiteVideo[] }) {
   const [activeLang, setActiveLang] = useState("Original");
   const languages = [
     { name: "Original", flag: "USA" },
@@ -126,6 +144,8 @@ export function InteractiveDemo() {
     { name: "Mandarin", flag: "CHN" },
     { name: "Arabic", flag: "SAU" },
   ];
+
+  const demoVideo = siteVideos.find(v => v.section === 'interactive_demo');
 
   return (
     <section className="py-32 bg-zinc-950 border-b border-white/5">
@@ -155,17 +175,31 @@ export function InteractiveDemo() {
           </div>
 
           <Reveal type="fold" className="bg-zinc-900 border border-white/10 p-4 aspect-video relative group">
-            <img
-              src={`https://picsum.photos/seed/demo_${activeLang}/1920/1080`}
-              alt="Demo Video"
-              className="w-full h-full object-cover opacity-80"
-              referrerPolicy="no-referrer"
-            />
-            <div className="absolute inset-0 flex items-center justify-center bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity">
-              <div className="w-20 h-20 bg-white flex items-center justify-center">
-                <Play size={28} fill="black" />
-              </div>
-            </div>
+            {demoVideo?.video_url && extractYouTubeVideoId(demoVideo.video_url) ? (
+              <iframe
+                width="100%"
+                height="100%"
+                src={getYouTubeEmbedUrl(extractYouTubeVideoId(demoVideo.video_url)!)}
+                title={demoVideo.title || "Interactive Demo"}
+                frameBorder="0"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope"
+                className="w-full h-full"
+              />
+            ) : (
+              <>
+                <img
+                  src={`https://picsum.photos/seed/demo_${activeLang}/1920/1080`}
+                  alt="Demo Video"
+                  className="w-full h-full object-cover opacity-80"
+                  referrerPolicy="no-referrer"
+                />
+                <div className="absolute inset-0 flex items-center justify-center bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity">
+                  <div className="w-20 h-20 bg-white flex items-center justify-center">
+                    <Play size={28} fill="black" />
+                  </div>
+                </div>
+              </>
+            )}
             <div className="absolute top-10 left-10 bg-purple-600 text-white px-4 py-2 text-[10px] font-mono font-bold uppercase tracking-[0.2em]">
               {activeLang} DUB ACTIVE
             </div>

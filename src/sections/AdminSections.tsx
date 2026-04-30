@@ -15,7 +15,7 @@ import {
   Upload,
   Video,
 } from "lucide-react";
-import type { PortfolioContentType, PortfolioItem } from "../lib/supabase";
+import type { PortfolioContentType, PortfolioItem, SiteVideo } from "../lib/supabase";
 
 type AdminDashboardProps = Readonly<{
   isConfigured: boolean;
@@ -23,6 +23,7 @@ type AdminDashboardProps = Readonly<{
   isAdmin: boolean;
   userEmail?: string;
   items: PortfolioItem[];
+  siteVideos: SiteVideo[];
   onSignIn: (email: string, password: string) => Promise<string>;
   onSignOut: () => Promise<void>;
   onClaimAdmin: () => Promise<string>;
@@ -33,6 +34,14 @@ type AdminDashboardProps = Readonly<{
     file: File,
     contentType: PortfolioContentType,
     variant: "media" | "thumbnail",
+    onProgress?: (progress: number) => void,
+  ) => Promise<string>;
+  onSaveSiteVideo: (video: EditableSiteVideo) => Promise<string>;
+  onDeleteSiteVideo: (id: string) => Promise<string>;
+  onUploadSiteVideo: (
+    file: File,
+    section: string,
+    variant: "video" | "thumbnail",
     onProgress?: (progress: number) => void,
   ) => Promise<string>;
 }>;
@@ -49,6 +58,15 @@ export type EditablePortfolioItem = {
   sort_order: number;
   is_featured: boolean;
   is_published: boolean;
+};
+
+export type EditableSiteVideo = {
+  id?: string;
+  section: string;
+  video_url: string;
+  thumbnail_url: string;
+  title: string;
+  description: string;
 };
 
 type DropVariant = "media" | "thumbnail";
@@ -194,6 +212,7 @@ export function AdminDashboardSection({
   isAdmin,
   userEmail,
   items,
+  siteVideos,
   onSignIn,
   onSignOut,
   onClaimAdmin,
@@ -201,12 +220,16 @@ export function AdminDashboardSection({
   onDeleteItem,
   onTogglePublished,
   onUploadFile,
+  onSaveSiteVideo,
+  onDeleteSiteVideo,
+  onUploadSiteVideo,
 }: AdminDashboardProps) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [status, setStatus] = useState<string | null>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [form, setForm] = useState<EditablePortfolioItem>(emptyForm);
+  const [siteVideoForm, setSiteVideoForm] = useState<EditableSiteVideo>({ section: "media_player", video_url: "", thumbnail_url: "", title: "", description: "" });
   const [dragTarget, setDragTarget] = useState<DropVariant | null>(null);
   const [uploadState, setUploadState] = useState<UploadState | null>(null);
   const mediaInputRef = useRef<HTMLInputElement | null>(null);
@@ -244,7 +267,7 @@ export function AdminDashboardSection({
     setStatus("Editor reset.");
   };
 
-  const handleFileUpload = async (file: File | undefined, variant: DropVariant) => {
+  const handleSiteVideoUpload = async (file: File | undefined, variant: "video" | "thumbnail") => {
     if (!file) {
       return;
     }
@@ -252,22 +275,22 @@ export function AdminDashboardSection({
     try {
       setIsSubmitting(true);
       setUploadState({ variant, fileName: file.name, progress: 0 });
-      setStatus(variant === "media" ? `Uploading media: ${file.name}` : `Uploading thumbnail: ${file.name}`);
+      setStatus(variant === "video" ? `Uploading video: ${file.name}` : `Uploading thumbnail: ${file.name}`);
 
-      const uploadedUrl = await onUploadFile(file, form.content_type, variant, (progress) => {
+      const uploadedUrl = await onUploadSiteVideo(file, siteVideoForm.section, variant, (progress) => {
         setUploadState({ variant, fileName: file.name, progress });
       });
 
-      setForm((current) => {
-        if (variant === "media") {
-          return { ...current, media_url: uploadedUrl };
+      setSiteVideoForm((current) => {
+        if (variant === "video") {
+          return { ...current, video_url: uploadedUrl };
         }
 
         return { ...current, thumbnail_url: uploadedUrl };
       });
 
       setUploadState({ variant, fileName: file.name, progress: 100 });
-      setStatus(variant === "media" ? "Media uploaded successfully." : "Thumbnail uploaded successfully.");
+      setStatus(variant === "video" ? "Video uploaded successfully." : "Thumbnail uploaded successfully.");
     } catch (error) {
       setUploadState(null);
       setStatus(error instanceof Error ? error.message : "Upload failed.");
@@ -479,6 +502,62 @@ export function AdminDashboardSection({
           </aside>
 
           <div className="space-y-6">
+            <div className="border border-white/10 bg-zinc-950/50 p-6">
+              <div className="mb-4 flex items-center justify-between gap-3">
+                <h2 className="text-xl font-semibold text-white">Media Player Videos</h2>
+                <p className="text-xs text-zinc-500">Add proof of concept videos</p>
+              </div>
+
+              <div className="grid gap-3">
+                <input value={siteVideoForm.title} onChange={(event) => setSiteVideoForm((current) => ({ ...current, title: event.target.value }))} placeholder="Video Title" className="border border-white/10 bg-black px-4 py-3 text-white" />
+                <textarea value={siteVideoForm.description} onChange={(event) => setSiteVideoForm((current) => ({ ...current, description: event.target.value }))} placeholder="Description (optional)" rows={2} className="border border-white/10 bg-black px-4 py-3 text-white" />
+
+                <div className="border border-white/10 bg-zinc-950/40 p-4">
+                  <label className="block text-sm font-medium text-white mb-2">YouTube URL</label>
+                  <input 
+                    value={siteVideoForm.video_url} 
+                    onChange={(event) => setSiteVideoForm((current) => ({ ...current, video_url: event.target.value }))} 
+                    placeholder="https://youtu.be/E8hBNvyR8p0" 
+                    className="w-full border border-white/10 bg-black px-4 py-3 text-white text-sm"
+                  />
+                  <p className="mt-2 text-xs text-zinc-400">Paste any YouTube link (youtu.be or youtube.com)</p>
+                </div>
+
+                <button
+                  onClick={() => handleAction(async () => {
+                    const message = await onSaveSiteVideo(siteVideoForm);
+                    setSiteVideoForm({ section: "media_player", video_url: "", thumbnail_url: "", title: "", description: "" });
+                    return message;
+                  })}
+                  disabled={isSubmitting || !siteVideoForm.video_url}
+                  className="inline-flex items-center justify-center gap-2 bg-white px-5 py-3 text-sm font-semibold text-black disabled:cursor-not-allowed disabled:bg-zinc-700 disabled:text-zinc-300"
+                >
+                  <Plus className="h-4 w-4" />
+                  {siteVideoForm.id ? "Update Video" : "Add Video"}
+                </button>
+              </div>
+
+              <div className="mt-6 space-y-3">
+                {siteVideos.map((video) => (
+                  <article key={video.id} className="border border-white/10 bg-black/30 p-4">
+                    <div className="flex flex-wrap items-start justify-between gap-3">
+                      <div>
+                        <h3 className="text-lg font-semibold text-white">{video.title || "Untitled"}</h3>
+                        <p className="mt-2 text-sm text-zinc-400">{video.description}</p>
+                        <p className="mt-2 text-xs text-zinc-500 truncate">{video.video_url}</p>
+                      </div>
+                    </div>
+                    <div className="mt-4 flex flex-wrap gap-2">
+                      <button onClick={() => handleAction(() => onDeleteSiteVideo(video.id))} className="inline-flex items-center gap-2 border border-rose-500/30 px-3 py-2 text-sm text-rose-300">
+                        <Trash2 className="h-4 w-4" />
+                        Delete
+                      </button>
+                    </div>
+                  </article>
+                ))}
+              </div>
+            </div>
+
             <div className="grid gap-6 2xl:grid-cols-[1.1fr_0.9fr]">
               <div className="border border-white/10 bg-black/30 p-6">
                 <div className="mb-4 flex items-center justify-between gap-3">

@@ -4,10 +4,10 @@ import {
   Hero,
 } from "../sections/HeroSections";
 import {
-  AIFirstSection,
-  CoreValueProp,
-  InteractiveDemo,
-} from "../sections/CapabilitySections";
+  PrivacyPolicy,
+  TermsOfService,
+  CookiePolicy,
+} from "../sections/LegalSections";
 import {
   BenefitsGrid,
   FeaturesGrid,
@@ -16,16 +16,8 @@ import {
 } from "../sections/PlatformSections";
 import {
   IndustryUseCases,
-  ImpactCaseStudies,
-  BlogSection,
 } from "../sections/MarketingSections";
 import {
-  InteractiveAIHuman,
-  InteractiveFeatures,
-  SecuritySection,
-} from "../sections/InteractiveSections";
-import {
-  Faq,
   FinalCTA,
   Footer,
 } from "../sections/ClosureSections";
@@ -39,23 +31,28 @@ import {
 import {
   AdminDashboardSection,
   type EditablePortfolioItem,
+  type EditableSiteVideo,
 } from "../sections/AdminSections";
-import type { PortfolioItem } from "../lib/supabase";
+import type { PortfolioItem, SiteVideo } from "../lib/supabase";
 
 type AppShellProps = Readonly<{
-  currentPage: "home" | "portfolio" | "admin";
+  currentPage: "home" | "portfolio" | "admin" | "privacy" | "terms" | "cookies";
   isScrolled: boolean;
   isContactModalOpen: boolean;
   isAdmin: boolean;
   isSupabaseConfigured: boolean;
   isPortfolioLoading: boolean;
   portfolioItems: PortfolioItem[];
+  siteVideos: SiteVideo[];
   userEmail?: string;
   onOpenContactModal: () => void;
   onCloseContactModal: () => void;
   onNavigateHome: () => void;
   onNavigatePortfolio: () => void;
   onNavigateAdmin: () => void;
+  onNavigatePrivacy: () => void;
+  onNavigateTerms: () => void;
+  onNavigateCookies: () => void;
   onSignIn: (email: string, password: string) => Promise<string>;
   onSignOut: () => Promise<void>;
   onClaimAdmin: () => Promise<string>;
@@ -68,6 +65,14 @@ type AppShellProps = Readonly<{
     variant: "media" | "thumbnail",
     onProgress?: (progress: number) => void,
   ) => Promise<string>;
+  onSaveSiteVideo: (video: EditableSiteVideo) => Promise<string>;
+  onDeleteSiteVideo: (id: string) => Promise<string>;
+  onUploadSiteVideo: (
+    file: File,
+    section: string,
+    variant: "video" | "thumbnail",
+    onProgress?: (progress: number) => void,
+  ) => Promise<string>;
 }>;
 
 export function AppShell({
@@ -78,12 +83,16 @@ export function AppShell({
   isSupabaseConfigured,
   isPortfolioLoading,
   portfolioItems,
+  siteVideos,
   userEmail,
   onOpenContactModal,
   onCloseContactModal,
   onNavigateHome,
   onNavigatePortfolio,
   onNavigateAdmin,
+  onNavigatePrivacy,
+  onNavigateTerms,
+  onNavigateCookies,
   onSignIn,
   onSignOut,
   onClaimAdmin,
@@ -91,9 +100,13 @@ export function AppShell({
   onDeleteItem,
   onTogglePublished,
   onUploadFile,
+  onSaveSiteVideo,
+  onDeleteSiteVideo,
+  onUploadSiteVideo,
 }: AppShellProps) {
   const isPortfolioPage = currentPage === "portfolio";
   const isAdminPage = currentPage === "admin";
+  const isLegalPage = ["privacy", "terms", "cookies"].includes(currentPage);
 
   return (
     <div className="min-h-screen bg-black text-zinc-300 selection:bg-purple-600 selection:text-white">
@@ -109,33 +122,10 @@ export function AppShell({
 
           <div className="hidden md:flex items-center gap-6 text-sm text-zinc-300">
             <button onClick={onNavigateHome} className="hover:text-white">Home</button>
-            <button onClick={onNavigatePortfolio} className="hover:text-white">Portfolio</button>
-            <button onClick={onNavigateAdmin} className="hover:text-white">Admin</button>
-            {!isAdminPage ? <button onClick={onOpenContactModal} className="hover:text-white">Contact</button> : null}
           </div>
 
           <div className="flex items-center gap-3">
-            {!isPortfolioPage ? (
-              <button
-                onClick={onNavigatePortfolio}
-                className="border border-white/20 px-5 py-2.5 text-sm font-medium tracking-tight text-white transition-all duration-300 hover:bg-white/10"
-              >
-                View Portfolio
-              </button>
-            ) : (
-              <button
-                onClick={onNavigateHome}
-                className="border border-white/20 px-5 py-2.5 text-sm font-medium tracking-tight text-white transition-all duration-300 hover:bg-white/10"
-              >
-                Home
-              </button>
-            )}
-            <button
-              onClick={isAdminPage ? onNavigateHome : onNavigateAdmin}
-              className="px-5 py-2.5 bg-white text-black text-sm font-medium tracking-tight hover:bg-purple-600 hover:text-white transition-all duration-300"
-            >
-              {isAdminPage ? "Exit Admin" : "Admin"}
-            </button>
+            {/* no top nav admin/contact buttons */}
           </div>
         </div>
       </nav>
@@ -148,6 +138,7 @@ export function AppShell({
             isAdmin={isAdmin}
             userEmail={userEmail}
             items={portfolioItems}
+            siteVideos={siteVideos}
             onSignIn={onSignIn}
             onSignOut={onSignOut}
             onClaimAdmin={onClaimAdmin}
@@ -155,6 +146,9 @@ export function AppShell({
             onDeleteItem={onDeleteItem}
             onTogglePublished={onTogglePublished}
             onUploadFile={onUploadFile}
+            onSaveSiteVideo={onSaveSiteVideo}
+            onDeleteSiteVideo={onDeleteSiteVideo}
+            onUploadSiteVideo={onUploadSiteVideo}
           />
         ) : isPortfolioPage ? (
           <>
@@ -163,16 +157,15 @@ export function AppShell({
             <MusicPlayerSection items={portfolioItems} isLoading={isPortfolioLoading} />
             <WebsiteLinksSection items={portfolioItems} isLoading={isPortfolioLoading} />
           </>
+        ) : currentPage === "privacy" ? (
+          <PrivacyPolicy onClose={onNavigateHome} />
+        ) : currentPage === "terms" ? (
+          <TermsOfService onClose={onNavigateHome} />
+        ) : currentPage === "cookies" ? (
+          <CookiePolicy onClose={onNavigateHome} />
         ) : (
           <>
-            <Hero onContactClick={onOpenContactModal} onPortfolioClick={onNavigatePortfolio} />
-            <CTASection
-              title="Ready to scale your global reach?"
-              subtitle="Join the world's leading media companies and creators who are scaling their reach with Quantum Climb."
-              onContactClick={onOpenContactModal}
-            />
-            <CoreValueProp />
-            <InteractiveDemo />
+            <Hero onContactClick={onOpenContactModal} onPortfolioClick={onNavigatePortfolio} siteVideos={siteVideos} />
             <BenefitsGrid />
             <FeaturesGrid />
             <TechnicalEdge />
@@ -183,30 +176,12 @@ export function AppShell({
             />
             <HowItWorks />
             <IndustryUseCases />
-            <AIFirstSection />
-            <ImpactCaseStudies />
-            <SecuritySection />
-            <CTASection
-              title="Advanced AI Solutions"
-              subtitle="Explore our specialized services: 3D Applications, AI Filmmaking, and AI Automation."
-              buttonText="Explore Services"
-              onContactClick={onOpenContactModal}
-            />
-            <BlogSection />
-            <InteractiveAIHuman onContactClick={onOpenContactModal} />
-            <InteractiveFeatures />
-            <CTASection
-              title="Ready to go global?"
-              subtitle="Join the world's most innovative companies using Quantum Climb to break language barriers."
-              onContactClick={onOpenContactModal}
-            />
-            <Faq />
             <FinalCTA onContactClick={onOpenContactModal} />
           </>
         )}
       </main>
 
-      {isPortfolioPage ? <PortfolioFooter /> : isAdminPage ? null : <Footer />}
+      {isPortfolioPage ? <PortfolioFooter /> : isAdminPage || isLegalPage ? null : <Footer onAdminClick={onNavigateAdmin} onPrivacyClick={onNavigatePrivacy} onTermsClick={onNavigateTerms} onCookiesClick={onNavigateCookies} />}
 
       <ContactModal isOpen={isContactModalOpen} onClose={onCloseContactModal} />
     </div>
