@@ -96,8 +96,8 @@ export function Footer({ onAdminClick, onPrivacyClick, onTermsClick, onCookiesCl
             </p>
             <div className="flex gap-6">
               <span className="text-zinc-500 transition-colors">X</span>
-              <a href="https://www.linkedin.com/in/quantumclimb/?isSelfProfile=true" target="_blank" rel="noreferrer" className="text-zinc-500 hover:text-white transition-colors">LinkedIn</a>
-              <span className="text-zinc-500 transition-colors">Instagram</span>
+              <a href="https://www.linkedin.com/in/quantumclimb/" target="_blank" rel="noreferrer" className="text-zinc-500 hover:text-white transition-colors">LinkedIn</a>
+              <a href="https://www.instagram.com/quantum.climb?igsh=MTNpbmV5OWJrdG84dQ==" target="_blank" rel="noreferrer" className="text-zinc-500 hover:text-white transition-colors">Instagram</a>
             </div>
           </div>
           <div>

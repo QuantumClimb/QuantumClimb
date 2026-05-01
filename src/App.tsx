@@ -562,7 +562,7 @@ export default function App() {
 
     if (file.size > resumableUploadThreshold) {
       // Use resumable upload for large files
-      return new Promise((resolve, reject) => {
+      return new Promise<string>((resolve, reject) => {
         const upload = new tus.Upload(file, {
           endpoint: getStorageResumableEndpoint(supabaseUrl),
           retryDelays: [0, 3000, 5000, 10000, 20000],

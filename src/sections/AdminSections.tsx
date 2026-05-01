@@ -70,9 +70,10 @@ export type EditableSiteVideo = {
 };
 
 type DropVariant = "media" | "thumbnail";
+type UploadVariant = DropVariant | "video";
 
 type UploadState = {
-  variant: DropVariant;
+  variant: UploadVariant;
   fileName: string;
   progress: number;
 };
@@ -265,6 +266,41 @@ export function AdminDashboardSection({
   const resetForm = () => {
     setForm(emptyForm);
     setStatus("Editor reset.");
+  };
+
+  const handleFileUpload = async (file: File | undefined, variant: DropVariant) => {
+    if (!file) {
+      return;
+    }
+
+    try {
+      setIsSubmitting(true);
+      setUploadState({ variant, fileName: file.name, progress: 0 });
+      setStatus(variant === "media" ? `Uploading media: ${file.name}` : `Uploading thumbnail: ${file.name}`);
+
+      const uploadedUrl = await onUploadFile(file, form.content_type, variant, (progress) => {
+        setUploadState({ variant, fileName: file.name, progress });
+      });
+
+      setForm((current) => {
+        if (variant === "media") {
+          return { ...current, media_url: uploadedUrl };
+        }
+
+        return { ...current, thumbnail_url: uploadedUrl };
+      });
+
+      setUploadState({ variant, fileName: file.name, progress: 100 });
+      setStatus(variant === "media" ? "Media uploaded successfully." : "Thumbnail uploaded successfully.");
+    } catch (error) {
+      setUploadState(null);
+      setStatus(error instanceof Error ? error.message : "Upload failed.");
+    } finally {
+      setIsSubmitting(false);
+      globalThis.setTimeout(() => {
+        setUploadState((current) => (current?.fileName === file.name ? null : current));
+      }, 1200);
+    }
   };
 
   const handleSiteVideoUpload = async (file: File | undefined, variant: "video" | "thumbnail") => {

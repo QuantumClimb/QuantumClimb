@@ -32,8 +32,6 @@ export function Hero({ onContactClick, onPortfolioClick, siteVideos }: ContactAc
             </p>
           </Reveal>
 
-          <Reveal type="fade-up" delay={0.3} className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-16">
-          </Reveal>
         </div>
 
         {/* Media Player */}
