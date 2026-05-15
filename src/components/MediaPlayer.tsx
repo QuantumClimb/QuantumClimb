@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useRef } from "react";
 import { extractYouTubeVideoId, getYouTubeEmbedUrl } from "../lib/supabase";
 import type { SiteVideo } from "../lib/supabase";
 
@@ -6,11 +6,20 @@ export function MediaPlayer({ videos }: { videos: SiteVideo[] }) {
   const [selectedVideo, setSelectedVideo] = useState<SiteVideo | null>(
     videos.length > 0 ? videos[0] : null
   );
+  const playerRef = useRef<HTMLDivElement>(null);
+
+  const handleVideoSelect = (video: SiteVideo) => {
+    setSelectedVideo(video);
+    // On mobile, the playlist is below the player, so scroll up to show the video
+    if (window.innerWidth < 1024) { // 1024 is the 'lg' breakpoint in tailwind/common configs
+      playerRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
+    }
+  };
 
   const videoId = selectedVideo?.video_url ? extractYouTubeVideoId(selectedVideo.video_url) : null;
 
   return (
-    <div className="bg-black border border-white/10 overflow-hidden">
+    <div ref={playerRef} className="bg-black border border-white/10 overflow-hidden scroll-mt-24">
       <div className="grid grid-cols-1 lg:grid-cols-[1fr_320px] gap-0 h-full">
         {/* Main Video Player */}
         <div className="flex flex-col">
@@ -47,7 +56,7 @@ export function MediaPlayer({ videos }: { videos: SiteVideo[] }) {
         <div className="border-l border-white/10 flex flex-col bg-zinc-950/50 overflow-hidden">
           <div className="p-4 border-b border-white/10">
             <p className="text-xs uppercase tracking-[0.25em] text-purple-300 font-semibold">
-              Proof of Concepts
+              Select video to begin
             </p>
           </div>
 
@@ -67,7 +76,7 @@ export function MediaPlayer({ videos }: { videos: SiteVideo[] }) {
                   return (
                     <button
                       key={video.id}
-                      onClick={() => setSelectedVideo(video)}
+                      onClick={() => handleVideoSelect(video)}
                       className={`w-full text-left overflow-hidden transition-colors rounded ${
                         isSelected
                           ? "bg-purple-600/20 border border-purple-600/40"

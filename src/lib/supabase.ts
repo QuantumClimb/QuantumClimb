@@ -28,6 +28,7 @@ export type SiteVideo = {
   thumbnail_url: string | null;
   title: string | null;
   description: string | null;
+  sort_order: number;
   created_at: string;
   updated_at: string;
 };

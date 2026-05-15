@@ -67,6 +67,7 @@ export type EditableSiteVideo = {
   thumbnail_url: string;
   title: string;
   description: string;
+  sort_order: number;
 };
 
 type DropVariant = "media" | "thumbnail";
@@ -230,7 +231,14 @@ export function AdminDashboardSection({
   const [status, setStatus] = useState<string | null>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [form, setForm] = useState<EditablePortfolioItem>(emptyForm);
-  const [siteVideoForm, setSiteVideoForm] = useState<EditableSiteVideo>({ section: "media_player", video_url: "", thumbnail_url: "", title: "", description: "" });
+  const [siteVideoForm, setSiteVideoForm] = useState<EditableSiteVideo>({ 
+    section: "media_player", 
+    video_url: "", 
+    thumbnail_url: "", 
+    title: "", 
+    description: "",
+    sort_order: 0
+  });
   const [dragTarget, setDragTarget] = useState<DropVariant | null>(null);
   const [uploadState, setUploadState] = useState<UploadState | null>(null);
   const mediaInputRef = useRef<HTMLInputElement | null>(null);
@@ -341,6 +349,19 @@ export function AdminDashboardSection({
   const quickUpdate = async (item: PortfolioItem, patch: Partial<EditablePortfolioItem>) => {
     const editable = toEditableItem(item);
     return onSaveItem({ ...editable, ...patch });
+  };
+
+  const quickUpdateSiteVideo = async (video: SiteVideo, patch: Partial<EditableSiteVideo>) => {
+    return onSaveSiteVideo({
+      id: video.id,
+      section: video.section,
+      video_url: video.video_url ?? "",
+      thumbnail_url: video.thumbnail_url ?? "",
+      title: video.title ?? "",
+      description: video.description ?? "",
+      sort_order: video.sort_order,
+      ...patch,
+    });
   };
 
   const mediaAccept = getAcceptValue(form.content_type);
@@ -562,7 +583,14 @@ export function AdminDashboardSection({
                 <button
                   onClick={() => handleAction(async () => {
                     const message = await onSaveSiteVideo(siteVideoForm);
-                    setSiteVideoForm({ section: "media_player", video_url: "", thumbnail_url: "", title: "", description: "" });
+                    setSiteVideoForm({ 
+                      section: "media_player", 
+                      video_url: "", 
+                      thumbnail_url: "", 
+                      title: "", 
+                      description: "",
+                      sort_order: 0
+                    });
                     return message;
                   })}
                   disabled={isSubmitting || !siteVideoForm.video_url}
@@ -579,11 +607,20 @@ export function AdminDashboardSection({
                     <div className="flex flex-wrap items-start justify-between gap-3">
                       <div>
                         <h3 className="text-lg font-semibold text-white">{video.title || "Untitled"}</h3>
+                        <p className="mt-1 text-xs text-zinc-500">Order {video.sort_order}</p>
                         <p className="mt-2 text-sm text-zinc-400">{video.description}</p>
                         <p className="mt-2 text-xs text-zinc-500 truncate">{video.video_url}</p>
                       </div>
                     </div>
                     <div className="mt-4 flex flex-wrap gap-2">
+                      <button onClick={() => handleAction(() => quickUpdateSiteVideo(video, { sort_order: Math.max(0, video.sort_order - 1) }))} className="inline-flex items-center gap-2 border border-white/10 px-3 py-2 text-sm text-white">
+                        <ArrowUp className="h-4 w-4" />
+                        Up
+                      </button>
+                      <button onClick={() => handleAction(() => quickUpdateSiteVideo(video, { sort_order: video.sort_order + 1 }))} className="inline-flex items-center gap-2 border border-white/10 px-3 py-2 text-sm text-white">
+                        <ArrowDown className="h-4 w-4" />
+                        Down
+                      </button>
                       <button onClick={() => handleAction(() => onDeleteSiteVideo(video.id))} className="inline-flex items-center gap-2 border border-rose-500/30 px-3 py-2 text-sm text-rose-300">
                         <Trash2 className="h-4 w-4" />
                         Delete

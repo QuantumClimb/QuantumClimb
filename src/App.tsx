@@ -137,6 +137,7 @@ export default function App() {
       const { data, error } = await supabase
         .from("site_videos")
         .select("*")
+        .order("sort_order", { ascending: true })
         .order("section");
 
       if (error) {
@@ -502,6 +503,7 @@ export default function App() {
       thumbnail_url: video.thumbnail_url || null,
       title: video.title || null,
       description: video.description || null,
+      sort_order: video.sort_order ?? 0,
     };
 
     if (video.id) {

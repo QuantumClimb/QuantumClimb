@@ -1,5 +1,5 @@
 import { ArrowUpRight, ExternalLink, Film, Globe, Headphones, ImageIcon, PlayCircle } from "lucide-react";
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useState, useRef } from "react";
 import type { PortfolioItem } from "../lib/supabase";
 
 type ContactClickProps = Readonly<{
@@ -307,6 +307,14 @@ export function MusicPlayerSection({ items, isLoading }: PortfolioListProps) {
     [items],
   );
   const [activeIndex, setActiveIndex] = useState(0);
+  const playerRef = useRef<HTMLDivElement>(null);
+
+  const handleTrackSelect = (index: number) => {
+    setActiveIndex(index);
+    if (window.innerWidth < 1024) {
+      playerRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
+    }
+  };
 
   useEffect(() => {
     setActiveIndex(0);
@@ -326,7 +334,7 @@ export function MusicPlayerSection({ items, isLoading }: PortfolioListProps) {
         </div>
 
         <div className="grid gap-6 lg:grid-cols-[0.95fr_1.05fr]">
-          <div className="border border-white/10 bg-zinc-950/70 p-6">
+          <div ref={playerRef} className="border border-white/10 bg-zinc-950/70 p-6 scroll-mt-24">
             {isLoading ? (
               <p className="text-zinc-400">Loading music previews...</p>
             ) : activeTrack ? (
@@ -364,7 +372,7 @@ export function MusicPlayerSection({ items, isLoading }: PortfolioListProps) {
             {(musicItems.length > 0 ? musicItems : placeholderTracks).map((track, index) => (
               <button
                 key={"id" in track ? track.id : track.title}
-                onClick={() => setActiveIndex(index)}
+                onClick={() => handleTrackSelect(index)}
                 className={`flex w-full items-center justify-between border px-4 py-4 text-left transition ${activeIndex === index ? "border-purple-500 bg-purple-500/10" : "border-transparent hover:border-white/10 hover:bg-white/5"}`}
               >
                 <div>
