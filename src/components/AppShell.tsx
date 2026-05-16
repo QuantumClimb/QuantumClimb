@@ -170,7 +170,7 @@ export function AppShell({
             <FeaturesGrid />
             <TechnicalEdge />
             <CTASection
-              title="Experience the peak of AI localization"
+              title="Unlock your global reach"
               subtitle="Our enterprise-grade platform is designed for high-throughput media pipelines and studio-quality output."
               onContactClick={onOpenContactModal}
             />

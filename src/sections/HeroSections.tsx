@@ -20,8 +20,8 @@ export function Hero({ onContactClick, onPortfolioClick, siteVideos }: ContactAc
 
           <Reveal type="mask" className="mb-8">
             <h1 className="text-6xl md:text-[120px] font-medium tracking-tighter text-white leading-[0.82] uppercase">
-              The Peak of <br />
-              <span className="text-zinc-500 italic font-serif">Localization</span>
+              Unlock <br />
+              <span className="text-zinc-500 italic font-serif">the world</span>
             </h1>
           </Reveal>
 
