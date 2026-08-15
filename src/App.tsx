@@ -12,7 +12,7 @@ import {
 } from "./lib/supabase";
 import type { EditablePortfolioItem, EditableSiteVideo } from "./sections/AdminSections";
 
-type PageView = "home" | "portfolio" | "admin" | "privacy" | "terms" | "cookies";
+type PageView = "home" | "ai-dubbing" | "ai-video" | "web-dev" | "portfolio" | "admin" | "privacy" | "terms" | "cookies";
 
 function getCurrentPage(): PageView {
   if (globalThis.window === undefined) {
@@ -20,7 +20,7 @@ function getCurrentPage(): PageView {
   }
 
   const page = new URLSearchParams(globalThis.location.search).get("page");
-  if (["admin", "privacy", "terms", "cookies"].includes(page ?? "")) {
+  if (["ai-dubbing", "ai-video", "web-dev", "admin", "privacy", "terms", "cookies"].includes(page ?? "")) {
     return page as PageView;
   }
 
@@ -624,6 +624,9 @@ export default function App() {
     onOpenContactModal: openContactModal,
     onCloseContactModal: closeContactModal,
     onNavigateHome: () => navigateToPage("home"),
+    onNavigateAIDubbing: () => navigateToPage("ai-dubbing"),
+    onNavigateAIVideo: () => navigateToPage("ai-video"),
+    onNavigateWebDev: () => navigateToPage("web-dev"),
     onNavigatePortfolio: () => navigateToPage("portfolio"),
     onNavigateAdmin: () => navigateToPage("admin"),
     onNavigatePrivacy: () => navigateToPage("privacy"),

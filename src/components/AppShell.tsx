@@ -1,26 +1,14 @@
 import { ContactModal } from "./ContactModal";
-import {
-  CTASection,
-  Hero,
-} from "../sections/HeroSections";
+import { Footer } from "../sections/ClosureSections";
+import { HomePage } from "../pages/HomePage";
+import { AIDubbingPage } from "../pages/AIDubbingPage";
+import { AIVideoPage } from "../pages/AIVideoPage";
+import { WebDevPage } from "../pages/WebDevPage";
 import {
   PrivacyPolicy,
   TermsOfService,
   CookiePolicy,
 } from "../sections/LegalSections";
-import {
-  BenefitsGrid,
-  FeaturesGrid,
-  HowItWorks,
-  TechnicalEdge,
-} from "../sections/PlatformSections";
-import {
-  IndustryUseCases,
-} from "../sections/MarketingSections";
-import {
-  FinalCTA,
-  Footer,
-} from "../sections/ClosureSections";
 import {
   ImageGallerySection,
   MusicPlayerSection,
@@ -36,7 +24,7 @@ import {
 import type { PortfolioItem, SiteVideo } from "../lib/supabase";
 
 type AppShellProps = Readonly<{
-  currentPage: "home" | "portfolio" | "admin" | "privacy" | "terms" | "cookies";
+  currentPage: "home" | "ai-dubbing" | "ai-video" | "web-dev" | "portfolio" | "admin" | "privacy" | "terms" | "cookies";
   isScrolled: boolean;
   isContactModalOpen: boolean;
   isAdmin: boolean;
@@ -48,6 +36,9 @@ type AppShellProps = Readonly<{
   onOpenContactModal: () => void;
   onCloseContactModal: () => void;
   onNavigateHome: () => void;
+  onNavigateAIDubbing: () => void;
+  onNavigateAIVideo: () => void;
+  onNavigateWebDev: () => void;
   onNavigatePortfolio: () => void;
   onNavigateAdmin: () => void;
   onNavigatePrivacy: () => void;
@@ -88,6 +79,9 @@ export function AppShell({
   onOpenContactModal,
   onCloseContactModal,
   onNavigateHome,
+  onNavigateAIDubbing,
+  onNavigateAIVideo,
+  onNavigateWebDev,
   onNavigatePortfolio,
   onNavigateAdmin,
   onNavigatePrivacy,
@@ -106,6 +100,9 @@ export function AppShell({
 }: AppShellProps) {
   const isPortfolioPage = currentPage === "portfolio";
   const isAdminPage = currentPage === "admin";
+  const isAIDubbingPage = currentPage === "ai-dubbing";
+  const isAIVideoPage = currentPage === "ai-video";
+  const isWebDevPage = currentPage === "web-dev";
   const isLegalPage = ["privacy", "terms", "cookies"].includes(currentPage);
 
   return (
@@ -121,7 +118,10 @@ export function AppShell({
           </button>
 
           <div className="hidden md:flex items-center gap-6 text-sm text-zinc-300">
-            <button onClick={onNavigateHome} className="hover:text-white">Home</button>
+            <button onClick={onNavigateHome} className={`hover:text-white ${currentPage === "home" ? "text-white font-medium" : ""}`}>Agency</button>
+            <button onClick={onNavigateAIDubbing} className={`hover:text-white ${isAIDubbingPage ? "text-white font-medium" : ""}`}>AI Dubbing</button>
+            <button onClick={onNavigateAIVideo} className={`hover:text-white ${isAIVideoPage ? "text-white font-medium" : ""}`}>AI Video</button>
+            <button onClick={onNavigateWebDev} className={`hover:text-white ${isWebDevPage ? "text-white font-medium" : ""}`}>Web Dev</button>
           </div>
 
           <div className="flex items-center gap-3">
@@ -163,21 +163,23 @@ export function AppShell({
           <TermsOfService onClose={onNavigateHome} />
         ) : currentPage === "cookies" ? (
           <CookiePolicy onClose={onNavigateHome} />
+        ) : isAIDubbingPage ? (
+          <AIDubbingPage 
+            onOpenContactModal={onOpenContactModal} 
+            onNavigatePortfolio={onNavigatePortfolio} 
+            siteVideos={siteVideos} 
+          />
+        ) : isAIVideoPage ? (
+          <AIVideoPage onOpenContactModal={onOpenContactModal} />
+        ) : isWebDevPage ? (
+          <WebDevPage onOpenContactModal={onOpenContactModal} />
         ) : (
-          <>
-            <Hero onContactClick={onOpenContactModal} onPortfolioClick={onNavigatePortfolio} siteVideos={siteVideos} />
-            <BenefitsGrid />
-            <FeaturesGrid />
-            <TechnicalEdge />
-            <CTASection
-              title="Unlock your global reach"
-              subtitle="Our enterprise-grade platform is designed for high-throughput media pipelines and studio-quality output."
-              onContactClick={onOpenContactModal}
-            />
-            <HowItWorks />
-            <IndustryUseCases />
-            <FinalCTA onContactClick={onOpenContactModal} />
-          </>
+          <HomePage 
+            onOpenContactModal={onOpenContactModal} 
+            onNavigateAIDubbing={onNavigateAIDubbing} 
+            onNavigateAIVideo={onNavigateAIVideo}
+            onNavigateWebDev={onNavigateWebDev}
+          />
         )}
       </main>
 
