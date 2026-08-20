@@ -53,7 +53,7 @@ type AppShellProps = Readonly<{
   onUploadFile: (
     file: File,
     contentType: PortfolioItem["content_type"],
-    variant: "media" | "thumbnail",
+    variant: "media" | "thumbnail" | "logo",
     onProgress?: (progress: number) => void,
   ) => Promise<string>;
   onSaveSiteVideo: (video: EditableSiteVideo) => Promise<string>;

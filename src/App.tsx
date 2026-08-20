@@ -346,14 +346,14 @@ export default function App() {
   const uploadPortfolioFile = async (
     file: File,
     contentType: PortfolioItem["content_type"],
-    variant: "media" | "thumbnail",
+    variant: "media" | "thumbnail" | "logo",
     onProgress?: (progress: number) => void,
   ) => {
     if (!supabase || !session?.user) {
       throw new Error("Admin access is required.");
     }
 
-    const effectiveType = variant === "thumbnail" ? "image" : contentType;
+    const effectiveType = (variant === "thumbnail" || variant === "logo") ? "image" : contentType;
     const bucket = getBucketForContentType(effectiveType);
     const filePath = `${session.user.id}/${Date.now()}-${sanitizeFileName(file.name)}`;
     const maxSize = uploadSizeLimits[effectiveType as keyof typeof uploadSizeLimits];

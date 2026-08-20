@@ -1,4 +1,4 @@
-import { useMemo, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import {
   ArrowDown,
   ArrowUp,
@@ -33,7 +33,7 @@ type AdminDashboardProps = Readonly<{
   onUploadFile: (
     file: File,
     contentType: PortfolioContentType,
-    variant: "media" | "thumbnail",
+    variant: "media" | "thumbnail" | "logo",
     onProgress?: (progress: number) => void,
   ) => Promise<string>;
   onSaveSiteVideo: (video: EditableSiteVideo) => Promise<string>;
@@ -245,10 +245,12 @@ export function AdminDashboardSection({
     description: "",
     sort_order: 0
   });
+  const [activeTab, setActiveTab] = useState<"site-videos" | "dubbing-media" | "websites">("dubbing-media");
   const [dragTarget, setDragTarget] = useState<DropVariant | null>(null);
   const [uploadState, setUploadState] = useState<UploadState | null>(null);
   const mediaInputRef = useRef<HTMLInputElement | null>(null);
   const thumbnailInputRef = useRef<HTMLInputElement | null>(null);
+  const logoInputRef = useRef<HTMLInputElement | null>(null);
 
   const groupedCount = useMemo(() => ({
     video: items.filter((item) => item.content_type === "video").length,
@@ -259,6 +261,24 @@ export function AdminDashboardSection({
 
   const sortedItems = useMemo(() => sortItems(items), [items]);
   const featuredItems = useMemo(() => sortedItems.filter((item) => item.is_featured), [sortedItems]);
+
+  useEffect(() => {
+    if (activeTab === "websites") {
+      setForm((current) => {
+        if (current.content_type !== "website") {
+          return { ...emptyForm, content_type: "website" };
+        }
+        return current;
+      });
+    } else if (activeTab === "dubbing-media") {
+      setForm((current) => {
+        if (current.content_type === "website") {
+          return { ...emptyForm, content_type: "video" };
+        }
+        return current;
+      });
+    }
+  }, [activeTab]);
 
   const handleAction = async (action: () => Promise<string>) => {
     try {
@@ -275,6 +295,27 @@ export function AdminDashboardSection({
   const startEditing = (item: PortfolioItem) => {
     setForm(toEditableItem(item));
     setStatus(`Editing ${item.title}`);
+    if (item.content_type === "website") {
+      setActiveTab("websites");
+    } else {
+      setActiveTab("dubbing-media");
+    }
+    globalThis.scrollTo({ top: 0, behavior: "smooth" });
+  };
+
+  const startEditingSiteVideo = (video: SiteVideo) => {
+    setSiteVideoForm({
+      id: video.id,
+      section: video.section,
+      video_url: video.video_url ?? "",
+      thumbnail_url: video.thumbnail_url ?? "",
+      title: video.title ?? "",
+      description: video.description ?? "",
+      sort_order: video.sort_order,
+    });
+    setStatus(`Editing site video: ${video.title || "Untitled"}`);
+    setActiveTab("site-videos");
+    globalThis.scrollTo({ top: 0, behavior: "smooth" });
   };
 
   const resetForm = () => {
@@ -290,7 +331,7 @@ export function AdminDashboardSection({
     try {
       setIsSubmitting(true);
       setUploadState({ variant, fileName: file.name, progress: 0 });
-      setStatus(variant === "media" ? `Uploading media: ${file.name}` : `Uploading thumbnail: ${file.name}`);
+      setStatus(variant === "media" ? `Uploading media: ${file.name}` : variant === "logo" ? `Uploading logo: ${file.name}` : `Uploading thumbnail: ${file.name}`);
 
       const uploadedUrl = await onUploadFile(file, form.content_type, variant, (progress) => {
         setUploadState({ variant, fileName: file.name, progress });
@@ -300,12 +341,14 @@ export function AdminDashboardSection({
         if (variant === "media") {
           return { ...current, media_url: uploadedUrl };
         }
-
+        if (variant === "logo") {
+          return { ...current, logo_url: uploadedUrl };
+        }
         return { ...current, thumbnail_url: uploadedUrl };
       });
 
       setUploadState({ variant, fileName: file.name, progress: 100 });
-      setStatus(variant === "media" ? "Media uploaded successfully." : "Thumbnail uploaded successfully.");
+      setStatus(variant === "media" ? "Media uploaded successfully." : variant === "logo" ? "Logo uploaded successfully." : "Thumbnail uploaded successfully.");
     } catch (error) {
       setUploadState(null);
       setStatus(error instanceof Error ? error.message : "Upload failed.");
@@ -426,7 +469,7 @@ export function AdminDashboardSection({
       <button
         type="button"
         disabled={isSubmitting}
-        onClick={() => (variant === "media" ? mediaInputRef.current?.click() : thumbnailInputRef.current?.click())}
+        onClick={() => (variant === "media" ? mediaInputRef.current?.click() : variant === "logo" ? logoInputRef.current?.click() : thumbnailInputRef.current?.click())}
         onDragOver={(event) => {
           event.preventDefault();
           setDragTarget(variant);
@@ -453,7 +496,7 @@ export function AdminDashboardSection({
           <p className="mt-2 text-[11px] uppercase tracking-[0.25em] text-purple-300">Drag, drop, or click</p>
         </div>
         <input
-          ref={variant === "media" ? mediaInputRef : thumbnailInputRef}
+          ref={variant === "media" ? mediaInputRef : variant === "logo" ? logoInputRef : thumbnailInputRef}
           type="file"
           className="hidden"
           accept={accept}
@@ -604,97 +647,63 @@ export function AdminDashboardSection({
           </aside>
 
           <div className="space-y-6">
-            <div className="border border-white/10 bg-zinc-950/50 p-6">
-              <div className="mb-4 flex items-center justify-between gap-3">
-                <h2 className="text-xl font-semibold text-white">Media Player Videos</h2>
-                <p className="text-xs text-zinc-500">Add proof of concept videos</p>
-              </div>
-
-              <div className="grid gap-3">
-                <input value={siteVideoForm.title} onChange={(event) => setSiteVideoForm((current) => ({ ...current, title: event.target.value }))} placeholder="Video Title" className="border border-white/10 bg-black px-4 py-3 text-white" />
-                <textarea value={siteVideoForm.description} onChange={(event) => setSiteVideoForm((current) => ({ ...current, description: event.target.value }))} placeholder="Description (optional)" rows={2} className="border border-white/10 bg-black px-4 py-3 text-white" />
-
-                <div className="border border-white/10 bg-zinc-950/40 p-4">
-                  <label className="block text-sm font-medium text-white mb-2">YouTube URL</label>
-                  <input 
-                    value={siteVideoForm.video_url} 
-                    onChange={(event) => setSiteVideoForm((current) => ({ ...current, video_url: event.target.value }))} 
-                    placeholder="https://youtu.be/E8hBNvyR8p0" 
-                    className="w-full border border-white/10 bg-black px-4 py-3 text-white text-sm"
-                  />
-                  <p className="mt-2 text-xs text-zinc-400">Paste any YouTube link (youtu.be or youtube.com)</p>
-                </div>
-
-                <button
-                  onClick={() => handleAction(async () => {
-                    const message = await onSaveSiteVideo(siteVideoForm);
-                    setSiteVideoForm({ 
-                      section: "media_player", 
-                      video_url: "", 
-                      thumbnail_url: "", 
-                      title: "", 
-                      description: "",
-                      sort_order: 0
-                    });
-                    return message;
-                  })}
-                  disabled={isSubmitting || !siteVideoForm.video_url}
-                  className="inline-flex items-center justify-center gap-2 bg-white px-5 py-3 text-sm font-semibold text-black disabled:cursor-not-allowed disabled:bg-zinc-700 disabled:text-zinc-300"
-                >
-                  <Plus className="h-4 w-4" />
-                  {siteVideoForm.id ? "Update Video" : "Add Video"}
-                </button>
-              </div>
-
-              <div className="mt-6 space-y-3">
-                {siteVideos.map((video) => (
-                  <article key={video.id} className="border border-white/10 bg-black/30 p-4">
-                    <div className="flex flex-wrap items-start justify-between gap-3">
-                      <div>
-                        <h3 className="text-lg font-semibold text-white">{video.title || "Untitled"}</h3>
-                        <p className="mt-1 text-xs text-zinc-500">Order {video.sort_order}</p>
-                        <p className="mt-2 text-sm text-zinc-400">{video.description}</p>
-                        <p className="mt-2 text-xs text-zinc-500 truncate">{video.video_url}</p>
-                      </div>
-                    </div>
-                    <div className="mt-4 flex flex-wrap gap-2">
-                      <button onClick={() => handleAction(() => quickUpdateSiteVideo(video, { sort_order: Math.max(0, video.sort_order - 1) }))} className="inline-flex items-center gap-2 border border-white/10 px-3 py-2 text-sm text-white">
-                        <ArrowUp className="h-4 w-4" />
-                        Up
-                      </button>
-                      <button onClick={() => handleAction(() => quickUpdateSiteVideo(video, { sort_order: video.sort_order + 1 }))} className="inline-flex items-center gap-2 border border-white/10 px-3 py-2 text-sm text-white">
-                        <ArrowDown className="h-4 w-4" />
-                        Down
-                      </button>
-                      <button onClick={() => handleAction(() => onDeleteSiteVideo(video.id))} className="inline-flex items-center gap-2 border border-rose-500/30 px-3 py-2 text-sm text-rose-300">
-                        <Trash2 className="h-4 w-4" />
-                        Delete
-                      </button>
-                    </div>
-                  </article>
-                ))}
-              </div>
+            {/* Tabs Navigation */}
+            <div className="flex border-b border-white/10 overflow-x-auto">
+              <button
+                onClick={() => setActiveTab("dubbing-media")}
+                className={`px-6 py-3 text-sm font-semibold tracking-wider uppercase border-b-2 transition-colors whitespace-nowrap ${
+                  activeTab === "dubbing-media"
+                    ? "border-purple-500 text-white font-bold bg-white/5"
+                    : "border-transparent text-zinc-400 hover:text-white"
+                }`}
+              >
+                Dubbing & Media Portfolio
+              </button>
+              <button
+                onClick={() => setActiveTab("websites")}
+                className={`px-6 py-3 text-sm font-semibold tracking-wider uppercase border-b-2 transition-colors whitespace-nowrap ${
+                  activeTab === "websites"
+                    ? "border-purple-500 text-white font-bold bg-white/5"
+                    : "border-transparent text-zinc-400 hover:text-white"
+                }`}
+              >
+                Website Portfolio
+              </button>
+              <button
+                onClick={() => setActiveTab("site-videos")}
+                className={`px-6 py-3 text-sm font-semibold tracking-wider uppercase border-b-2 transition-colors whitespace-nowrap ${
+                  activeTab === "site-videos"
+                    ? "border-purple-500 text-white font-bold bg-white/5"
+                    : "border-transparent text-zinc-400 hover:text-white"
+                }`}
+              >
+                Showcase Videos (Media Player)
+              </button>
             </div>
 
-            <div className="grid gap-6 2xl:grid-cols-[1.1fr_0.9fr]">
-              <div className="border border-white/10 bg-black/30 p-6">
-                <div className="mb-4 flex items-center justify-between gap-3">
-                  <h2 className="text-xl font-semibold text-white">{form.id ? "Edit item" : "Create new item"}</h2>
-                  <button onClick={resetForm} className="text-sm text-zinc-400 hover:text-white">Reset</button>
-                </div>
+            {/* Tab 1: Dubbing & Media Portfolio */}
+            {activeTab === "dubbing-media" && (
+              <>
+                <div className="grid gap-6 2xl:grid-cols-[1.1fr_0.9fr]">
+                  <div className="border border-white/10 bg-black/30 p-6">
+                    <div className="mb-4 flex items-center justify-between gap-3">
+                      <h2 className="text-xl font-semibold text-white">{form.id ? "Edit Item" : "Create New Item"}</h2>
+                      <button onClick={resetForm} className="text-sm text-zinc-400 hover:text-white">Reset</button>
+                    </div>
 
-                <div className="grid gap-3">
-                  <select value={form.content_type} onChange={(event) => setForm((current) => ({ ...current, content_type: event.target.value as EditablePortfolioItem["content_type"] }))} className="border border-white/10 bg-black px-4 py-3 text-white">
-                    <option value="video">Video</option>
-                    <option value="image">Image</option>
-                    <option value="music">Music</option>
-                    <option value="website">Website</option>
-                  </select>
-                  <input value={form.title} onChange={(event) => setForm((current) => ({ ...current, title: event.target.value }))} placeholder="Title" className="border border-white/10 bg-black px-4 py-3 text-white" />
-                  <textarea value={form.description} onChange={(event) => setForm((current) => ({ ...current, description: event.target.value }))} placeholder="Description" rows={4} className="border border-white/10 bg-black px-4 py-3 text-white" />
+                    <div className="grid gap-3">
+                      <select 
+                        value={form.content_type} 
+                        onChange={(event) => setForm((current) => ({ ...current, content_type: event.target.value as EditablePortfolioItem["content_type"] }))} 
+                        className="border border-white/10 bg-black px-4 py-3 text-white"
+                      >
+                        <option value="video">Video</option>
+                        <option value="image">Image</option>
+                        <option value="music">Music</option>
+                      </select>
+                      <input value={form.title} onChange={(event) => setForm((current) => ({ ...current, title: event.target.value }))} placeholder="Title" className="border border-white/10 bg-black px-4 py-3 text-white" />
+                      <textarea value={form.description} onChange={(event) => setForm((current) => ({ ...current, description: event.target.value }))} placeholder="Description" rows={4} className="border border-white/10 bg-black px-4 py-3 text-white" />
 
-                  {form.content_type !== "website" ? (
-                    <>
                       <div className="grid gap-3 md:grid-cols-2">
                         {renderUploadZone("media", "Main media", "Upload the primary file for this item.", form.media_url, mediaAccept)}
                         {renderUploadZone("thumbnail", "Thumbnail", "Add a cover image for cards and previews.", form.thumbnail_url, "image/*")}
@@ -716,144 +725,371 @@ export function AdminDashboardSection({
                           <p className="mt-2 text-xs text-zinc-400">{uploadState.fileName}</p>
                         </div>
                       ) : null}
-                    </>
-                  ) : null}
 
-                  <input value={form.media_url} onChange={(event) => setForm((current) => ({ ...current, media_url: event.target.value }))} placeholder="Media URL" className="border border-white/10 bg-black px-4 py-3 text-white" />
-                  <input value={form.thumbnail_url} onChange={(event) => setForm((current) => ({ ...current, thumbnail_url: event.target.value }))} placeholder="Thumbnail URL" className="border border-white/10 bg-black px-4 py-3 text-white" />
-                  
-                  <div className="flex gap-2">
-                    <input value={form.external_url} onChange={(event) => setForm((current) => ({ ...current, external_url: event.target.value }))} placeholder="External URL" className="flex-1 border border-white/10 bg-black px-4 py-3 text-white" />
-                    {form.content_type === "website" && (
-                      <button 
-                        onClick={fetchMetadata}
-                        disabled={isSubmitting || !form.external_url}
-                        type="button"
-                        className="bg-purple-600/20 text-purple-300 border border-purple-500/30 px-4 py-3 text-sm font-medium transition hover:bg-purple-600/40 disabled:opacity-50 disabled:cursor-not-allowed whitespace-nowrap"
+                      <input value={form.media_url} onChange={(event) => setForm((current) => ({ ...current, media_url: event.target.value }))} placeholder="Media URL" className="border border-white/10 bg-black px-4 py-3 text-white" />
+                      <input value={form.thumbnail_url} onChange={(event) => setForm((current) => ({ ...current, thumbnail_url: event.target.value }))} placeholder="Thumbnail URL" className="border border-white/10 bg-black px-4 py-3 text-white" />
+                      
+                      <div className="flex gap-2">
+                        <input value={form.external_url} onChange={(event) => setForm((current) => ({ ...current, external_url: event.target.value }))} placeholder="External URL (optional)" className="flex-1 border border-white/10 bg-black px-4 py-3 text-white" />
+                      </div>
+                      
+                      <input value={form.tags} onChange={(event) => setForm((current) => ({ ...current, tags: event.target.value }))} placeholder="Tags, comma separated" className="border border-white/10 bg-black px-4 py-3 text-white" />
+
+                      <div className="grid gap-3 md:grid-cols-2">
+                        <div className="border border-white/10 bg-zinc-950/40 p-4">
+                          <p className="text-xs uppercase tracking-[0.25em] text-purple-300">Section placement</p>
+                          <input value={form.sort_order} onChange={(event) => setForm((current) => ({ ...current, sort_order: Number(event.target.value) || 0 }))} type="number" placeholder="Sort order" className="mt-3 w-full border border-white/10 bg-black px-4 py-3 text-white" />
+                          <p className="mt-2 text-xs text-zinc-500">Lower numbers appear earlier in the portfolio.</p>
+                        </div>
+                        <div className="border border-white/10 bg-zinc-950/40 p-4 text-sm text-zinc-300">
+                          <label className="flex items-center gap-3">
+                            <input type="checkbox" checked={form.is_featured} onChange={(event) => setForm((current) => ({ ...current, is_featured: event.target.checked }))} />
+                            Feature this item
+                          </label>
+                          <label className="mt-3 flex items-center gap-3">
+                            <input type="checkbox" checked={form.is_published} onChange={(event) => setForm((current) => ({ ...current, is_published: event.target.checked }))} />
+                            Publish on live site
+                          </label>
+                        </div>
+                      </div>
+
+                      {requiresUpload ? (
+                        <p className="text-sm text-amber-300">Upload the main media file or add an external media link before saving this item.</p>
+                      ) : null}
+
+                      <button
+                        onClick={() => handleAction(async () => {
+                          const message = await onSaveItem(form);
+                          resetForm();
+                          return message;
+                        })}
+                        disabled={isSubmitting || requiresUpload}
+                        className="inline-flex items-center justify-center gap-2 bg-white px-5 py-3 text-sm font-semibold text-black disabled:cursor-not-allowed disabled:bg-zinc-700 disabled:text-zinc-300"
                       >
-                        Fetch Metadata
+                        <Plus className="h-4 w-4" />
+                        {form.id ? "Save Changes" : "Add Item"}
                       </button>
+                    </div>
+                  </div>
+
+                  <div className="space-y-6">
+                    <PreviewCard form={form} />
+                    <div className="border border-white/10 bg-zinc-950/50 p-4 text-sm text-zinc-400">
+                      <p className="font-semibold text-white">Before you save</p>
+                      <ul className="mt-3 space-y-2">
+                        <li>• Drag files directly into the upload zones</li>
+                        <li>• Use Featured plus a low order number for top placement</li>
+                        <li>• Publish only when the preview looks right</li>
+                        <li>• Video, image, and music items need a real media upload or external media link</li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="border border-white/10 bg-zinc-950/50 p-6">
+                  <div className="mb-4 flex items-center justify-between gap-3">
+                    <h2 className="text-xl font-semibold text-white">Media Library</h2>
+                    <span className="text-sm text-zinc-500">Video, Image, and Music Items</span>
+                  </div>
+
+                  <div className="space-y-3">
+                    {sortedItems.filter(item => item.content_type !== "website").length === 0 ? (
+                      <div className="border border-dashed border-white/10 p-5 text-sm text-zinc-500">No media items yet.</div>
+                    ) : (
+                      sortedItems.filter(item => item.content_type !== "website").map((item) => (
+                        <article key={item.id} className="border border-white/10 bg-black/30 p-4">
+                          <div className="flex flex-wrap items-start justify-between gap-3">
+                            <div>
+                              <div className="flex flex-wrap items-center gap-2">
+                                <p className="text-xs uppercase tracking-[0.25em] text-purple-300">{item.content_type}</p>
+                                {item.is_featured ? <span className="bg-purple-500/10 px-2 py-1 text-[10px] uppercase tracking-[0.2em] text-purple-300">Featured</span> : null}
+                              </div>
+                              <h3 className="mt-1 text-lg font-semibold text-white">{item.title}</h3>
+                              <p className="mt-2 text-sm text-zinc-400">{item.description}</p>
+                              <p className="mt-2 text-xs text-zinc-500">Order {item.sort_order}</p>
+                            </div>
+                            <span className={`px-2 py-1 text-xs ${item.is_published ? "bg-emerald-500/15 text-emerald-300" : "bg-zinc-800 text-zinc-400"}`}>
+                              {item.is_published ? "Published" : "Draft"}
+                            </span>
+                          </div>
+                          <div className="mt-4 flex flex-wrap gap-2">
+                            <button onClick={() => startEditing(item)} className="inline-flex items-center gap-2 border border-white/10 px-3 py-2 text-sm text-white">
+                              <Pencil className="h-4 w-4" />
+                              Edit
+                            </button>
+                            <button onClick={() => handleAction(() => quickUpdate(item, { sort_order: Math.max(0, item.sort_order - 1) }))} className="inline-flex items-center gap-2 border border-white/10 px-3 py-2 text-sm text-white">
+                              <ArrowUp className="h-4 w-4" />
+                              Up
+                            </button>
+                            <button onClick={() => handleAction(() => quickUpdate(item, { sort_order: item.sort_order + 1 }))} className="inline-flex items-center gap-2 border border-white/10 px-3 py-2 text-sm text-white">
+                              <ArrowDown className="h-4 w-4" />
+                              Down
+                            </button>
+                            <button onClick={() => handleAction(() => quickUpdate(item, { is_featured: !item.is_featured }))} className="border border-white/10 px-3 py-2 text-sm text-white">
+                              {item.is_featured ? "Unfeature" : "Feature"}
+                            </button>
+                            <button onClick={() => handleAction(() => onTogglePublished(item))} className="border border-white/10 px-3 py-2 text-sm text-white">
+                              {item.is_published ? "Unpublish" : "Publish"}
+                            </button>
+                            <button onClick={() => handleAction(() => onDeleteItem(item.id))} className="inline-flex items-center gap-2 border border-rose-500/30 px-3 py-2 text-sm text-rose-300">
+                              <Trash2 className="h-4 w-4" />
+                              Delete
+                            </button>
+                          </div>
+                        </article>
+                      ))
                     )}
                   </div>
-                  
-                  <input value={form.tags} onChange={(event) => setForm((current) => ({ ...current, tags: event.target.value }))} placeholder="Tags, comma separated" className="border border-white/10 bg-black px-4 py-3 text-white" />
-                  
-                  {form.content_type === "website" && (
-                    <>
-                      <input value={form.logo_url} onChange={(event) => setForm((current) => ({ ...current, logo_url: event.target.value }))} placeholder="Logo URL (optional)" className="border border-white/10 bg-black px-4 py-3 text-white" />
-                      <textarea value={form.case_study} onChange={(event) => setForm((current) => ({ ...current, case_study: event.target.value }))} placeholder="Case Study / Gyaan (paragraphs of text)" rows={6} className="border border-white/10 bg-black px-4 py-3 text-white font-mono text-sm" />
-                    </>
-                  )}
+                </div>
+              </>
+            )}
 
-                  <div className="grid gap-3 md:grid-cols-2">
-                    <div className="border border-white/10 bg-zinc-950/40 p-4">
-                      <p className="text-xs uppercase tracking-[0.25em] text-purple-300">Section placement</p>
-                      <input value={form.sort_order} onChange={(event) => setForm((current) => ({ ...current, sort_order: Number(event.target.value) || 0 }))} type="number" placeholder="Sort order" className="mt-3 w-full border border-white/10 bg-black px-4 py-3 text-white" />
-                      <p className="mt-2 text-xs text-zinc-500">Lower numbers appear earlier in the portfolio.</p>
+            {/* Tab 2: Website Portfolio */}
+            {activeTab === "websites" && (
+              <>
+                <div className="grid gap-6 2xl:grid-cols-[1.1fr_0.9fr]">
+                  <div className="border border-white/10 bg-black/30 p-6">
+                    <div className="mb-4 flex items-center justify-between gap-3">
+                      <h2 className="text-xl font-semibold text-white">{form.id ? "Edit Website" : "Create New Website"}</h2>
+                      <button onClick={resetForm} className="text-sm text-zinc-400 hover:text-white">Reset</button>
                     </div>
-                    <div className="border border-white/10 bg-zinc-950/40 p-4 text-sm text-zinc-300">
-                      <label className="flex items-center gap-3">
-                        <input type="checkbox" checked={form.is_featured} onChange={(event) => setForm((current) => ({ ...current, is_featured: event.target.checked }))} />
-                        Feature this item
-                      </label>
-                      <label className="mt-3 flex items-center gap-3">
-                        <input type="checkbox" checked={form.is_published} onChange={(event) => setForm((current) => ({ ...current, is_published: event.target.checked }))} />
-                        Publish on live site
-                      </label>
+
+                    <div className="grid gap-3">
+                      <input value={form.title} onChange={(event) => setForm((current) => ({ ...current, title: event.target.value }))} placeholder="Website Title" className="border border-white/10 bg-black px-4 py-3 text-white font-medium" />
+                      <textarea value={form.description} onChange={(event) => setForm((current) => ({ ...current, description: event.target.value }))} placeholder="Description / Summary" rows={3} className="border border-white/10 bg-black px-4 py-3 text-white" />
+
+                      {/* Website Logo and Thumbnail Upload Zones */}
+                      <div className="grid gap-3 md:grid-cols-2">
+                        {renderUploadZone("logo", "Logo Image (Overlay)", "Upload logo for details modal.", form.logo_url, "image/*")}
+                        {renderUploadZone("thumbnail", "Cover Thumbnail", "Upload card background image.", form.thumbnail_url, "image/*")}
+                      </div>
+
+                      {uploadState ? (
+                        <div className="border border-purple-500/30 bg-purple-500/10 p-4">
+                          <div className="flex items-center justify-between gap-3 text-sm">
+                            <p className="font-medium text-white">
+                              {uploadState.variant === "logo" ? "Uploading logo" : "Uploading thumbnail"}
+                            </p>
+                            <span className="text-purple-300">{uploadState.progress}%</span>
+                          </div>
+                          <div className="mt-3 h-2 overflow-hidden bg-zinc-900">
+                            <div
+                              className="h-full bg-gradient-to-r from-purple-500 to-fuchsia-400 transition-all duration-200"
+                              style={{ width: `${uploadState.progress}%` }}
+                            />
+                          </div>
+                          <p className="mt-2 text-xs text-zinc-400">{uploadState.fileName}</p>
+                        </div>
+                      ) : null}
+
+                      <div className="flex gap-2">
+                        <input value={form.external_url} onChange={(event) => setForm((current) => ({ ...current, external_url: event.target.value }))} placeholder="External Live URL (e.g. https://my-site.vercel.app/)" className="flex-1 border border-white/10 bg-black px-4 py-3 text-white" />
+                        <button 
+                          onClick={fetchMetadata}
+                          disabled={isSubmitting || !form.external_url}
+                          type="button"
+                          className="bg-purple-600/20 text-purple-300 border border-purple-500/30 px-4 py-3 text-sm font-medium transition hover:bg-purple-600/40 disabled:opacity-50 disabled:cursor-not-allowed whitespace-nowrap"
+                        >
+                          Fetch Metadata
+                        </button>
+                      </div>
+
+                      <input value={form.logo_url} onChange={(event) => setForm((current) => ({ ...current, logo_url: event.target.value }))} placeholder="Logo URL (manually override)" className="border border-white/10 bg-black px-4 py-3 text-white text-xs" />
+                      <input value={form.thumbnail_url} onChange={(event) => setForm((current) => ({ ...current, thumbnail_url: event.target.value }))} placeholder="Thumbnail URL (manually override)" className="border border-white/10 bg-black px-4 py-3 text-white text-xs" />
+                      
+                      <input value={form.tags} onChange={(event) => setForm((current) => ({ ...current, tags: event.target.value }))} placeholder="Tags (e.g. Next.js, TailWind, E-Commerce)" className="border border-white/10 bg-black px-4 py-3 text-white" />
+                      <textarea value={form.case_study} onChange={(event) => setForm((current) => ({ ...current, case_study: event.target.value }))} placeholder="Case Study / Gyaan (paragraphs of text for details modal)" rows={6} className="border border-white/10 bg-black px-4 py-3 text-white font-mono text-sm" />
+
+                      <div className="grid gap-3 md:grid-cols-2">
+                        <div className="border border-white/10 bg-zinc-950/40 p-4">
+                          <p className="text-xs uppercase tracking-[0.25em] text-purple-300">Section placement</p>
+                          <input value={form.sort_order} onChange={(event) => setForm((current) => ({ ...current, sort_order: Number(event.target.value) || 0 }))} type="number" placeholder="Sort order" className="mt-3 w-full border border-white/10 bg-black px-4 py-3 text-white" />
+                          <p className="mt-2 text-xs text-zinc-500">Lower numbers appear earlier in the portfolio.</p>
+                        </div>
+                        <div className="border border-white/10 bg-zinc-950/40 p-4 text-sm text-zinc-300">
+                          <label className="flex items-center gap-3">
+                            <input type="checkbox" checked={form.is_featured} onChange={(event) => setForm((current) => ({ ...current, is_featured: event.target.checked }))} />
+                            Feature this website
+                          </label>
+                          <label className="mt-3 flex items-center gap-3">
+                            <input type="checkbox" checked={form.is_published} onChange={(event) => setForm((current) => ({ ...current, is_published: event.target.checked }))} />
+                            Publish on live site
+                          </label>
+                        </div>
+                      </div>
+
+                      {requiresWebsiteLink ? (
+                        <p className="text-sm text-amber-300">Add the website external URL before saving this website.</p>
+                      ) : null}
+
+                      <button
+                        onClick={() => handleAction(async () => {
+                          const message = await onSaveItem(form);
+                          resetForm();
+                          return message;
+                        })}
+                        disabled={isSubmitting || requiresWebsiteLink}
+                        className="inline-flex items-center justify-center gap-2 bg-white px-5 py-3 text-sm font-semibold text-black disabled:cursor-not-allowed disabled:bg-zinc-700 disabled:text-zinc-300"
+                      >
+                        <Plus className="h-4 w-4" />
+                        {form.id ? "Save Changes" : "Add Website"}
+                      </button>
                     </div>
                   </div>
 
-                  {requiresUpload ? (
-                    <p className="text-sm text-amber-300">Upload the main media file or add an external media link before saving this item.</p>
-                  ) : null}
-                  {requiresWebsiteLink ? (
-                    <p className="text-sm text-amber-300">Add the website URL before saving this item.</p>
-                  ) : null}
+                  <div className="space-y-6">
+                    <PreviewCard form={form} />
+                    <div className="border border-white/10 bg-zinc-950/50 p-4 text-sm text-zinc-400">
+                      <p className="font-semibold text-white">Website preview options</p>
+                      <ul className="mt-3 space-y-2">
+                        <li>• Paste a link and click **Fetch Metadata** to fetch Title/Description/Thumbnail automatically!</li>
+                        <li>• Drag and drop logo and cover images directly.</li>
+                        <li>• Input tags and case study paragraphs to enrich details modal.</li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="border border-white/10 bg-zinc-950/50 p-6">
+                  <div className="mb-4 flex items-center justify-between gap-3">
+                    <h2 className="text-xl font-semibold text-white">Web Showcase Library</h2>
+                    <span className="text-sm text-zinc-500">Website items</span>
+                  </div>
+
+                  <div className="space-y-3">
+                    {sortedItems.filter(item => item.content_type === "website").length === 0 ? (
+                      <div className="border border-dashed border-white/10 p-5 text-sm text-zinc-500">No websites added yet.</div>
+                    ) : (
+                      sortedItems.filter(item => item.content_type === "website").map((item) => (
+                        <article key={item.id} className="border border-white/10 bg-black/30 p-4">
+                          <div className="flex flex-wrap items-start justify-between gap-3">
+                            <div>
+                              <div className="flex flex-wrap items-center gap-2">
+                                <p className="text-xs uppercase tracking-[0.25em] text-purple-300">{item.content_type}</p>
+                                {item.is_featured ? <span className="bg-purple-500/10 px-2 py-1 text-[10px] uppercase tracking-[0.2em] text-purple-300">Featured</span> : null}
+                              </div>
+                              <h3 className="mt-1 text-lg font-semibold text-white">{item.title}</h3>
+                              <p className="mt-2 text-sm text-zinc-400">{item.description}</p>
+                              <p className="mt-2 text-xs text-zinc-500">Order {item.sort_order}</p>
+                            </div>
+                            <span className={`px-2 py-1 text-xs ${item.is_published ? "bg-emerald-500/15 text-emerald-300" : "bg-zinc-800 text-zinc-400"}`}>
+                              {item.is_published ? "Published" : "Draft"}
+                            </span>
+                          </div>
+                          <div className="mt-4 flex flex-wrap gap-2">
+                            <button onClick={() => startEditing(item)} className="inline-flex items-center gap-2 border border-white/10 px-3 py-2 text-sm text-white">
+                              <Pencil className="h-4 w-4" />
+                              Edit
+                            </button>
+                            <button onClick={() => handleAction(() => quickUpdate(item, { sort_order: Math.max(0, item.sort_order - 1) }))} className="inline-flex items-center gap-2 border border-white/10 px-3 py-2 text-sm text-white">
+                              <ArrowUp className="h-4 w-4" />
+                              Up
+                            </button>
+                            <button onClick={() => handleAction(() => quickUpdate(item, { sort_order: item.sort_order + 1 }))} className="inline-flex items-center gap-2 border border-white/10 px-3 py-2 text-sm text-white">
+                              <ArrowDown className="h-4 w-4" />
+                              Down
+                            </button>
+                            <button onClick={() => handleAction(() => quickUpdate(item, { is_featured: !item.is_featured }))} className="border border-white/10 px-3 py-2 text-sm text-white">
+                              {item.is_featured ? "Unfeature" : "Feature"}
+                            </button>
+                            <button onClick={() => handleAction(() => onTogglePublished(item))} className="border border-white/10 px-3 py-2 text-sm text-white">
+                              {item.is_published ? "Unpublish" : "Publish"}
+                            </button>
+                            <button onClick={() => handleAction(() => onDeleteItem(item.id))} className="inline-flex items-center gap-2 border border-rose-500/30 px-3 py-2 text-sm text-rose-300">
+                              <Trash2 className="h-4 w-4" />
+                              Delete
+                            </button>
+                          </div>
+                        </article>
+                      ))
+                    )}
+                  </div>
+                </div>
+              </>
+            )}
+
+            {/* Tab 3: Showcase Videos (Media Player) */}
+            {activeTab === "site-videos" && (
+              <div className="border border-white/10 bg-zinc-950/50 p-6">
+                <div className="mb-4 flex items-center justify-between gap-3">
+                  <h2 className="text-xl font-semibold text-white">Media Player Showcase Videos</h2>
+                  <p className="text-xs text-zinc-500">Manage proof of concept showcase videos</p>
+                </div>
+
+                <div className="grid gap-3">
+                  <input value={siteVideoForm.title} onChange={(event) => setSiteVideoForm((current) => ({ ...current, title: event.target.value }))} placeholder="Video Title" className="border border-white/10 bg-black px-4 py-3 text-white font-medium" />
+                  <textarea value={siteVideoForm.description} onChange={(event) => setSiteVideoForm((current) => ({ ...current, description: event.target.value }))} placeholder="Description (optional)" rows={2} className="border border-white/10 bg-black px-4 py-3 text-white" />
+
+                  <div className="border border-white/10 bg-zinc-950/40 p-4">
+                    <label className="block text-sm font-medium text-white mb-2">YouTube URL</label>
+                    <input 
+                      value={siteVideoForm.video_url} 
+                      onChange={(event) => setSiteVideoForm((current) => ({ ...current, video_url: event.target.value }))} 
+                      placeholder="https://youtu.be/E8hBNvyR8p0" 
+                      className="w-full border border-white/10 bg-black px-4 py-3 text-white text-sm"
+                    />
+                    <p className="mt-2 text-xs text-zinc-400">Paste any YouTube link (youtu.be or youtube.com)</p>
+                  </div>
 
                   <button
                     onClick={() => handleAction(async () => {
-                      const message = await onSaveItem(form);
-                      resetForm();
+                      const message = await onSaveSiteVideo(siteVideoForm);
+                      setSiteVideoForm({ 
+                        section: "media_player", 
+                        video_url: "", 
+                        thumbnail_url: "", 
+                        title: "", 
+                        description: "",
+                        sort_order: 0
+                      });
                       return message;
                     })}
-                    disabled={isSubmitting || requiresUpload || requiresWebsiteLink}
+                    disabled={isSubmitting || !siteVideoForm.video_url}
                     className="inline-flex items-center justify-center gap-2 bg-white px-5 py-3 text-sm font-semibold text-black disabled:cursor-not-allowed disabled:bg-zinc-700 disabled:text-zinc-300"
                   >
                     <Plus className="h-4 w-4" />
-                    {form.id ? "Save Changes" : "Add Item"}
+                    {siteVideoForm.id ? "Update Video" : "Add Video"}
                   </button>
                 </div>
-              </div>
 
-              <div className="space-y-6">
-                <PreviewCard form={form} />
-                <div className="border border-white/10 bg-zinc-950/50 p-4 text-sm text-zinc-400">
-                  <p className="font-semibold text-white">Before you save</p>
-                  <ul className="mt-3 space-y-2">
-                    <li>• Drag files directly into the upload zones</li>
-                    <li>• Use Featured plus a low order number for top placement</li>
-                    <li>• Publish only when the preview looks right</li>
-                    <li>• Video, image, and music items need a real media upload or external media link</li>
-                  </ul>
+                <div className="mt-6 space-y-3">
+                  {siteVideos.length === 0 ? (
+                    <div className="border border-dashed border-white/10 p-5 text-sm text-zinc-500">No site videos added yet.</div>
+                  ) : (
+                    siteVideos.map((video) => (
+                      <article key={video.id} className="border border-white/10 bg-black/30 p-4">
+                        <div className="flex flex-wrap items-start justify-between gap-3">
+                          <div>
+                            <h3 className="text-lg font-semibold text-white">{video.title || "Untitled"}</h3>
+                            <p className="mt-1 text-xs text-zinc-500">Order {video.sort_order}</p>
+                            <p className="mt-2 text-sm text-zinc-400">{video.description}</p>
+                            <p className="mt-2 text-xs text-zinc-500 truncate">{video.video_url}</p>
+                          </div>
+                        </div>
+                        <div className="mt-4 flex flex-wrap gap-2">
+                          <button onClick={() => startEditingSiteVideo(video)} className="inline-flex items-center gap-2 border border-white/10 px-3 py-2 text-sm text-white">
+                            <Pencil className="h-4 w-4" />
+                            Edit
+                          </button>
+                          <button onClick={() => handleAction(() => quickUpdateSiteVideo(video, { sort_order: Math.max(0, video.sort_order - 1) }))} className="inline-flex items-center gap-2 border border-white/10 px-3 py-2 text-sm text-white">
+                            <ArrowUp className="h-4 w-4" />
+                            Up
+                          </button>
+                          <button onClick={() => handleAction(() => quickUpdateSiteVideo(video, { sort_order: video.sort_order + 1 }))} className="inline-flex items-center gap-2 border border-white/10 px-3 py-2 text-sm text-white">
+                            <ArrowDown className="h-4 w-4" />
+                            Down
+                          </button>
+                          <button onClick={() => handleAction(() => onDeleteSiteVideo(video.id))} className="inline-flex items-center gap-2 border border-rose-500/30 px-3 py-2 text-sm text-rose-300">
+                            <Trash2 className="h-4 w-4" />
+                            Delete
+                          </button>
+                        </div>
+                      </article>
+                    ))
+                  )}
                 </div>
               </div>
-            </div>
-
-            <div className="border border-white/10 bg-zinc-950/50 p-6">
-              <div className="mb-4 flex items-center justify-between gap-3">
-                <h2 className="text-xl font-semibold text-white">Content library</h2>
-                <span className="text-sm text-zinc-500">Featured items appear first</span>
-              </div>
-
-              <div className="space-y-3">
-                {sortedItems.length === 0 ? (
-                  <div className="border border-dashed border-white/10 p-5 text-sm text-zinc-500">No portfolio items yet.</div>
-                ) : (
-                  sortedItems.map((item) => (
-                    <article key={item.id} className="border border-white/10 bg-black/30 p-4">
-                      <div className="flex flex-wrap items-start justify-between gap-3">
-                        <div>
-                          <div className="flex flex-wrap items-center gap-2">
-                            <p className="text-xs uppercase tracking-[0.25em] text-purple-300">{item.content_type}</p>
-                            {item.is_featured ? <span className="bg-purple-500/10 px-2 py-1 text-[10px] uppercase tracking-[0.2em] text-purple-300">Featured</span> : null}
-                          </div>
-                          <h3 className="mt-1 text-lg font-semibold text-white">{item.title}</h3>
-                          <p className="mt-2 text-sm text-zinc-400">{item.description}</p>
-                          <p className="mt-2 text-xs text-zinc-500">Order {item.sort_order}</p>
-                        </div>
-                        <span className={`px-2 py-1 text-xs ${item.is_published ? "bg-emerald-500/15 text-emerald-300" : "bg-zinc-800 text-zinc-400"}`}>
-                          {item.is_published ? "Published" : "Draft"}
-                        </span>
-                      </div>
-                      <div className="mt-4 flex flex-wrap gap-2">
-                        <button onClick={() => startEditing(item)} className="inline-flex items-center gap-2 border border-white/10 px-3 py-2 text-sm text-white">
-                          <Pencil className="h-4 w-4" />
-                          Edit
-                        </button>
-                        <button onClick={() => handleAction(() => quickUpdate(item, { sort_order: Math.max(0, item.sort_order - 1) }))} className="inline-flex items-center gap-2 border border-white/10 px-3 py-2 text-sm text-white">
-                          <ArrowUp className="h-4 w-4" />
-                          Up
-                        </button>
-                        <button onClick={() => handleAction(() => quickUpdate(item, { sort_order: item.sort_order + 1 }))} className="inline-flex items-center gap-2 border border-white/10 px-3 py-2 text-sm text-white">
-                          <ArrowDown className="h-4 w-4" />
-                          Down
-                        </button>
-                        <button onClick={() => handleAction(() => quickUpdate(item, { is_featured: !item.is_featured }))} className="border border-white/10 px-3 py-2 text-sm text-white">
-                          {item.is_featured ? "Unfeature" : "Feature"}
-                        </button>
-                        <button onClick={() => handleAction(() => onTogglePublished(item))} className="border border-white/10 px-3 py-2 text-sm text-white">
-                          {item.is_published ? "Unpublish" : "Publish"}
-                        </button>
-                        <button onClick={() => handleAction(() => onDeleteItem(item.id))} className="inline-flex items-center gap-2 border border-rose-500/30 px-3 py-2 text-sm text-rose-300">
-                          <Trash2 className="h-4 w-4" />
-                          Delete
-                        </button>
-                      </div>
-                    </article>
-                  ))
-                )}
-              </div>
-            </div>
+            )}
           </div>
         </div>
 
