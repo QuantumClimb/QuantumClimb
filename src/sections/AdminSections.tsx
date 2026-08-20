@@ -54,6 +54,8 @@ export type EditablePortfolioItem = {
   media_url: string;
   thumbnail_url: string;
   external_url: string;
+  logo_url: string;
+  case_study: string;
   tags: string;
   sort_order: number;
   is_featured: boolean;
@@ -70,7 +72,7 @@ export type EditableSiteVideo = {
   sort_order: number;
 };
 
-type DropVariant = "media" | "thumbnail";
+type DropVariant = "media" | "thumbnail" | "logo";
 type UploadVariant = DropVariant | "video";
 
 type UploadState = {
@@ -86,6 +88,8 @@ const emptyForm: EditablePortfolioItem = {
   media_url: "",
   thumbnail_url: "",
   external_url: "",
+  logo_url: "",
+  case_study: "",
   tags: "",
   sort_order: 0,
   is_featured: false,
@@ -108,6 +112,8 @@ function toEditableItem(item: PortfolioItem): EditablePortfolioItem {
     media_url: item.media_url ?? "",
     thumbnail_url: item.thumbnail_url ?? "",
     external_url: item.external_url ?? "",
+    logo_url: item.metadata?.logo_url ?? "",
+    case_study: item.metadata?.case_study ?? "",
     tags: item.tags.join(", "),
     sort_order: item.sort_order ?? 0,
     is_featured: item.is_featured,
@@ -362,6 +368,45 @@ export function AdminDashboardSection({
       sort_order: video.sort_order,
       ...patch,
     });
+  };
+
+  const fetchMetadata = async () => {
+    if (!form.external_url) {
+      setStatus("Please enter a valid External URL first.");
+      return;
+    }
+    
+    try {
+      setIsSubmitting(true);
+      setStatus("Fetching metadata...");
+      
+      const response = await fetch(`https://api.allorigins.win/get?url=${encodeURIComponent(form.external_url)}`);
+      const data = await response.json();
+      
+      if (!data.contents) {
+        throw new Error("Failed to fetch page contents");
+      }
+      
+      const parser = new DOMParser();
+      const doc = parser.parseFromString(data.contents, "text/html");
+      
+      const title = doc.querySelector('meta[property="og:title"]')?.getAttribute("content") || doc.title || "";
+      const description = doc.querySelector('meta[property="og:description"]')?.getAttribute("content") || doc.querySelector('meta[name="description"]')?.getAttribute("content") || "";
+      const image = doc.querySelector('meta[property="og:image"]')?.getAttribute("content") || "";
+      
+      setForm((current) => ({
+        ...current,
+        title: title || current.title,
+        description: description || current.description,
+        thumbnail_url: image || current.thumbnail_url,
+      }));
+      
+      setStatus("Metadata fetched successfully.");
+    } catch (error) {
+      setStatus(error instanceof Error ? error.message : "Failed to fetch metadata.");
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   const mediaAccept = getAcceptValue(form.content_type);
@@ -676,8 +721,29 @@ export function AdminDashboardSection({
 
                   <input value={form.media_url} onChange={(event) => setForm((current) => ({ ...current, media_url: event.target.value }))} placeholder="Media URL" className="border border-white/10 bg-black px-4 py-3 text-white" />
                   <input value={form.thumbnail_url} onChange={(event) => setForm((current) => ({ ...current, thumbnail_url: event.target.value }))} placeholder="Thumbnail URL" className="border border-white/10 bg-black px-4 py-3 text-white" />
-                  <input value={form.external_url} onChange={(event) => setForm((current) => ({ ...current, external_url: event.target.value }))} placeholder="External URL" className="border border-white/10 bg-black px-4 py-3 text-white" />
+                  
+                  <div className="flex gap-2">
+                    <input value={form.external_url} onChange={(event) => setForm((current) => ({ ...current, external_url: event.target.value }))} placeholder="External URL" className="flex-1 border border-white/10 bg-black px-4 py-3 text-white" />
+                    {form.content_type === "website" && (
+                      <button 
+                        onClick={fetchMetadata}
+                        disabled={isSubmitting || !form.external_url}
+                        type="button"
+                        className="bg-purple-600/20 text-purple-300 border border-purple-500/30 px-4 py-3 text-sm font-medium transition hover:bg-purple-600/40 disabled:opacity-50 disabled:cursor-not-allowed whitespace-nowrap"
+                      >
+                        Fetch Metadata
+                      </button>
+                    )}
+                  </div>
+                  
                   <input value={form.tags} onChange={(event) => setForm((current) => ({ ...current, tags: event.target.value }))} placeholder="Tags, comma separated" className="border border-white/10 bg-black px-4 py-3 text-white" />
+                  
+                  {form.content_type === "website" && (
+                    <>
+                      <input value={form.logo_url} onChange={(event) => setForm((current) => ({ ...current, logo_url: event.target.value }))} placeholder="Logo URL (optional)" className="border border-white/10 bg-black px-4 py-3 text-white" />
+                      <textarea value={form.case_study} onChange={(event) => setForm((current) => ({ ...current, case_study: event.target.value }))} placeholder="Case Study / Gyaan (paragraphs of text)" rows={6} className="border border-white/10 bg-black px-4 py-3 text-white font-mono text-sm" />
+                    </>
+                  )}
 
                   <div className="grid gap-3 md:grid-cols-2">
                     <div className="border border-white/10 bg-zinc-950/40 p-4">

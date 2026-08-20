@@ -311,6 +311,10 @@ export default function App() {
       is_featured: item.is_featured,
       is_published: item.is_published,
       created_by: session.user.id,
+      metadata: {
+        logo_url: item.logo_url?.trim() || null,
+        case_study: item.case_study?.trim() || null,
+      },
     };
 
     const response = item.id

@@ -15,7 +15,7 @@ export type PortfolioItem = {
   sort_order: number;
   is_featured: boolean;
   is_published: boolean;
-  metadata: Record<string, unknown> | null;
+  metadata: ({ logo_url?: string; case_study?: string } & Record<string, unknown>) | null;
   created_by: string | null;
   created_at: string;
   updated_at: string;

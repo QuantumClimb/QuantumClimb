@@ -172,7 +172,11 @@ export function AppShell({
         ) : isAIVideoPage ? (
           <AIVideoPage onOpenContactModal={onOpenContactModal} />
         ) : isWebDevPage ? (
-          <WebDevPage onOpenContactModal={onOpenContactModal} />
+          <WebDevPage 
+            onOpenContactModal={onOpenContactModal} 
+            items={portfolioItems}
+            isLoading={isPortfolioLoading}
+          />
         ) : (
           <HomePage 
             onOpenContactModal={onOpenContactModal} 
