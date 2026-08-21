@@ -152,8 +152,6 @@ export function AIVideoPage({ onOpenContactModal, siteVideos }: AIVideoPageProps
   
   // Track active featured video (Default: first video)
   const [featuredVideo, setFeaturedVideo] = useState<SiteVideo>(displayVideos[0]);
-  // Track selected video for popup cinematic modal
-  const [selectedModalVideo, setSelectedModalVideo] = useState<SiteVideo | null>(null);
 
   const getEmbedUrl = (url: string) => {
     try {
@@ -297,7 +295,7 @@ export function AIVideoPage({ onOpenContactModal, siteVideos }: AIVideoPageProps
                 </div>
 
                 <button
-                  onClick={() => setSelectedModalVideo(featuredVideo)}
+                  onClick={() => scrollToSection("featured-video")}
                   className="w-full py-4 border border-white/25 text-white font-semibold text-xs tracking-wider uppercase hover:border-white transition-all cursor-pointer text-center bg-transparent mt-4"
                 >
                   WATCH FILM →
@@ -330,7 +328,7 @@ export function AIVideoPage({ onOpenContactModal, siteVideos }: AIVideoPageProps
                     key={video.id}
                     onClick={() => {
                       setFeaturedVideo(video);
-                      setSelectedModalVideo(video);
+                      scrollToSection("featured-video");
                     }}
                     className="text-left border border-white/5 bg-zinc-950/40 hover:border-white/20 transition-all duration-300 group cursor-pointer relative flex flex-col justify-between"
                   >
@@ -759,42 +757,7 @@ export function AIVideoPage({ onOpenContactModal, siteVideos }: AIVideoPageProps
         </div>
       </section>
 
-      {/* VIDEO PLAYBACK MODAL */}
-      {selectedModalVideo && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/95 p-4 md:p-10 transition-opacity">
-          <div className="absolute inset-0 cursor-pointer" onClick={() => setSelectedModalVideo(null)}></div>
-          
-          <div className="relative border border-white/10 bg-zinc-950 max-w-5xl w-full flex flex-col z-10 shadow-2xl">
-            {/* Close Button */}
-            <button 
-              onClick={() => setSelectedModalVideo(null)} 
-              className="absolute -top-12 right-0 md:top-4 md:right-4 text-zinc-500 hover:text-white p-2 transition-colors cursor-pointer z-20"
-            >
-              <X className="w-6 h-6" />
-            </button>
 
-            {/* Video Player */}
-            <div className="aspect-[16/9] bg-black relative border-b border-white/5">
-              <iframe
-                src={getEmbedUrl(selectedModalVideo.video_url)}
-                title={selectedModalVideo.title}
-                className="w-full h-full border-none"
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                allowFullScreen
-              ></iframe>
-            </div>
-
-            {/* Metadata info */}
-            <div className="p-8 space-y-4">
-              <span className="text-[10px] font-mono text-purple-400 uppercase tracking-widest block">
-                {getVideoCategory(selectedModalVideo)}
-              </span>
-              <h3 className="text-2xl font-semibold text-white tracking-tight">{selectedModalVideo.title}</h3>
-              <p className="text-sm text-zinc-400 leading-relaxed font-light">{selectedModalVideo.description}</p>
-            </div>
-          </div>
-        </div>
-      )}
 
     </div>
   );
