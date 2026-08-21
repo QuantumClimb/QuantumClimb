@@ -4,6 +4,7 @@ import { HomePage } from "../pages/HomePage";
 import { AIDubbingPage } from "../pages/AIDubbingPage";
 import { AIVideoPage } from "../pages/AIVideoPage";
 import { WebDevPage } from "../pages/WebDevPage";
+import { ContactPage } from "../pages/ContactPage";
 import {
   PrivacyPolicy,
   TermsOfService,
@@ -24,7 +25,7 @@ import {
 import type { PortfolioItem, SiteVideo } from "../lib/supabase";
 
 type AppShellProps = Readonly<{
-  currentPage: "home" | "ai-dubbing" | "ai-video" | "web-dev" | "portfolio" | "admin" | "privacy" | "terms" | "cookies";
+  currentPage: "home" | "ai-dubbing" | "ai-video" | "web-dev" | "portfolio" | "admin" | "privacy" | "terms" | "cookies" | "contact";
   isScrolled: boolean;
   isContactModalOpen: boolean;
   isAdmin: boolean;
@@ -44,6 +45,7 @@ type AppShellProps = Readonly<{
   onNavigatePrivacy: () => void;
   onNavigateTerms: () => void;
   onNavigateCookies: () => void;
+  onNavigateContact: () => void;
   onSignIn: (email: string, password: string) => Promise<string>;
   onSignOut: () => Promise<void>;
   onClaimAdmin: () => Promise<string>;
@@ -64,6 +66,7 @@ type AppShellProps = Readonly<{
     variant: "video" | "thumbnail",
     onProgress?: (progress: number) => void,
   ) => Promise<string>;
+  onSubmitInquiry: (data: any) => Promise<void>;
 }>;
 
 export function AppShell({
@@ -87,6 +90,7 @@ export function AppShell({
   onNavigatePrivacy,
   onNavigateTerms,
   onNavigateCookies,
+  onNavigateContact,
   onSignIn,
   onSignOut,
   onClaimAdmin,
@@ -97,12 +101,14 @@ export function AppShell({
   onSaveSiteVideo,
   onDeleteSiteVideo,
   onUploadSiteVideo,
+  onSubmitInquiry,
 }: AppShellProps) {
   const isPortfolioPage = currentPage === "portfolio";
   const isAdminPage = currentPage === "admin";
   const isAIDubbingPage = currentPage === "ai-dubbing";
   const isAIVideoPage = currentPage === "ai-video";
   const isWebDevPage = currentPage === "web-dev";
+  const isContactPage = currentPage === "contact";
   const isLegalPage = ["privacy", "terms", "cookies"].includes(currentPage);
 
   return (
@@ -125,7 +131,12 @@ export function AppShell({
           </div>
 
           <div className="flex items-center gap-3">
-            {/* no top nav admin/contact buttons */}
+            <button 
+              onClick={onNavigateContact} 
+              className="px-4 py-2 border border-purple-500/30 bg-purple-500/10 hover:bg-purple-600 hover:border-purple-600 text-white font-semibold text-xs tracking-wider uppercase transition-all duration-300 cursor-pointer"
+            >
+              Start a Project
+            </button>
           </div>
         </div>
       </nav>
@@ -163,23 +174,30 @@ export function AppShell({
           <TermsOfService onClose={onNavigateHome} />
         ) : currentPage === "cookies" ? (
           <CookiePolicy onClose={onNavigateHome} />
+        ) : isContactPage ? (
+          <ContactPage
+            onOpenContactModal={onNavigateContact}
+            onNavigateHome={onNavigateHome}
+            onNavigatePortfolio={onNavigatePortfolio}
+            onSubmitInquiry={onSubmitInquiry}
+          />
         ) : isAIDubbingPage ? (
           <AIDubbingPage 
-            onOpenContactModal={onOpenContactModal} 
+            onOpenContactModal={onNavigateContact} 
             onNavigatePortfolio={onNavigatePortfolio} 
             siteVideos={siteVideos} 
           />
         ) : isAIVideoPage ? (
-          <AIVideoPage onOpenContactModal={onOpenContactModal} />
+          <AIVideoPage onOpenContactModal={onNavigateContact} siteVideos={siteVideos} />
         ) : isWebDevPage ? (
           <WebDevPage 
-            onOpenContactModal={onOpenContactModal} 
+            onOpenContactModal={onNavigateContact} 
             items={portfolioItems}
             isLoading={isPortfolioLoading}
           />
         ) : (
           <HomePage 
-            onOpenContactModal={onOpenContactModal} 
+            onOpenContactModal={onNavigateContact} 
             onNavigateAIDubbing={onNavigateAIDubbing} 
             onNavigateAIVideo={onNavigateAIVideo}
             onNavigateWebDev={onNavigateWebDev}

@@ -1020,15 +1020,30 @@ export function AdminDashboardSection({
                   <input value={siteVideoForm.title} onChange={(event) => setSiteVideoForm((current) => ({ ...current, title: event.target.value }))} placeholder="Video Title" className="border border-white/10 bg-black px-4 py-3 text-white font-medium" />
                   <textarea value={siteVideoForm.description} onChange={(event) => setSiteVideoForm((current) => ({ ...current, description: event.target.value }))} placeholder="Description (optional)" rows={2} className="border border-white/10 bg-black px-4 py-3 text-white" />
 
-                  <div className="border border-white/10 bg-zinc-950/40 p-4">
-                    <label className="block text-sm font-medium text-white mb-2">YouTube URL</label>
-                    <input 
-                      value={siteVideoForm.video_url} 
-                      onChange={(event) => setSiteVideoForm((current) => ({ ...current, video_url: event.target.value }))} 
-                      placeholder="https://youtu.be/E8hBNvyR8p0" 
-                      className="w-full border border-white/10 bg-black px-4 py-3 text-white text-sm"
-                    />
-                    <p className="mt-2 text-xs text-zinc-400">Paste any YouTube link (youtu.be or youtube.com)</p>
+                  <div className="grid gap-3 md:grid-cols-2">
+                    <div className="border border-white/10 bg-zinc-950/40 p-4">
+                      <label className="block text-sm font-medium text-white mb-2">YouTube URL</label>
+                      <input 
+                        value={siteVideoForm.video_url} 
+                        onChange={(event) => setSiteVideoForm((current) => ({ ...current, video_url: event.target.value }))} 
+                        placeholder="https://youtu.be/E8hBNvyR8p0" 
+                        className="w-full border border-white/10 bg-black px-4 py-3 text-white text-sm"
+                      />
+                      <p className="mt-2 text-xs text-zinc-400">Paste any YouTube link (youtu.be or youtube.com)</p>
+                    </div>
+
+                    <div className="border border-white/10 bg-zinc-950/40 p-4">
+                      <label className="block text-sm font-medium text-white mb-2">Showcase Section Page</label>
+                      <select
+                        value={siteVideoForm.section}
+                        onChange={(event) => setSiteVideoForm((current) => ({ ...current, section: event.target.value }))}
+                        className="w-full border border-white/10 bg-black px-4 py-3 text-white text-sm"
+                      >
+                        <option value="media_player">AI Dubbing Page (media_player)</option>
+                        <option value="ai_video">AI Video Page (ai_video)</option>
+                      </select>
+                      <p className="mt-2 text-xs text-zinc-400">Select which page this showcase video should be displayed on.</p>
+                    </div>
                   </div>
 
                   <button
@@ -1060,8 +1075,13 @@ export function AdminDashboardSection({
                       <article key={video.id} className="border border-white/10 bg-black/30 p-4">
                         <div className="flex flex-wrap items-start justify-between gap-3">
                           <div>
+                            <div className="flex flex-wrap items-center gap-2 mb-2">
+                              <span className="bg-purple-500/10 px-2 py-0.5 text-[10px] font-semibold uppercase tracking-[0.2em] text-purple-300">
+                                {video.section === "ai_video" ? "AI Video Showcase" : "AI Dubbing Showcase"}
+                              </span>
+                              <span className="text-xs text-zinc-500">Order {video.sort_order}</span>
+                            </div>
                             <h3 className="text-lg font-semibold text-white">{video.title || "Untitled"}</h3>
-                            <p className="mt-1 text-xs text-zinc-500">Order {video.sort_order}</p>
                             <p className="mt-2 text-sm text-zinc-400">{video.description}</p>
                             <p className="mt-2 text-xs text-zinc-500 truncate">{video.video_url}</p>
                           </div>

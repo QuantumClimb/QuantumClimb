@@ -109,9 +109,13 @@ export function Footer({ onAdminClick, onPrivacyClick, onTermsClick, onCookiesCl
           </div>
           <div>
             <h4 className="text-white font-medium mb-8">Malaysia Office</h4>
-            <ul className="space-y-4 text-xs text-zinc-500 leading-relaxed">
-              <li>Koi Kinrara</li>
-              <li className="text-purple-600 font-medium">+60 11-6424 2145</li>
+            <ul className="space-y-2 text-xs text-zinc-500 leading-relaxed">
+              <li className="text-zinc-400 font-medium">RHYTHM HARMONY EMPIRE</li>
+              <li className="text-[10px] font-mono font-bold text-zinc-400">REG NO. 202603217521 (AS0520165-V)</li>
+              <li>A-3-10, Koi Kinrara Suites,</li>
+              <li>Jalan Pippit, Puchong Jaya,</li>
+              <li>47100 Puchong, Selangor</li>
+              <li className="text-purple-600 font-medium pt-1">+60 11-6424 2145</li>
             </ul>
           </div>
         </div>

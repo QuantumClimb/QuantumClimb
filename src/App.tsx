@@ -11,8 +11,9 @@ import {
   type SiteVideo,
 } from "./lib/supabase";
 import type { EditablePortfolioItem, EditableSiteVideo } from "./sections/AdminSections";
+import type { InquirySubmissionData } from "./pages/ContactPage";
 
-type PageView = "home" | "ai-dubbing" | "ai-video" | "web-dev" | "portfolio" | "admin" | "privacy" | "terms" | "cookies";
+type PageView = "home" | "ai-dubbing" | "ai-video" | "web-dev" | "portfolio" | "admin" | "privacy" | "terms" | "cookies" | "contact";
 
 function getCurrentPage(): PageView {
   if (globalThis.window === undefined) {
@@ -20,7 +21,7 @@ function getCurrentPage(): PageView {
   }
 
   const page = new URLSearchParams(globalThis.location.search).get("page");
-  if (["ai-dubbing", "ai-video", "web-dev", "admin", "privacy", "terms", "cookies"].includes(page ?? "")) {
+  if (["ai-dubbing", "ai-video", "web-dev", "admin", "privacy", "terms", "cookies", "contact"].includes(page ?? "")) {
     return page as PageView;
   }
 
@@ -615,6 +616,34 @@ export default function App() {
     }
   };
 
+  const submitProjectInquiry = async (data: InquirySubmissionData) => {
+    if (!supabase) {
+      console.log("Supabase not configured. Mocking inquiry submission:", data);
+      await new Promise((resolve) => setTimeout(resolve, 1000));
+      return;
+    }
+
+    const { error } = await supabase.from("project_inquiries").insert({
+      name: data.name,
+      email: data.email,
+      phone: data.phone,
+      company: data.company,
+      job_title: data.jobTitle,
+      country: data.country,
+      selected_services: data.selectedServices,
+      requirements: data.requirements,
+      description: data.description,
+      timeline: data.timeline,
+      budget: data.budget,
+      referral_source: data.referralSource,
+      file_url: data.fileName ? `https://mock-file-storage.supabase.co/${data.fileName}` : null,
+    });
+
+    if (error) {
+      throw new Error(error.message);
+    }
+  };
+
   return AppShell({
     currentPage,
     isScrolled,
@@ -636,6 +665,7 @@ export default function App() {
     onNavigatePrivacy: () => navigateToPage("privacy"),
     onNavigateTerms: () => navigateToPage("terms"),
     onNavigateCookies: () => navigateToPage("cookies"),
+    onNavigateContact: () => navigateToPage("contact"),
     onSignIn: signIn,
     onSignOut: signOut,
     onClaimAdmin: claimAdminAccess,
@@ -646,5 +676,6 @@ export default function App() {
     onSaveSiteVideo: saveSiteVideo,
     onDeleteSiteVideo: deleteSiteVideo,
     onUploadSiteVideo: uploadSiteVideo,
+    onSubmitInquiry: submitProjectInquiry,
   });
 }
