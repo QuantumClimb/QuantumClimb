@@ -200,7 +200,7 @@ export function AIVideoPage({ onOpenContactModal, siteVideos }: AIVideoPageProps
           <img 
             src="/images/aivideo/create%20the%20impossible.png" 
             alt="Cinematic generative visual creation" 
-            className="w-full h-full object-cover opacity-35"
+            className="w-full h-full object-cover opacity-75"
             referrerPolicy="no-referrer"
           />
           {/* Grid overlay */}
@@ -447,10 +447,10 @@ export function AIVideoPage({ onOpenContactModal, siteVideos }: AIVideoPageProps
                       <img 
                         src={path.img} 
                         alt={path.title} 
-                        className="w-full h-full object-cover opacity-30 group-hover:opacity-40 group-hover:scale-105 transition-all duration-700"
+                        className="w-full h-full object-cover opacity-85 group-hover:opacity-100 group-hover:scale-105 transition-all duration-700"
                         referrerPolicy="no-referrer"
                       />
-                      <div className="absolute inset-0 bg-gradient-to-t from-zinc-950 via-zinc-950/40 to-transparent"></div>
+                      <div className="absolute inset-0 bg-gradient-to-t from-zinc-950/50 to-transparent"></div>
                     </div>
                     {/* Visual details */}
                     <div className="p-6 space-y-3">
@@ -482,10 +482,10 @@ export function AIVideoPage({ onOpenContactModal, siteVideos }: AIVideoPageProps
               <img 
                 src="/images/aivideo/generative%20cinema.png" 
                 alt="Generative cinematic landscape creation" 
-                className="w-full h-full object-cover opacity-45"
+                className="w-full h-full object-cover opacity-85"
                 referrerPolicy="no-referrer"
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent"></div>
+              <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent"></div>
             </div>
 
             {/* Content Specifications */}
@@ -554,10 +554,10 @@ export function AIVideoPage({ onOpenContactModal, siteVideos }: AIVideoPageProps
               <img 
                 src="/images/aivideo/global%20campaign.png" 
                 alt="Multi-channel global campaigns asset visual" 
-                className="w-full h-full object-cover opacity-45"
+                className="w-full h-full object-cover opacity-85"
                 referrerPolicy="no-referrer"
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent"></div>
+              <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent"></div>
             </div>
 
           </div>
@@ -574,10 +574,10 @@ export function AIVideoPage({ onOpenContactModal, siteVideos }: AIVideoPageProps
               <img 
                 src="/images/aivideo/post%20production.png" 
                 alt="Cinematic post-production workflow editing" 
-                className="w-full h-full object-cover opacity-45"
+                className="w-full h-full object-cover opacity-85"
                 referrerPolicy="no-referrer"
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent"></div>
+              <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent"></div>
             </div>
 
             {/* Details */}
@@ -634,10 +634,10 @@ export function AIVideoPage({ onOpenContactModal, siteVideos }: AIVideoPageProps
                     <img 
                       src={ind.img} 
                       alt={ind.title} 
-                      className="w-full h-full object-cover opacity-35 group-hover:scale-105 transition-transform duration-700"
+                      className="w-full h-full object-cover opacity-85 group-hover:opacity-100 group-hover:scale-105 transition-transform duration-700"
                       referrerPolicy="no-referrer"
                     />
-                    <div className="absolute inset-0 bg-gradient-to-t from-zinc-950 via-zinc-950/40 to-transparent"></div>
+                    <div className="absolute inset-0 bg-gradient-to-t from-zinc-950/50 to-transparent"></div>
                   </div>
                   <div className="p-6 space-y-2">
                     <h3 className="text-xs font-semibold text-white uppercase tracking-wider">{ind.title}</h3>
@@ -681,10 +681,10 @@ export function AIVideoPage({ onOpenContactModal, siteVideos }: AIVideoPageProps
               <img 
                 src="/images/aivideo/post%20production.png" 
                 alt="Sound engineering post-production finish" 
-                className="w-full h-full object-cover opacity-45"
+                className="w-full h-full object-cover opacity-85"
                 referrerPolicy="no-referrer"
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent"></div>
+              <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent"></div>
             </div>
 
           </div>
@@ -720,7 +720,7 @@ export function AIVideoPage({ onOpenContactModal, siteVideos }: AIVideoPageProps
           <img 
             src="/images/aivideo/final%20cta.png" 
             alt="Final visual production cta backdrop" 
-            className="w-full h-full object-cover opacity-25"
+            className="w-full h-full object-cover opacity-60"
             referrerPolicy="no-referrer"
           />
         </div>

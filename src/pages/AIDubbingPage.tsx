@@ -524,10 +524,10 @@ export function AIDubbingPage({ onOpenContactModal, onNavigatePortfolio, siteVid
                     <img 
                       src={ind.img} 
                       alt={ind.title} 
-                      className="w-full h-full object-cover opacity-40 group-hover:scale-105 transition-transform duration-700"
+                      className="w-full h-full object-cover opacity-80 group-hover:scale-105 transition-transform duration-700"
                       referrerPolicy="no-referrer"
                     />
-                    <div className="absolute inset-0 bg-gradient-to-t from-black via-black/40 to-transparent"></div>
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent"></div>
                   </div>
                   <div className="p-6 absolute bottom-0 left-0 right-0">
                     <h3 className="text-sm font-semibold text-white uppercase tracking-wider">{ind.title}</h3>
@@ -547,7 +547,7 @@ export function AIDubbingPage({ onOpenContactModal, onNavigatePortfolio, siteVid
           <img 
             src="/images/Quantum%20Climb%20%20-Hero%20Visual.png" 
             alt="Cinematic screening room" 
-            className="w-full h-full object-cover opacity-40"
+            className="w-full h-full object-cover opacity-80"
             referrerPolicy="no-referrer"
           />
           <div className="absolute inset-0 bg-[linear-gradient(to_right,rgba(255,255,255,0.015)_1px,transparent_1px),linear-gradient(to_bottom,rgba(255,255,255,0.015)_1px,transparent_1px)] bg-[size:40px_40px] z-10 opacity-20"></div>
