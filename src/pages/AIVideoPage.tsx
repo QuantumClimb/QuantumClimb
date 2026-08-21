@@ -407,7 +407,7 @@ export function AIVideoPage({ onOpenContactModal, siteVideos }: AIVideoPageProps
                 },
                 { 
                   title: "I NEED A PRODUCT FILM", 
-                  img: "/images/aivideo/product%20commercial.png", 
+                  img: "/images/aivideo/cinematoc%20product.png", 
                   desc: "Transform a product into a cinematic visual experience for launches, advertising, websites and presentations.", 
                   cta: "SHOWCASE MY PRODUCT →" 
                 },
