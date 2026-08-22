@@ -385,8 +385,8 @@ export function ContactPage({ onOpenContactModal, onNavigateHome, onNavigatePort
       </div>
       
       <div className="space-y-2">
-        <h2 className="text-3xl font-medium tracking-tight text-white uppercase">Select your project type</h2>
-        <p className="text-sm text-zinc-500">Choose one or multiple services you wish to integrate into your project.</p>
+        <h2 className="text-xl sm:text-3xl font-medium tracking-tight text-white uppercase">Select your project type</h2>
+        <p className="text-xs sm:text-sm text-zinc-500">Choose one or multiple services you wish to integrate into your project.</p>
       </div>
 
       {errors.services && (
@@ -447,8 +447,8 @@ export function ContactPage({ onOpenContactModal, onNavigateHome, onNavigatePort
       </div>
 
       <div className="space-y-2">
-        <h2 className="text-3xl font-medium tracking-tight text-white uppercase">First, tell us about you</h2>
-        <p className="text-sm text-zinc-500">Provide your contact details so our studio coordinators can reach out to you.</p>
+        <h2 className="text-xl sm:text-3xl font-medium tracking-tight text-white uppercase">First, tell us about you</h2>
+        <p className="text-xs sm:text-sm text-zinc-500">Provide your contact details so our studio coordinators can reach out to you.</p>
       </div>
 
       <div className="grid gap-6">
@@ -576,8 +576,8 @@ export function ContactPage({ onOpenContactModal, onNavigateHome, onNavigatePort
         </div>
 
         <div className="space-y-2">
-          <h2 className="text-3xl font-medium tracking-tight text-white uppercase">Project Specifications</h2>
-          <p className="text-sm text-zinc-500">Provide details for the chosen service modules to help us estimate scope.</p>
+          <h2 className="text-xl sm:text-3xl font-medium tracking-tight text-white uppercase">Project Specifications</h2>
+          <p className="text-xs sm:text-sm text-zinc-500">Provide details for the chosen service modules to help us estimate scope.</p>
         </div>
 
         {/* Dynamic Section: AI Dubbing & Localization */}
@@ -1127,8 +1127,8 @@ export function ContactPage({ onOpenContactModal, onNavigateHome, onNavigatePort
       </div>
 
       <div className="space-y-2">
-        <h2 className="text-3xl font-medium tracking-tight text-white uppercase">Project Context</h2>
-        <p className="text-sm text-zinc-500">Provide a high-level summary, target timeline, and budget estimation.</p>
+        <h2 className="text-xl sm:text-3xl font-medium tracking-tight text-white uppercase">Project Context</h2>
+        <p className="text-xs sm:text-sm text-zinc-500">Provide a high-level summary, target timeline, and budget estimation.</p>
       </div>
 
       <div className="space-y-6">
@@ -1281,8 +1281,8 @@ export function ContactPage({ onOpenContactModal, onNavigateHome, onNavigatePort
       </div>
 
       <div className="space-y-2">
-        <h2 className="text-3xl font-medium tracking-tight text-white uppercase">Review & Submit</h2>
-        <p className="text-sm text-zinc-500">Double check your requirements before initiating transmission to our studio system.</p>
+        <h2 className="text-xl sm:text-3xl font-medium tracking-tight text-white uppercase">Review & Submit</h2>
+        <p className="text-xs sm:text-sm text-zinc-500">Double check your requirements before initiating transmission to our studio system.</p>
       </div>
 
       {errors.submission && (
@@ -1434,11 +1434,11 @@ export function ContactPage({ onOpenContactModal, onNavigateHome, onNavigatePort
         <div className="absolute inset-0" style={{ backgroundImage: "linear-gradient(to right, rgba(255,255,255,0.015) 1px, transparent 1px), linear-gradient(to bottom, rgba(255,255,255,0.015) 1px, transparent 1px)", backgroundSize: "40px 40px" }}></div>
       </div>
 
-      <div className="container mx-auto px-6 relative z-10">
+      <div className="container mx-auto px-4 sm:px-6 relative z-10 w-full max-w-full overflow-hidden">
         {isSuccess ? (
           <Reveal type="fold">{renderSuccess()}</Reveal>
         ) : (
-          <div className="grid xl:grid-cols-[400px_1fr] gap-16 items-start">
+          <div className="grid grid-cols-1 xl:grid-cols-[400px_1fr] gap-10 xl:gap-16 items-start w-full max-w-full">
             
             {/* LEFT COLUMN: Hero text and Dynamic Sticky Summary */}
             <aside className="xl:sticky xl:top-32 space-y-12 text-center xl:text-left mx-auto max-w-xl xl:max-w-none">
@@ -1524,7 +1524,7 @@ export function ContactPage({ onOpenContactModal, onNavigateHome, onNavigatePort
             </aside>
 
             {/* RIGHT COLUMN: Form steps */}
-            <main className="border border-white/10 bg-black/40 p-5 sm:p-8 md:p-12 shadow-2xl relative">
+            <main className="border border-white/10 bg-black/40 p-5 sm:p-8 md:p-12 shadow-2xl relative w-full max-w-full overflow-hidden">
               {currentStep === 1 && renderStepServices()}
               {currentStep === 2 && renderStepPersonalInfo()}
               {currentStep === 3 && renderStepRequirements()}
