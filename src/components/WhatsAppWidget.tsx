@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "motion/react";
-import { X } from "lucide-react";
+import { X, Languages, Video, Code, Smartphone, Cpu, Sparkles, Check } from "lucide-react";
 
 const WhatsAppIcon = ({ className = "w-6 h-6" }: { className?: string }) => (
   <svg
@@ -13,10 +13,20 @@ const WhatsAppIcon = ({ className = "w-6 h-6" }: { className?: string }) => (
   </svg>
 );
 
+const SERVICES = [
+  { id: "01", name: "AI Dubbing & Localization", icon: Languages },
+  { id: "02", name: "AI Video Production", icon: Video },
+  { id: "03", name: "Web Development", icon: Code },
+  { id: "04", name: "Mobile App Development", icon: Smartphone },
+  { id: "05", name: "AI Automation & Agents", icon: Cpu },
+  { id: "06", name: "Creative & Custom Projects", icon: Sparkles },
+] as const;
+
 export function WhatsAppWidget() {
   const [isOpen, setIsOpen] = useState(false);
   const [hasNotification, setHasNotification] = useState(true);
   const [showTooltip, setShowTooltip] = useState(false);
+  const [selectedServices, setSelectedServices] = useState<string[]>([]);
   const widgetRef = useRef<HTMLDivElement>(null);
 
   // Auto-show tooltip or badge alert after a short delay
@@ -59,9 +69,23 @@ export function WhatsAppWidget() {
     setShowTooltip(false);
   };
 
+  const handleToggleService = (serviceName: string) => {
+    setSelectedServices((prev) =>
+      prev.includes(serviceName)
+        ? prev.filter((name) => name !== serviceName)
+        : [...prev, serviceName]
+    );
+  };
+
   const handleStartChat = () => {
     const phoneNumber = "601164242145";
-    const message = "Hi Quantum Climb, I'd like to inquire about your services!";
+    let message = "Hi Quantum Climb, I'd like to inquire about your services!";
+    
+    if (selectedServices.length > 0) {
+      const servicesList = selectedServices.join(", ");
+      message = `Hi Quantum Climb, I would like to inquire about: ${servicesList}. Let's discuss a project!`;
+    }
+    
     const encodedMessage = encodeURIComponent(message);
     const whatsappUrl = `https://wa.me/${phoneNumber}?text=${encodedMessage}`;
     window.open(whatsappUrl, "_blank", "noopener,noreferrer");
@@ -78,7 +102,7 @@ export function WhatsAppWidget() {
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: 20, scale: 0.95 }}
             transition={{ duration: 0.2, ease: "easeOut" }}
-            className="mb-4 w-80 md:w-96 overflow-hidden rounded-2xl border border-white/10 bg-zinc-950/95 shadow-2xl backdrop-blur-xl"
+            className="mb-4 w-80 md:w-[420px] overflow-hidden rounded-2xl border border-white/10 bg-zinc-950/95 shadow-2xl backdrop-blur-xl"
           >
             {/* Header section */}
             <div className="relative bg-gradient-to-r from-primary/30 to-purple-600/10 p-5 pb-6 border-b border-white/5">
@@ -111,10 +135,50 @@ export function WhatsAppWidget() {
             </div>
 
             {/* Chat Body */}
-            <div className="p-5 max-h-[160px] overflow-y-auto bg-zinc-950/30">
-              <div className="rounded-2xl rounded-tl-sm bg-white/5 p-3.5 border border-white/5 text-zinc-300 text-xs md:text-sm leading-relaxed max-w-[85%]">
+            <div className="p-5 max-h-[380px] overflow-y-auto bg-zinc-950/30 space-y-4">
+              <div className="rounded-2xl rounded-tl-sm bg-white/5 p-3.5 border border-white/5 text-zinc-300 text-xs md:text-sm leading-relaxed max-w-[90%]">
                 <p className="font-medium text-white mb-1">Hey there! 👋</p>
-                How can we help you scale your business today? Drop us a line and let's build something exceptional.
+                How can we help you scale your business today? Select the services you are interested in below to start our chat.
+              </div>
+
+              {/* Service Selection Form */}
+              <div className="space-y-2">
+                <p className="text-[11px] font-mono text-zinc-500 uppercase tracking-widest block font-semibold mb-2">
+                  Select Project Services:
+                </p>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
+                  {SERVICES.map((service) => {
+                    const Icon = service.icon;
+                    const isSelected = selectedServices.includes(service.name);
+                    return (
+                      <button
+                        key={service.id}
+                        onClick={() => handleToggleService(service.name)}
+                        className={`flex items-center justify-between gap-2 p-3 border rounded-xl text-left cursor-pointer transition-all duration-300 text-xs group relative ${
+                          isSelected
+                            ? "border-primary/50 bg-primary/10 text-white font-medium shadow-lg shadow-primary/5"
+                            : "border-white/5 bg-white/5 text-zinc-400 hover:bg-white/10 hover:border-white/10 hover:text-zinc-200"
+                        }`}
+                      >
+                        <div className="flex items-center gap-2">
+                          <Icon className={`w-3.5 h-3.5 transition-colors ${
+                            isSelected ? "text-purple-400" : "text-zinc-500 group-hover:text-zinc-400"
+                          }`} />
+                          <span className="leading-tight">{service.name}</span>
+                        </div>
+                        {isSelected && (
+                          <motion.div
+                            initial={{ scale: 0 }}
+                            animate={{ scale: 1 }}
+                            className="flex h-4 w-4 items-center justify-center rounded-full bg-primary text-white shrink-0"
+                          >
+                            <Check className="w-2.5 h-2.5" />
+                          </motion.div>
+                        )}
+                      </button>
+                    );
+                  })}
+                </div>
               </div>
             </div>
 
@@ -125,7 +189,9 @@ export function WhatsAppWidget() {
                 className="w-full flex items-center justify-center gap-2 py-3 px-4 rounded-xl bg-primary hover:bg-primary/80 text-white font-semibold text-xs tracking-wider uppercase transition-all duration-300 shadow-lg shadow-primary/10 hover:shadow-primary/20 hover:scale-[1.01] cursor-pointer"
               >
                 <WhatsAppIcon className="w-4 h-4" />
-                Start Chat
+                {selectedServices.length > 0
+                  ? `Inquire About ${selectedServices.length} Service${selectedServices.length > 1 ? "s" : ""}`
+                  : "Start WhatsApp Chat"}
               </button>
               <div className="text-[10px] text-zinc-500 text-center mt-3">
                 Powered by Quantum Climb & WhatsApp
