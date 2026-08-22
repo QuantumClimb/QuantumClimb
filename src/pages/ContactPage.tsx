@@ -430,7 +430,7 @@ export function ContactPage({ onOpenContactModal, onNavigateHome, onNavigatePort
         <button
           type="button"
           onClick={handleNextStep}
-          className="px-8 py-4 bg-white text-black font-semibold text-xs uppercase tracking-wider flex items-center gap-2 hover:bg-purple-600 hover:text-white transition-colors cursor-pointer"
+          className="px-5 py-3 sm:px-8 sm:py-4 bg-white text-black font-semibold text-xs uppercase tracking-wider flex items-center gap-2 hover:bg-purple-600 hover:text-white transition-colors cursor-pointer"
         >
           NEXT: ABOUT YOU <ArrowRight className="w-4 h-4" />
         </button>
@@ -491,7 +491,7 @@ export function ContactPage({ onOpenContactModal, onNavigateHome, onNavigatePort
               <select
                 value={personalInfo.countryCode}
                 onChange={e => setPersonalInfo(prev => ({ ...prev, countryCode: e.target.value }))}
-                className="bg-zinc-950 border-r border-white/10 text-white text-sm px-3 py-3 focus:outline-none cursor-pointer max-w-[120px] sm:max-w-none"
+                className="bg-zinc-950 border-r border-white/10 text-white text-xs sm:text-sm px-2 sm:px-3 py-3 focus:outline-none cursor-pointer w-[95px] sm:w-[120px] shrink-0"
               >
                 {COUNTRY_CODES.map(c => (
                   <option key={c.code + c.country} value={c.code}>
@@ -550,7 +550,7 @@ export function ContactPage({ onOpenContactModal, onNavigateHome, onNavigatePort
         <button
           type="button"
           onClick={handlePrevStep}
-          className="px-6 py-4 bg-transparent border border-white/10 text-white font-semibold text-xs uppercase tracking-wider flex items-center gap-2 hover:border-white transition-colors cursor-pointer"
+          className="px-4 py-3 sm:px-6 sm:py-4 bg-transparent border border-white/10 text-white font-semibold text-xs uppercase tracking-wider flex items-center gap-2 hover:border-white transition-colors cursor-pointer"
         >
           <ArrowLeft className="w-4 h-4" /> BACK
         </button>
@@ -558,9 +558,9 @@ export function ContactPage({ onOpenContactModal, onNavigateHome, onNavigatePort
         <button
           type="button"
           onClick={handleNextStep}
-          className="px-8 py-4 bg-white text-black font-semibold text-xs uppercase tracking-wider flex items-center gap-2 hover:bg-purple-600 hover:text-white transition-colors cursor-pointer"
+          className="px-5 py-3 sm:px-8 sm:py-4 bg-white text-black font-semibold text-xs uppercase tracking-wider flex items-center gap-2 hover:bg-purple-600 hover:text-white transition-colors cursor-pointer"
         >
-          NEXT: REQUIREMENTS <ArrowRight className="w-4 h-4" />
+          NEXT: SPECS <ArrowRight className="w-4 h-4" />
         </button>
       </div>
     </div>
@@ -1101,7 +1101,7 @@ export function ContactPage({ onOpenContactModal, onNavigateHome, onNavigatePort
           <button
             type="button"
             onClick={handlePrevStep}
-            className="px-6 py-4 bg-transparent border border-white/10 text-white font-semibold text-xs uppercase tracking-wider flex items-center gap-2 hover:border-white transition-colors cursor-pointer"
+            className="px-4 py-3 sm:px-6 sm:py-4 bg-transparent border border-white/10 text-white font-semibold text-xs uppercase tracking-wider flex items-center gap-2 hover:border-white transition-colors cursor-pointer"
           >
             <ArrowLeft className="w-4 h-4" /> BACK
           </button>
@@ -1109,9 +1109,9 @@ export function ContactPage({ onOpenContactModal, onNavigateHome, onNavigatePort
           <button
             type="button"
             onClick={handleNextStep}
-            className="px-8 py-4 bg-white text-black font-semibold text-xs uppercase tracking-wider flex items-center gap-2 hover:bg-purple-600 hover:text-white transition-colors cursor-pointer"
+            className="px-5 py-3 sm:px-8 sm:py-4 bg-white text-black font-semibold text-xs uppercase tracking-wider flex items-center gap-2 hover:bg-purple-600 hover:text-white transition-colors cursor-pointer"
           >
-            NEXT: TIMELINE & BUDGET <ArrowRight className="w-4 h-4" />
+            NEXT: TIMELINE <ArrowRight className="w-4 h-4" />
           </button>
         </div>
       </div>
@@ -1256,7 +1256,7 @@ export function ContactPage({ onOpenContactModal, onNavigateHome, onNavigatePort
         <button
           type="button"
           onClick={handlePrevStep}
-          className="px-6 py-4 bg-transparent border border-white/10 text-white font-semibold text-xs uppercase tracking-wider flex items-center gap-2 hover:border-white transition-colors cursor-pointer"
+          className="px-4 py-3 sm:px-6 sm:py-4 bg-transparent border border-white/10 text-white font-semibold text-xs uppercase tracking-wider flex items-center gap-2 hover:border-white transition-colors cursor-pointer"
         >
           <ArrowLeft className="w-4 h-4" /> BACK
         </button>
@@ -1264,9 +1264,9 @@ export function ContactPage({ onOpenContactModal, onNavigateHome, onNavigatePort
         <button
           type="button"
           onClick={handleNextStep}
-          className="px-8 py-4 bg-white text-black font-semibold text-xs uppercase tracking-wider flex items-center gap-2 hover:bg-purple-600 hover:text-white transition-colors cursor-pointer"
+          className="px-5 py-3 sm:px-8 sm:py-4 bg-white text-black font-semibold text-xs uppercase tracking-wider flex items-center gap-2 hover:bg-purple-600 hover:text-white transition-colors cursor-pointer"
         >
-          NEXT: SUBMIT <ArrowRight className="w-4 h-4" />
+          NEXT: REVIEW <ArrowRight className="w-4 h-4" />
         </button>
       </div>
     </div>
@@ -1377,7 +1377,7 @@ export function ContactPage({ onOpenContactModal, onNavigateHome, onNavigatePort
         <button
           type="button"
           onClick={handlePrevStep}
-          className="px-6 py-4 bg-transparent border border-white/10 text-white font-semibold text-xs uppercase tracking-wider flex items-center gap-2 hover:border-white transition-colors cursor-pointer"
+          className="px-4 py-3 sm:px-6 sm:py-4 bg-transparent border border-white/10 text-white font-semibold text-xs uppercase tracking-wider flex items-center gap-2 hover:border-white transition-colors cursor-pointer"
         >
           <ArrowLeft className="w-4 h-4" /> BACK
         </button>
@@ -1428,7 +1428,7 @@ export function ContactPage({ onOpenContactModal, onNavigateHome, onNavigatePort
   );
 
   return (
-    <div className="relative bg-[#050307] min-h-screen pt-40 pb-24 overflow-hidden text-zinc-300 selection:bg-purple-600 selection:text-white">
+    <div className="relative bg-[#050307] min-h-screen pt-24 md:pt-40 pb-16 md:pb-24 overflow-hidden text-zinc-300 selection:bg-purple-600 selection:text-white">
       {/* Subtle grid backdrop */}
       <div className="absolute inset-0 pointer-events-none opacity-30 z-0">
         <div className="absolute inset-0" style={{ backgroundImage: "linear-gradient(to right, rgba(255,255,255,0.015) 1px, transparent 1px), linear-gradient(to bottom, rgba(255,255,255,0.015) 1px, transparent 1px)", backgroundSize: "40px 40px" }}></div>
@@ -1441,7 +1441,7 @@ export function ContactPage({ onOpenContactModal, onNavigateHome, onNavigatePort
           <div className="grid xl:grid-cols-[400px_1fr] gap-16 items-start">
             
             {/* LEFT COLUMN: Hero text and Dynamic Sticky Summary */}
-            <aside className="xl:sticky xl:top-32 space-y-12">
+            <aside className="xl:sticky xl:top-32 space-y-12 text-center xl:text-left mx-auto max-w-xl xl:max-w-none">
               <div className="space-y-6">
                 <Reveal type="mask">
                   <span className="inline-block px-3 py-1 bg-purple-600/10 border border-purple-600/20 text-purple-400 text-[10px] font-mono uppercase tracking-[0.3em] font-bold">
@@ -1463,7 +1463,7 @@ export function ContactPage({ onOpenContactModal, onNavigateHome, onNavigatePort
 
               {/* Progress Tracker dots */}
               <Reveal type="fade-up" delay={0.2}>
-                <div className="flex items-center gap-3 font-mono text-xs text-zinc-500">
+                <div className="flex items-center gap-3 font-mono text-xs text-zinc-500 justify-center xl:justify-start">
                   <span className={currentStep === 1 ? "text-purple-400 font-bold" : currentStep > 1 ? "text-white" : ""}>01</span>
                   <span>—</span>
                   <span className={currentStep === 2 ? "text-purple-400 font-bold" : currentStep > 2 ? "text-white" : ""}>02</span>
@@ -1478,7 +1478,7 @@ export function ContactPage({ onOpenContactModal, onNavigateHome, onNavigatePort
 
               {/* Dynamic Sticky Project Summary Card */}
               <Reveal type="fade-up" delay={0.3}>
-                <div className="border border-white/10 bg-zinc-950/80 p-6 space-y-4">
+                <div className="border border-white/10 bg-zinc-950/80 p-6 space-y-4 text-left">
                   <h4 className="text-xs font-mono uppercase tracking-widest text-zinc-500 border-b border-white/5 pb-2">YOUR PROJECT</h4>
                   
                   <div className="space-y-3 text-xs">
@@ -1524,7 +1524,7 @@ export function ContactPage({ onOpenContactModal, onNavigateHome, onNavigatePort
             </aside>
 
             {/* RIGHT COLUMN: Form steps */}
-            <main className="border border-white/10 bg-black/40 p-8 md:p-12 shadow-2xl relative">
+            <main className="border border-white/10 bg-black/40 p-5 sm:p-8 md:p-12 shadow-2xl relative">
               {currentStep === 1 && renderStepServices()}
               {currentStep === 2 && renderStepPersonalInfo()}
               {currentStep === 3 && renderStepRequirements()}
