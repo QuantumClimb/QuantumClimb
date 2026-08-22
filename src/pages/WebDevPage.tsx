@@ -292,7 +292,7 @@ export function WebDevPage({ onOpenContactModal, items = [], isLoading = false }
     <div className="relative overflow-x-hidden bg-[#050307] text-zinc-300">
       
       {/* 01 — HERO */}
-      <section className="relative min-h-[85vh] flex items-center justify-center overflow-hidden border-b border-white/5 bg-black">
+      <section className="relative min-h-[85vh] flex items-center justify-center overflow-hidden border-b border-white/5 bg-black pt-28 md:pt-0">
         {/* Full-width Background Image */}
         <div className="absolute inset-0 z-0">
           <div className="absolute inset-0 bg-gradient-to-b from-black/85 via-black/35 to-black z-10"></div>
