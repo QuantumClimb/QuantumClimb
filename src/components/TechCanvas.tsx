@@ -60,8 +60,8 @@ export function TechCanvas() {
         if (!ctx) return;
         ctx.beginPath();
         ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
-        // Brand themed purple glows
-        ctx.fillStyle = "rgba(139, 92, 246, 0.4)";
+        // Brand themed purple glows (increased opacity for brightness)
+        ctx.fillStyle = "rgba(139, 92, 246, 0.75)";
         ctx.fill();
       }
     }
@@ -82,13 +82,13 @@ export function TechCanvas() {
           const dist = Math.hypot(dx, dy);
 
           if (dist < connectionDistance) {
-            const alpha = (1 - dist / connectionDistance) * 0.18;
+            const alpha = (1 - dist / connectionDistance) * 0.42;
             ctx.beginPath();
             ctx.moveTo(p1.x, p1.y);
             ctx.lineTo(p2.x, p2.y);
-            // Draw connecting lines with brand themed purple color
-            ctx.strokeStyle = `rgba(139, 92, 246, ${alpha})`;
-            ctx.lineWidth = 0.75;
+            // Draw connecting lines with brand themed purple color (increased brightness)
+            ctx.strokeStyle = `rgba(147, 51, 234, ${alpha})`;
+            ctx.lineWidth = 1.0;
             ctx.stroke();
           }
         }
@@ -101,12 +101,12 @@ export function TechCanvas() {
           const dist = Math.hypot(dx, dy);
 
           if (dist < mouse.radius) {
-            const alpha = (1 - dist / mouse.radius) * 0.25;
+            const alpha = (1 - dist / mouse.radius) * 0.55;
             ctx.beginPath();
             ctx.moveTo(p.x, p.y);
             ctx.lineTo(mouse.x, mouse.y);
             ctx.strokeStyle = `rgba(168, 85, 247, ${alpha})`;
-            ctx.lineWidth = 0.9;
+            ctx.lineWidth = 1.2;
             ctx.stroke();
           }
         }

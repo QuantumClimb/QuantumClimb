@@ -82,24 +82,24 @@ export function ContactModal({ isOpen, onClose }: ContactModalProps) {
             initial={{ opacity: 0, scale: 0.9, y: 20 }}
             animate={{ opacity: 1, scale: 1, y: 0 }}
             exit={{ opacity: 0, scale: 0.9, y: 20 }}
-            className="relative w-full max-w-2xl bg-zinc-900 border border-white/10 p-12 shadow-2xl"
+            className="relative w-full max-w-2xl bg-zinc-900 border border-white/10 p-6 sm:p-12 shadow-2xl max-h-[90vh] overflow-y-auto"
           >
             <button
               onClick={onClose}
-              className="absolute top-8 right-8 text-zinc-500 hover:text-white transition-colors"
+              className="absolute top-4 right-4 sm:top-8 sm:right-8 text-zinc-500 hover:text-white transition-colors cursor-pointer z-10"
             >
               <X size={24} />
             </button>
 
-            <div className="mb-12">
-              <span className="text-[10px] font-mono uppercase tracking-[0.3em] text-purple-600 font-bold mb-4 block">
+            <div className="mb-8 sm:mb-12">
+              <span className="text-[10px] font-mono uppercase tracking-[0.3em] text-purple-400 font-bold mb-2 sm:mb-4 block">
                 Enterprise Inquiry
               </span>
-              <h2 className="text-4xl font-medium text-white tracking-tighter mb-4">
-                Let&apos;s scale your <br />
+              <h2 className="text-3xl sm:text-4xl font-medium text-white tracking-tighter mb-4">
+                Let&apos;s scale your <span className="hidden sm:inline"><br /></span>
                 <span className="text-zinc-500 italic font-serif">global presence</span>
               </h2>
-              <p className="text-zinc-400">
+              <p className="text-zinc-400 text-sm">
                 Our team of experts will help you design a custom localization pipeline tailored to your studio&apos;s needs.
               </p>
             </div>

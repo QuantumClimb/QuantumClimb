@@ -1,3 +1,6 @@
+import { useState, useEffect } from "react";
+import { AnimatePresence, motion } from "motion/react";
+import { Menu, X } from "lucide-react";
 import { ContactModal } from "./ContactModal";
 import { WhatsAppWidget } from "./WhatsAppWidget";
 import { Footer } from "../sections/ClosureSections";
@@ -104,6 +107,19 @@ export function AppShell({
   onUploadSiteVideo,
   onSubmitInquiry,
 }: AppShellProps) {
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+
+  useEffect(() => {
+    if (isMobileMenuOpen) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "";
+    }
+    return () => {
+      document.body.style.overflow = "";
+    };
+  }, [isMobileMenuOpen]);
+
   const isPortfolioPage = currentPage === "portfolio";
   const isAdminPage = currentPage === "admin";
   const isAIDubbingPage = currentPage === "ai-dubbing";
@@ -120,9 +136,18 @@ export function AppShell({
 
       <nav className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 border-b ${isScrolled ? "bg-black/80 backdrop-blur-md py-5 border-white/10" : "bg-transparent py-7 border-transparent"}`}>
         <div className="container mx-auto px-6 flex items-center justify-between gap-4">
-          <button onClick={onNavigateHome} className="text-2xl font-bold tracking-tighter text-white">
-            QUANTUM CLIMB
-          </button>
+          {currentPage !== "home" ? (
+            <button onClick={onNavigateHome} className="flex items-center cursor-pointer h-16 sm:h-22">
+              <img 
+                src="/images/qclogo.png" 
+                alt="Quantum Climb Logo" 
+                className="h-14 sm:h-20 w-auto object-contain brightness-110" 
+                referrerPolicy="no-referrer"
+              />
+            </button>
+          ) : (
+            <div className="h-16 sm:h-22" />
+          )}
 
           <div className="hidden md:flex items-center gap-6 text-sm text-zinc-300">
             <button onClick={onNavigateHome} className={`hover:text-white ${currentPage === "home" ? "text-white font-medium" : ""}`}>Agency</button>
@@ -134,9 +159,17 @@ export function AppShell({
           <div className="flex items-center gap-3">
             <button 
               onClick={onNavigateContact} 
-              className="px-4 py-2 border border-purple-500/30 bg-purple-500/10 hover:bg-purple-600 hover:border-purple-600 text-white font-semibold text-xs tracking-wider uppercase transition-all duration-300 cursor-pointer"
+              className="hidden md:block px-4 py-2 border border-purple-500/30 bg-purple-500/10 hover:bg-purple-600 hover:border-purple-600 text-white font-semibold text-xs tracking-wider uppercase transition-all duration-300 cursor-pointer"
             >
               Start a Project
+            </button>
+
+            <button
+              onClick={() => setIsMobileMenuOpen(true)}
+              className="md:hidden p-2 -mr-2 text-zinc-400 hover:text-white transition-colors cursor-pointer"
+              aria-label="Open Menu"
+            >
+              <Menu className="w-6 h-6" />
             </button>
           </div>
         </div>
@@ -210,6 +243,81 @@ export function AppShell({
 
       <ContactModal isOpen={isContactModalOpen} onClose={onCloseContactModal} />
       {!isAdminPage && <WhatsAppWidget />}
+
+      {/* Mobile Menu Overlay */}
+      <AnimatePresence>
+        {isMobileMenuOpen && (
+          <motion.div
+            initial={{ opacity: 0, y: -20 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -20 }}
+            transition={{ duration: 0.2 }}
+            className="fixed inset-0 bg-black/98 z-[999] backdrop-blur-lg flex flex-col justify-between p-6 pt-24"
+          >
+            <button
+              onClick={() => setIsMobileMenuOpen(false)}
+              className="absolute top-6 right-6 p-3 text-zinc-400 hover:text-white rounded-full bg-white/5 border border-white/5 shadow-lg cursor-pointer animate-fade-in"
+              aria-label="Close Menu"
+            >
+              <X className="w-6 h-6" />
+            </button>
+
+            <div className="flex flex-col gap-6 text-2xl font-bold tracking-tight text-white uppercase mt-8">
+              <button
+                onClick={() => {
+                  onNavigateHome();
+                  setIsMobileMenuOpen(false);
+                }}
+                className={`text-left py-2 border-b border-white/5 hover:text-purple-400 transition-colors ${currentPage === "home" ? "text-purple-400 border-purple-500/20" : ""}`}
+              >
+                Agency
+              </button>
+              <button
+                onClick={() => {
+                  onNavigateAIDubbing();
+                  setIsMobileMenuOpen(false);
+                }}
+                className={`text-left py-2 border-b border-white/5 hover:text-purple-400 transition-colors ${isAIDubbingPage ? "text-purple-400 border-purple-500/20" : ""}`}
+              >
+                AI Dubbing
+              </button>
+              <button
+                onClick={() => {
+                  onNavigateAIVideo();
+                  setIsMobileMenuOpen(false);
+                }}
+                className={`text-left py-2 border-b border-white/5 hover:text-purple-400 transition-colors ${isAIVideoPage ? "text-purple-400 border-purple-500/20" : ""}`}
+              >
+                AI Video
+              </button>
+              <button
+                onClick={() => {
+                  onNavigateWebDev();
+                  setIsMobileMenuOpen(false);
+                }}
+                className={`text-left py-2 border-b border-white/5 hover:text-purple-400 transition-colors ${isWebDevPage ? "text-purple-400 border-purple-500/20" : ""}`}
+              >
+                Web Dev
+              </button>
+              
+              <button
+                onClick={() => {
+                  onNavigateContact();
+                  setIsMobileMenuOpen(false);
+                }}
+                className="mt-6 w-full py-4 text-center border border-purple-500/30 bg-purple-500/10 hover:bg-purple-600 hover:border-purple-600 text-white font-bold text-sm tracking-wider uppercase transition-all duration-300 cursor-pointer animate-fade-in"
+              >
+                Start a Project
+              </button>
+            </div>
+
+            <div className="border-t border-white/5 pt-6 text-center text-xs font-mono text-zinc-500">
+              <p className="uppercase tracking-widest mb-1">QUANTUM CLIMB</p>
+              <p>AI-Powered Digital Products, Media & Experiences</p>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </div>
   );
 }

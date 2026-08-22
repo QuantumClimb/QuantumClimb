@@ -18,6 +18,20 @@
   --radius-2xl: 0px;
   --radius-3xl: 0px;
   --radius-full: 0px;
+  
+  --animate-ken-burns: kenburns 30s ease-in-out infinite;
+
+  @keyframes kenburns {
+    0% {
+      transform: scale(1) translate(0px, 0px);
+    }
+    50% {
+      transform: scale(1.12) translate(-8px, -4px);
+    }
+    100% {
+      transform: scale(1) translate(0px, 0px);
+    }
+  }
 }
 
 @layer base {
@@ -37,6 +51,8 @@
   h1, h2, h3, h4, h5, h6 {
     @apply text-text-header font-bold tracking-tight;
     letter-spacing: -0.04em;
+    overflow-wrap: break-word;
+    word-wrap: break-word;
   }
 
   .material-symbols-sharp {

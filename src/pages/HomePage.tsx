@@ -141,7 +141,7 @@ export function HomePage({
           <img 
             src="/images/Quantum%20Climb%20%20-Hero%20Visual.png" 
             alt="Quantum Climb Hero Visual Background" 
-            className="w-full h-full object-cover opacity-25 brightness-125"
+            className="w-full h-full object-cover opacity-35 brightness-125 animate-ken-burns"
             referrerPolicy="no-referrer"
           />
           {/* Subtle technical background grid */}
@@ -192,7 +192,7 @@ export function HomePage({
       </section>
 
       {/* 2. WHAT CAN WE BUILD SECTION */}
-      <section id="what-can-we-build" className="py-32 bg-zinc-950 border-b border-white/5 relative">
+      <section id="what-can-we-build" className="py-16 md:py-32 bg-zinc-950 border-b border-white/5 relative">
         <div className="container mx-auto px-6 relative z-10">
           <SectionHeader
             eyebrow="WHAT CAN WE BUILD?"
@@ -201,7 +201,7 @@ export function HomePage({
             centered={false}
           />
 
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 mt-16">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-16">
             {projects.map((project, index) => (
               <Reveal key={project.id} type="fade-up" delay={0.05 * index} className="group h-full">
                 <div 
@@ -253,7 +253,7 @@ export function HomePage({
       </section>
 
       {/* 3. BUILT WITH INTELLIGENCE SECTION */}
-      <section className="py-32 bg-black border-b border-white/5">
+      <section className="py-16 md:py-32 bg-black border-b border-white/5">
         <div className="container mx-auto px-6">
           <SectionHeader
             eyebrow="BUILT WITH INTELLIGENCE"
@@ -261,9 +261,9 @@ export function HomePage({
             subtitle="A curated look at actual media, products, and systems created by Quantum Climb. Built entirely using advanced AI pipeline technologies."
           />
 
-          <div className="grid md:grid-cols-12 gap-8 mt-16">
+          <div className="grid grid-cols-1 md:grid-cols-12 gap-8 mt-16">
             {/* Project 1 - Huge left card */}
-            <div className="md:col-span-8 group relative border border-white/10 bg-zinc-950/40 p-4 flex flex-col justify-between">
+            <div className="col-span-1 md:col-span-8 group relative border border-white/10 bg-zinc-950/40 p-4 flex flex-col justify-between">
               <div className="aspect-[16/9] w-full overflow-hidden relative border border-white/5">
                 <img 
                   src="/images/AI%20VIDEO1.png" 
@@ -292,7 +292,7 @@ export function HomePage({
             </div>
 
             {/* Project 2 - Top Right Small card */}
-            <div className="md:col-span-4 group relative border border-white/10 bg-zinc-950/40 p-4 flex flex-col justify-between">
+            <div className="col-span-1 md:col-span-4 group relative border border-white/10 bg-zinc-950/40 p-4 flex flex-col justify-between">
               <div className="aspect-square w-full overflow-hidden relative border border-white/5">
                 <img 
                   src="/images/Build%20a%20Website%20CTA..png" 
@@ -319,7 +319,7 @@ export function HomePage({
             </div>
 
             {/* Project 3 - Bottom Left Small card */}
-            <div className="md:col-span-4 group relative border border-white/10 bg-zinc-950/40 p-4 flex flex-col justify-between">
+            <div className="col-span-1 md:col-span-4 group relative border border-white/10 bg-zinc-950/40 p-4 flex flex-col justify-between">
               <div className="aspect-square w-full overflow-hidden relative border border-white/5">
                 <img 
                   src="/images/AI%20AGENT.png" 
@@ -346,7 +346,7 @@ export function HomePage({
             </div>
 
             {/* Project 4 - Bottom Right Large Card */}
-            <div className="md:col-span-8 group relative border border-white/10 bg-zinc-950/40 p-4 flex flex-col justify-between">
+            <div className="col-span-1 md:col-span-8 group relative border border-white/10 bg-zinc-950/40 p-4 flex flex-col justify-between">
               <div className="aspect-[16/9] w-full overflow-hidden relative border border-white/5">
                 <img 
                   src="/images/AI%20Dubbing%20-Voice.png" 
@@ -378,7 +378,7 @@ export function HomePage({
       </section>
 
       {/* 4. THE QUANTUM ECOSYSTEM */}
-      <section className="py-32 bg-zinc-950 border-b border-white/5">
+      <section className="py-16 md:py-32 bg-zinc-950 border-b border-white/5">
         <div className="container mx-auto px-6">
           <SectionHeader
             eyebrow="THE QUANTUM ECOSYSTEM"
@@ -386,7 +386,7 @@ export function HomePage({
             subtitle="The underlying AI-native pipeline mechanics powering all of our custom software, agent networks, and digital assets."
           />
           
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 mt-16">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-16">
             {capabilities.map((service, index) => (
               <Reveal key={service.id} type="fade-up" delay={0.05 * index} className="group relative">
                 <div className="bg-black border border-white/10 p-8 hover:border-purple-600/30 transition-all duration-300 flex flex-col justify-between h-full">
@@ -414,7 +414,7 @@ export function HomePage({
       </section>
 
       {/* 5. START A PROJECT CTA */}
-      <section className="relative py-32 bg-black overflow-hidden">
+      <section className="relative py-16 md:py-32 bg-black overflow-hidden">
         {/* Generative technical grid overlay behind section */}
         <div className="absolute inset-0 pointer-events-none opacity-20">
           <div className="absolute inset-0" style={{ backgroundImage: "radial-gradient(circle at center, rgba(147, 51, 234, 0.15) 0%, transparent 70%)" }}></div>
@@ -429,7 +429,7 @@ export function HomePage({
           </Reveal>
           
           <Reveal type="mask" className="mb-6">
-            <h2 className="text-5xl md:text-7xl font-medium tracking-tighter text-white leading-tight uppercase">
+            <h2 className="text-4xl sm:text-5xl md:text-7xl font-medium tracking-tighter text-white leading-tight uppercase">
               Let's <span className="text-zinc-500 italic font-serif">build it.</span>
             </h2>
           </Reveal>

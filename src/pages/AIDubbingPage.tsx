@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { TechCanvas } from "../components/TechCanvas";
 import { Reveal } from "../components/Reveal";
 import { 
   ArrowRight, 
@@ -216,11 +217,12 @@ export function AIDubbingPage({ onOpenContactModal, onNavigatePortfolio, siteVid
           <img 
             src="/images/Quantum%20Climb%20%20-Hero%20Visual.png" 
             alt="Cinematic Dubbing Background" 
-            className="w-full h-full object-cover opacity-25 brightness-125"
+            className="w-full h-full object-cover opacity-35 brightness-125 animate-ken-burns"
             referrerPolicy="no-referrer"
           />
           {/* Technical grid overlay */}
           <div className="absolute inset-0 bg-[linear-gradient(to_right,rgba(255,255,255,0.015)_1px,transparent_1px),linear-gradient(to_bottom,rgba(255,255,255,0.015)_1px,transparent_1px)] bg-[size:40px_40px] z-10 opacity-30"></div>
+          <TechCanvas />
         </div>
 
         <div className="container mx-auto px-6 relative z-20 text-center">
@@ -232,7 +234,7 @@ export function AIDubbingPage({ onOpenContactModal, onNavigatePortfolio, siteVid
             </Reveal>
 
             <Reveal type="mask">
-              <h1 className="text-7xl md:text-[110px] font-medium tracking-tighter text-white leading-[0.85] uppercase">
+              <h1 className="text-4xl sm:text-6xl md:text-7xl lg:text-[110px] font-medium tracking-tighter text-white leading-[0.85] uppercase">
                 UNLOCK <br />
                 <span className="text-zinc-500 italic font-serif">THE WORLD.</span>
               </h1>
@@ -264,7 +266,7 @@ export function AIDubbingPage({ onOpenContactModal, onNavigatePortfolio, siteVid
       </section>
 
       {/* 02 — FEATURED POC & CASE STUDY */}
-      <section id="featured-poc" className="py-24 border-b border-white/5 bg-zinc-950/20">
+      <section id="featured-poc" className="py-16 md:py-24 border-b border-white/5 bg-zinc-950/20">
         <div className="container mx-auto px-6">
           <div className="max-w-6xl mx-auto">
             
@@ -326,7 +328,7 @@ export function AIDubbingPage({ onOpenContactModal, onNavigatePortfolio, siteVid
       </section>
 
       {/* 03 — POC COLLECTION */}
-      <section className="py-24 border-b border-white/5 bg-black">
+      <section className="py-16 md:py-24 border-b border-white/5 bg-black">
         <div className="container mx-auto px-6">
           <div className="max-w-6xl mx-auto space-y-12">
             
@@ -396,7 +398,7 @@ export function AIDubbingPage({ onOpenContactModal, onNavigatePortfolio, siteVid
       </section>
 
       {/* 04 — PERFORMANCE (Built for Scale) */}
-      <section className="py-24 border-b border-white/5 bg-zinc-950/20">
+      <section className="py-16 md:py-24 border-b border-white/5 bg-zinc-950/20">
         <div className="container mx-auto px-6">
           <div className="max-w-6xl mx-auto space-y-12">
             
@@ -405,7 +407,7 @@ export function AIDubbingPage({ onOpenContactModal, onNavigatePortfolio, siteVid
               <h2 className="text-3xl font-medium tracking-tight text-white uppercase">Built for scale</h2>
             </div>
 
-            <div className="grid grid-cols-2 md:grid-cols-3 gap-6">
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
               {[
                 { label: "120+", desc: "Languages supported" },
                 { label: "90%", desc: "Efficiency gain vs traditional dubbing" },
@@ -426,7 +428,7 @@ export function AIDubbingPage({ onOpenContactModal, onNavigatePortfolio, siteVid
       </section>
 
       {/* 05 — CAPABILITIES ("Everything You Need for Global Content") */}
-      <section className="py-24 border-b border-white/5 bg-black">
+      <section className="py-16 md:py-24 border-b border-white/5 bg-black">
         <div className="container mx-auto px-6">
           <div className="max-w-6xl mx-auto space-y-12">
             
@@ -435,7 +437,7 @@ export function AIDubbingPage({ onOpenContactModal, onNavigatePortfolio, siteVid
               <h2 className="text-3xl font-medium tracking-tight text-white uppercase">Everything you need for global content</h2>
             </div>
 
-            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
               {[
                 { title: "Voice Cloning", desc: "Preserve the unique vocal characteristics, timbre, and subtle performance nuances of the original actor's delivery." },
                 { title: "Perfect Lip Sync", desc: "AI-powered visual adaptation that matches actor lip movements naturally to the localized target dialect dialogue." },
@@ -456,7 +458,7 @@ export function AIDubbingPage({ onOpenContactModal, onNavigatePortfolio, siteVid
       </section>
 
       {/* 06 — THE TECHNICAL EDGE */}
-      <section className="py-24 border-b border-white/5 bg-zinc-950/20">
+      <section className="py-16 md:py-24 border-b border-white/5 bg-zinc-950/20">
         <div className="container mx-auto px-6">
           <div className="max-w-6xl mx-auto space-y-12">
             
@@ -501,7 +503,7 @@ export function AIDubbingPage({ onOpenContactModal, onNavigatePortfolio, siteVid
       </section>
 
       {/* 07 — INDUSTRIES ("Built for Every Industry") */}
-      <section className="py-24 border-b border-white/5 bg-black">
+      <section className="py-16 md:py-24 border-b border-white/5 bg-black">
         <div className="container mx-auto px-6">
           <div className="max-w-6xl mx-auto space-y-12">
             
@@ -510,7 +512,7 @@ export function AIDubbingPage({ onOpenContactModal, onNavigatePortfolio, siteVid
               <h2 className="text-3xl font-medium tracking-tight text-white uppercase">Built for every industry</h2>
             </div>
 
-            <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
               {[
                 { title: "Film & Television", img: "/images/AI%20VIDEO1.png" },
                 { title: "E-Learning", img: "/images/Studification.png" },
@@ -547,10 +549,11 @@ export function AIDubbingPage({ onOpenContactModal, onNavigatePortfolio, siteVid
           <img 
             src="/images/Quantum%20Climb%20%20-Hero%20Visual.png" 
             alt="Cinematic screening room" 
-            className="w-full h-full object-cover opacity-25 brightness-125"
+            className="w-full h-full object-cover opacity-35 brightness-125 animate-ken-burns"
             referrerPolicy="no-referrer"
           />
           <div className="absolute inset-0 bg-[linear-gradient(to_right,rgba(255,255,255,0.015)_1px,transparent_1px),linear-gradient(to_bottom,rgba(255,255,255,0.015)_1px,transparent_1px)] bg-[size:40px_40px] z-10 opacity-20"></div>
+          <TechCanvas />
         </div>
         <div className="relative z-20 text-center max-w-2xl px-6 space-y-4">
           <span className="text-[10px] font-mono tracking-[0.3em] text-purple-400 uppercase">STUDIO PIPELINE</span>
@@ -562,7 +565,7 @@ export function AIDubbingPage({ onOpenContactModal, onNavigatePortfolio, siteVid
       </section>
 
       {/* 09 — CTA (Ready to Go Global?) */}
-      <section className="py-32 bg-black relative overflow-hidden">
+      <section className="py-16 md:py-32 bg-black relative overflow-hidden">
         {/* Subtle grid backdrop */}
         <div className="absolute inset-0 pointer-events-none opacity-20 z-0">
           <div className="absolute inset-0 animate-pulse" style={{ backgroundImage: "linear-gradient(to right, rgba(255,255,255,0.015) 1px, transparent 1px), linear-gradient(to bottom, rgba(255,255,255,0.015) 1px, transparent 1px)", backgroundSize: "40px 40px" }}></div>
@@ -572,7 +575,7 @@ export function AIDubbingPage({ onOpenContactModal, onNavigatePortfolio, siteVid
           <div className="max-w-3xl mx-auto space-y-10">
             <div className="space-y-4">
               <span className="text-[10px] font-mono tracking-[0.35em] text-purple-400 uppercase block">READY TO GO GLOBAL?</span>
-              <h2 className="text-4xl md:text-6xl font-medium tracking-tighter text-white uppercase leading-[0.9]">
+              <h2 className="text-3xl sm:text-4xl md:text-6xl font-medium tracking-tighter text-white uppercase leading-[0.9]">
                 Your content <br />
                 deserves a <br />
                 <span className="text-zinc-500 italic font-serif">bigger audience.</span>

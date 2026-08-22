@@ -1,4 +1,5 @@
 import { useMemo, useState, useEffect } from "react";
+import { TechCanvas } from "../components/TechCanvas";
 import { ArrowRight, ArrowDown, Check, Globe, X, ExternalLink } from "lucide-react";
 import { Reveal } from "../components/Reveal";
 import type { PortfolioItem } from "../lib/supabase";
@@ -299,11 +300,12 @@ export function WebDevPage({ onOpenContactModal, items = [], isLoading = false }
           <img 
             src="/images/Build%20a%20Website%20CTA..png" 
             alt="Web development hero background" 
-            className="w-full h-full object-cover opacity-65 brightness-125"
+            className="w-full h-full object-cover opacity-35 brightness-125 animate-ken-burns"
             referrerPolicy="no-referrer"
           />
           {/* Grid overlay */}
           <div className="absolute inset-0 bg-[linear-gradient(to_right,rgba(255,255,255,0.015)_1px,transparent_1px),linear-gradient(to_bottom,rgba(255,255,255,0.015)_1px,transparent_1px)] bg-[size:40px_40px] z-10 opacity-30"></div>
+          <TechCanvas />
         </div>
 
         <div className="container mx-auto px-6 relative z-20 text-center">
@@ -315,7 +317,7 @@ export function WebDevPage({ onOpenContactModal, items = [], isLoading = false }
             </Reveal>
 
             <Reveal type="mask">
-              <h1 className="text-7xl md:text-[110px] font-medium tracking-tighter text-white leading-[0.85] uppercase">
+              <h1 className="text-4xl sm:text-6xl md:text-7xl lg:text-[110px] font-medium tracking-tighter text-white leading-[0.85] uppercase">
                 WE BUILD <br />
                 <span className="text-zinc-500 italic font-serif">DIGITAL WORLDS.</span>
               </h1>
@@ -347,7 +349,7 @@ export function WebDevPage({ onOpenContactModal, items = [], isLoading = false }
       </section>
 
       {/* 02 — FEATURED PROJECT */}
-      <section id="featured-project" className="py-24 border-b border-white/5 bg-zinc-950/20 relative">
+      <section id="featured-project" className="py-16 md:py-24 border-b border-white/5 bg-zinc-950/20 relative">
         {/* Supporting backdrop */}
         <div className="absolute inset-0 z-0 pointer-events-none opacity-25">
           <img src="/images/webdev/editorial%20image%20placement.png" alt="Featured workspace preview" className="w-full h-full object-cover" />
@@ -414,7 +416,7 @@ export function WebDevPage({ onOpenContactModal, items = [], isLoading = false }
       </section>
 
       {/* 03 & 04 & 05 & 06 — PROJECT PORTFOLIO GRID */}
-      <section className="py-24 border-b border-white/5 bg-black">
+      <section className="py-16 md:py-24 border-b border-white/5 bg-black">
         <div className="container mx-auto px-6">
           <div className="max-w-6xl mx-auto space-y-12">
             
@@ -507,7 +509,7 @@ export function WebDevPage({ onOpenContactModal, items = [], isLoading = false }
       </section>
 
       {/* 07 — WHAT WE BUILD */}
-      <section className="py-24 border-b border-white/5 bg-zinc-950/20">
+      <section className="py-16 md:py-24 border-b border-white/5 bg-zinc-950/20">
         <div className="container mx-auto px-6">
           <div className="max-w-6xl mx-auto grid lg:grid-cols-[1fr_1.2fr] gap-16 items-center">
             
@@ -552,7 +554,7 @@ export function WebDevPage({ onOpenContactModal, items = [], isLoading = false }
 
       {/* 08 — ADD A STRONG VISUAL PROJECT MOMENT */}
       {displayWebsites.length > 1 && (
-        <section className="py-24 border-b border-white/5 bg-black">
+        <section className="py-16 md:py-24 border-b border-white/5 bg-black">
           <div className="container mx-auto px-6">
             <div className="max-w-6xl mx-auto space-y-8">
               <span className="text-[10px] font-mono tracking-[0.3em] text-purple-400 uppercase">PROJECT / DIGITAL EXPERIENCE</span>
@@ -590,7 +592,7 @@ export function WebDevPage({ onOpenContactModal, items = [], isLoading = false }
       )}
 
       {/* 10 — NOT JUST A WEBSITE */}
-      <section className="py-24 border-b border-white/5 bg-zinc-950/20">
+      <section className="py-16 md:py-24 border-b border-white/5 bg-zinc-950/20">
         <div className="container mx-auto px-6">
           <div className="max-w-6xl mx-auto grid lg:grid-cols-[1.2fr_1fr] gap-16 items-center">
             
@@ -636,7 +638,7 @@ export function WebDevPage({ onOpenContactModal, items = [], isLoading = false }
 
       {/* MORE WORK SHOWCASE ROW */}
       {displayWebsites.length > 2 && (
-        <section className="py-24 border-b border-white/5 bg-black">
+        <section className="py-16 md:py-24 border-b border-white/5 bg-black">
           <div className="container mx-auto px-6">
             <div className="max-w-6xl mx-auto space-y-12">
               <div className="space-y-2">
@@ -644,7 +646,7 @@ export function WebDevPage({ onOpenContactModal, items = [], isLoading = false }
                 <h2 className="text-3xl font-medium tracking-tight text-white uppercase">MORE WORK</h2>
               </div>
 
-              <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                 {displayWebsites.slice(2).map((project) => (
                   <button
                     key={project.id}
@@ -681,23 +683,24 @@ export function WebDevPage({ onOpenContactModal, items = [], isLoading = false }
       )}
 
       {/* 12 — LET'S BUILD IT (CTA) */}
-      <section className="py-32 bg-black relative overflow-hidden border-t border-white/5">
+      <section className="py-16 md:py-32 bg-black relative overflow-hidden border-t border-white/5">
         {/* Full-bleed background */}
         <div className="absolute inset-0 z-0">
           <div className="absolute inset-0 bg-gradient-to-b from-black/85 via-black/45 to-black z-10"></div>
           <img 
             src="/images/webdev/lets%20build%20it.png" 
             alt="Generative modular construction CTA backdrop" 
-            className="w-full h-full object-cover opacity-60"
+            className="w-full h-full object-cover opacity-35 brightness-125 animate-ken-burns"
             referrerPolicy="no-referrer"
           />
+          <TechCanvas />
         </div>
 
         <div className="container mx-auto px-6 relative z-20 text-center">
           <div className="max-w-3xl mx-auto space-y-10">
             <div className="space-y-4">
               <span className="text-[10px] font-mono tracking-[0.35em] text-purple-400 uppercase block">HAVE SOMETHING TO BUILD?</span>
-              <h2 className="text-4xl md:text-6xl font-medium tracking-tighter text-white uppercase leading-[0.9]">
+              <h2 className="text-3xl sm:text-4xl md:text-6xl font-medium tracking-tighter text-white uppercase leading-[0.9]">
                 LET'S <br />
                 <span className="text-zinc-500 italic font-serif">BUILD IT.</span>
               </h2>
@@ -739,10 +742,10 @@ export function WebDevPage({ onOpenContactModal, items = [], isLoading = false }
           </button>
           
           {/* Modal Container: Viewport-constrained, overflow-hidden */}
-          <div className="relative bg-zinc-950 w-full h-full flex flex-col md:flex-row z-10 shadow-2xl overflow-hidden max-h-screen">
+          <div className="relative bg-zinc-950 w-full h-full flex flex-col md:flex-row z-10 shadow-2xl overflow-y-auto md:overflow-hidden max-h-screen">
             
             {/* Left Side: Browser Mockup Preview */}
-            <div className="w-full md:w-[60%] lg:w-[65%] h-1/2 md:h-full flex flex-col justify-center p-4 sm:p-8 md:p-16 lg:p-20 bg-zinc-950 border-b md:border-b-0 md:border-r border-white/5 overflow-hidden shrink-0">
+            <div className="w-full md:w-[60%] lg:w-[65%] h-auto md:h-full flex flex-col justify-center p-4 sm:p-8 md:p-16 lg:p-20 bg-zinc-950 border-b md:border-b-0 md:border-r border-white/5 shrink-0">
               <div className="w-full flex-1 flex flex-col justify-center max-h-full overflow-hidden">
                 <div className="bg-zinc-900 border border-white/10 rounded-xl overflow-hidden shadow-2xl flex flex-col max-h-full">
                   {/* Browser Header Bar */}
@@ -761,7 +764,7 @@ export function WebDevPage({ onOpenContactModal, items = [], isLoading = false }
                   </div>
                   
                   {/* Browser Screen: Contains the image */}
-                  <div className="bg-zinc-950 relative flex-1 overflow-hidden">
+                  <div className="bg-zinc-950 relative aspect-video md:flex-1 overflow-hidden">
                     <img 
                       src={selectedProject.thumbnail_url || "/images/webdev/editorial%20image%20placement.png"} 
                       alt={selectedProject.title} 
@@ -774,9 +777,9 @@ export function WebDevPage({ onOpenContactModal, items = [], isLoading = false }
             </div>
 
             {/* Right Side: Details panel */}
-            <div className="w-full md:w-[40%] lg:w-[35%] h-1/2 md:h-full flex flex-col bg-zinc-950 overflow-hidden relative">
+            <div className="w-full md:w-[40%] lg:w-[35%] h-auto md:h-full flex flex-col bg-zinc-950 md:overflow-hidden relative">
               {/* Scrollable Content wrapper */}
-              <div className="flex-1 overflow-y-auto p-6 sm:p-10 space-y-8">
+              <div className="flex-1 overflow-visible md:overflow-y-auto p-6 sm:p-10 space-y-8">
                 {/* Title info */}
                 <div className="space-y-2 pt-4">
                   <span className="text-[10px] font-mono text-purple-400 uppercase tracking-[0.3em] font-bold">

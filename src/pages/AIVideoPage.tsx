@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { TechCanvas } from "../components/TechCanvas";
 import { Reveal } from "../components/Reveal";
 import { 
   ArrowRight, 
@@ -200,11 +201,12 @@ export function AIVideoPage({ onOpenContactModal, siteVideos }: AIVideoPageProps
           <img 
             src="/images/aivideo/create%20the%20impossible.png" 
             alt="Cinematic generative visual creation" 
-            className="w-full h-full object-cover opacity-75"
+            className="w-full h-full object-cover opacity-35 brightness-125 animate-ken-burns"
             referrerPolicy="no-referrer"
           />
           {/* Grid overlay */}
           <div className="absolute inset-0 bg-[linear-gradient(to_right,rgba(255,255,255,0.015)_1px,transparent_1px),linear-gradient(to_bottom,rgba(255,255,255,0.015)_1px,transparent_1px)] bg-[size:40px_40px] z-10 opacity-30"></div>
+          <TechCanvas />
         </div>
 
         <div className="container mx-auto px-6 relative z-20 text-center">
@@ -216,7 +218,7 @@ export function AIVideoPage({ onOpenContactModal, siteVideos }: AIVideoPageProps
             </Reveal>
 
             <Reveal type="mask">
-              <h1 className="text-6xl md:text-[110px] font-medium tracking-tighter text-white leading-[0.85] uppercase">
+              <h1 className="text-4xl sm:text-6xl md:text-7xl lg:text-[110px] font-medium tracking-tighter text-white leading-[0.85] uppercase">
                 WHAT DO YOU <br />
                 WANT TO <span className="text-zinc-500 italic font-serif">CREATE?</span>
               </h1>
@@ -251,7 +253,7 @@ export function AIVideoPage({ onOpenContactModal, siteVideos }: AIVideoPageProps
       </section>
 
       {/* 02 — FEATURED VIDEO */}
-      <section id="featured-video" className="py-24 border-b border-white/5 bg-zinc-950/20">
+      <section id="featured-video" className="py-16 md:py-24 border-b border-white/5 bg-zinc-950/20">
         <div className="container mx-auto px-6">
           <div className="max-w-6xl mx-auto">
             
@@ -308,7 +310,7 @@ export function AIVideoPage({ onOpenContactModal, siteVideos }: AIVideoPageProps
       </section>
 
       {/* 03 — SELECTED WORK */}
-      <section className="py-24 border-b border-white/5 bg-black">
+      <section className="py-16 md:py-24 border-b border-white/5 bg-black">
         <div className="container mx-auto px-6">
           <div className="max-w-6xl mx-auto space-y-12">
             
@@ -319,7 +321,7 @@ export function AIVideoPage({ onOpenContactModal, siteVideos }: AIVideoPageProps
             </div>
 
             {/* Asymmetric layout gallery grid */}
-            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
               {displayVideos.map((video, idx) => {
                 const category = getVideoCategory(video);
                 
@@ -372,7 +374,7 @@ export function AIVideoPage({ onOpenContactModal, siteVideos }: AIVideoPageProps
       </section>
 
       {/* 04 — WHAT CAN WE BUILD FOR YOU? */}
-      <section className="py-24 border-b border-white/5 bg-zinc-950/20">
+      <section className="py-16 md:py-24 border-b border-white/5 bg-zinc-950/20">
         <div className="container mx-auto px-6">
           <div className="max-w-6xl mx-auto space-y-12">
             
@@ -385,7 +387,7 @@ export function AIVideoPage({ onOpenContactModal, siteVideos }: AIVideoPageProps
             </div>
 
             {/* Visual project pathways grid */}
-            <div className="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
               {[
                 { 
                   title: "I NEED A COMMERCIAL", 
@@ -473,7 +475,7 @@ export function AIVideoPage({ onOpenContactModal, siteVideos }: AIVideoPageProps
       </section>
 
       {/* 05 — CREATE WHAT ONCE FELT IMPOSSIBLE */}
-      <section className="py-24 border-b border-white/5 bg-black relative">
+      <section className="py-16 md:py-24 border-b border-white/5 bg-black relative">
         <div className="container mx-auto px-6">
           <div className="max-w-6xl mx-auto grid lg:grid-cols-[1fr_1.2fr] gap-16 items-center">
             
@@ -518,7 +520,7 @@ export function AIVideoPage({ onOpenContactModal, siteVideos }: AIVideoPageProps
       </section>
 
       {/* 06 — ONE IDEA. AN ENTIRE CAMPAIGN. (Content at Scale) */}
-      <section className="py-24 border-b border-white/5 bg-zinc-950/20">
+      <section className="py-16 md:py-24 border-b border-white/5 bg-zinc-950/20">
         <div className="container mx-auto px-6">
           <div className="max-w-6xl mx-auto grid lg:grid-cols-[1.2fr_1fr] gap-16 items-center">
             
@@ -565,7 +567,7 @@ export function AIVideoPage({ onOpenContactModal, siteVideos }: AIVideoPageProps
       </section>
 
       {/* 07 — CREATIVE DIFFERENCE */}
-      <section className="py-24 border-b border-white/5 bg-black">
+      <section className="py-16 md:py-24 border-b border-white/5 bg-black">
         <div className="container mx-auto px-6">
           <div className="max-w-6xl mx-auto grid lg:grid-cols-[1fr_1.2fr] gap-16 items-center">
             
@@ -610,7 +612,7 @@ export function AIVideoPage({ onOpenContactModal, siteVideos }: AIVideoPageProps
       </section>
 
       {/* 08 — WHO WE CREATE FOR */}
-      <section className="py-24 border-b border-white/5 bg-zinc-950/20">
+      <section className="py-16 md:py-24 border-b border-white/5 bg-zinc-950/20">
         <div className="container mx-auto px-6">
           <div className="max-w-6xl mx-auto space-y-12">
             
@@ -619,7 +621,7 @@ export function AIVideoPage({ onOpenContactModal, siteVideos }: AIVideoPageProps
               <h2 className="text-3xl font-medium tracking-tight text-white uppercase">IDEAS FROM EVERY INDUSTRY.</h2>
             </div>
 
-            <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
               {[
                 { title: "BRANDS & ADVERTISING", img: "/images/aivideo/product%20commercial.png", desc: "Commercials, product films and campaigns." },
                 { title: "AUTOMOTIVE", img: "/images/aivideo/automative%20%20film.png", desc: "Vehicle campaigns, launches and cinematic product storytelling." }, // double space!
@@ -652,7 +654,7 @@ export function AIVideoPage({ onOpenContactModal, siteVideos }: AIVideoPageProps
       </section>
 
       {/* 09 — POST-PRODUCTION (Sound / Audio finishing) */}
-      <section className="py-24 border-b border-white/5 bg-black">
+      <section className="py-16 md:py-24 border-b border-white/5 bg-black">
         <div className="container mx-auto px-6">
           <div className="max-w-6xl mx-auto grid lg:grid-cols-[1.2fr_1fr] gap-16 items-center">
             
@@ -667,7 +669,7 @@ export function AIVideoPage({ onOpenContactModal, siteVideos }: AIVideoPageProps
               </div>
 
               {/* Compact Labels */}
-              <div className="grid grid-cols-3 gap-3 border-t border-white/5 pt-6 text-[10px] font-mono text-zinc-400 text-center">
+              <div className="grid grid-cols-2 sm:grid-cols-3 gap-3 border-t border-white/5 pt-6 text-[10px] font-mono text-zinc-400 text-center">
                 {["VOICE", "MUSIC", "SOUND DESIGN", "EDITING", "MIXING", "LOCALIZATION"].map((label, idx) => (
                   <span key={idx} className="border border-white/10 bg-zinc-950/40 px-2 py-3 font-semibold tracking-wider">
                     {label}
@@ -692,7 +694,7 @@ export function AIVideoPage({ onOpenContactModal, siteVideos }: AIVideoPageProps
       </section>
 
       {/* 10 — CONNECT TO AI DUBBING */}
-      <section className="py-24 border-b border-white/5 bg-zinc-950/10">
+      <section className="py-16 md:py-24 border-b border-white/5 bg-zinc-950/10">
         <div className="container mx-auto px-6 text-center">
           <div className="max-w-2xl mx-auto space-y-6">
             <span className="text-[10px] font-mono tracking-[0.3em] text-purple-400 uppercase block">TAKE IT FURTHER</span>
@@ -713,23 +715,24 @@ export function AIVideoPage({ onOpenContactModal, siteVideos }: AIVideoPageProps
       </section>
 
       {/* 11 — FINAL CTA */}
-      <section className="py-32 bg-black relative overflow-hidden border-t border-white/5">
+      <section className="py-16 md:py-32 bg-black relative overflow-hidden border-t border-white/5">
         {/* Full-bleed background */}
         <div className="absolute inset-0 z-0">
           <div className="absolute inset-0 bg-gradient-to-b from-black/85 via-black/45 to-black z-10"></div>
           <img 
             src="/images/aivideo/final%20cta.png" 
             alt="Final visual production cta backdrop" 
-            className="w-full h-full object-cover opacity-60"
+            className="w-full h-full object-cover opacity-35 brightness-125 animate-ken-burns"
             referrerPolicy="no-referrer"
           />
+          <TechCanvas />
         </div>
 
         <div className="container mx-auto px-6 relative z-20 text-center">
           <div className="max-w-3xl mx-auto space-y-10">
             <div className="space-y-4">
               <span className="text-[10px] font-mono tracking-[0.35em] text-purple-400 uppercase block">WHAT DO YOU WANT TO CREATE?</span>
-              <h2 className="text-4xl md:text-6xl font-medium tracking-tighter text-white uppercase leading-[0.9]">
+              <h2 className="text-3xl sm:text-4xl md:text-6xl font-medium tracking-tighter text-white uppercase leading-[0.9]">
                 BRING US <br />
                 THE IDEA. <br />
                 <span className="text-zinc-500 italic font-serif">We'll make it move.</span>
