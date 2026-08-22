@@ -1540,10 +1540,10 @@ export function ContactPage({ onOpenContactModal, onNavigateHome, onNavigatePort
           <div className="text-center space-y-2">
             <span className="text-[10px] font-mono tracking-[0.3em] text-purple-400 uppercase">CONTACT ALTERNATIVES</span>
             <h2 className="text-3xl font-medium tracking-tight text-white uppercase">Prefer to talk directly?</h2>
-            <p className="text-sm text-zinc-500 max-w-md mx-auto">Get in touch with specific departments or connect via WhatsApp instantly.</p>
+            <p className="text-sm text-zinc-500 max-w-md mx-auto">Get in touch with specific departments directly via email.</p>
           </div>
 
-          <div className="grid md:grid-cols-3 gap-6">
+          <div className="grid md:grid-cols-2 gap-6 max-w-4xl mx-auto">
             {/* GENERAL INQUIRIES */}
             <div className="border border-white/10 bg-zinc-950/30 p-6 space-y-4">
               <div className="w-10 h-10 border border-white/10 bg-zinc-900/60 rounded-full flex items-center justify-center">
@@ -1565,18 +1565,6 @@ export function ContactPage({ onOpenContactModal, onNavigateHome, onNavigatePort
               <p className="text-xs text-zinc-500 leading-relaxed">For brand campaigns, film distribution localization, and custom AI enterprise integrations.</p>
               <a href="mailto:studios@quantumclimb.com" className="block text-xs font-mono text-purple-400 hover:text-purple-300 uppercase tracking-widest pt-2">
                 studios@quantumclimb.com
-              </a>
-            </div>
-
-            {/* WHATSAPP */}
-            <div className="border border-white/10 bg-zinc-950/30 p-6 space-y-4">
-              <div className="w-10 h-10 border border-white/10 bg-zinc-900/60 rounded-full flex items-center justify-center">
-                <PhoneCall className="w-5 h-5 text-purple-400" />
-              </div>
-              <h3 className="text-base font-semibold text-white uppercase tracking-wider">WhatsApp Connect</h3>
-              <p className="text-xs text-zinc-500 leading-relaxed">Chat directly with our studio lead to discuss project scoping in real-time.</p>
-              <a href="https://wa.me/12015550123" target="_blank" rel="noreferrer" className="block text-xs font-mono text-purple-400 hover:text-purple-300 uppercase tracking-widest pt-2">
-                +1 (201) 555-0123
               </a>
             </div>
           </div>
