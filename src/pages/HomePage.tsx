@@ -1,4 +1,5 @@
 import { Reveal } from "../components/Reveal";
+import { TechCanvas } from "../components/TechCanvas";
 import { 
   ArrowRight, 
   Cpu, 
@@ -145,6 +146,7 @@ export function HomePage({
           />
           {/* Subtle technical background grid */}
           <div className="absolute inset-0 bg-[linear-gradient(to_right,rgba(255,255,255,0.015)_1px,transparent_1px),linear-gradient(to_bottom,rgba(255,255,255,0.015)_1px,transparent_1px)] bg-[size:40px_40px] z-10 opacity-40"></div>
+          <TechCanvas />
         </div>
 
         <div className="container mx-auto px-6 relative z-20 text-center">
