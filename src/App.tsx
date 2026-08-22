@@ -235,7 +235,7 @@ export default function App() {
     }
 
     if ((count ?? 0) === 0) {
-      return "Signed in. This is the first admin bootstrap session — claim access below.";
+      return "Signed in. This is the first admin bootstrap session. Claim access below.";
     }
 
     return "Signed in successfully.";

@@ -26,7 +26,7 @@ const FALLBACK_DUBBING_VIDEOS: SiteVideo[] = [
     video_url: "https://youtu.be/Muvmwr1xq7g",
     thumbnail_url: null,
     title: "Breaking Bad",
-    description: "Walter White’s iconic transformation—now in Tamil. Experience intensity, rhythm, and lip sync aligned to perfection.",
+    description: "Walter White’s iconic transformation, now in Tamil. Experience intensity, rhythm, and lip sync aligned to perfection.",
     sort_order: 10,
     created_at: "2026-04-30T06:38:33.920Z",
     updated_at: "2026-04-30T06:38:33.920Z"
@@ -37,7 +37,7 @@ const FALLBACK_DUBBING_VIDEOS: SiteVideo[] = [
     video_url: "https://youtu.be/tzcutphf9gM",
     thumbnail_url: null,
     title: "Avengers: Infinity War",
-    description: "Earth’s mightiest heroes—now speaking Hindi. This scene showcases seamless AI dubbing with natural lip sync, preserving tone, timing, and character dynamics across languages.",
+    description: "Earth’s mightiest heroes, now speaking Hindi. This scene showcases seamless AI dubbing with natural lip sync, preserving tone, timing, and character dynamics across languages.",
     sort_order: 20,
     created_at: "2026-04-30T06:41:47.914Z",
     updated_at: "2026-04-30T06:41:47.914Z"
@@ -48,7 +48,7 @@ const FALLBACK_DUBBING_VIDEOS: SiteVideo[] = [
     video_url: "https://youtu.be/iiiE8yREdgs",
     thumbnail_url: null,
     title: "The Matrix",
-    description: "One of cinema’s most iconic choices—reborn in Japanese. Watch how tone, tension, and philosophical weight are preserved through AI-driven dubbing and lip sync.",
+    description: "One of cinema’s most iconic choices, reborn in Japanese. Watch how tone, tension, and philosophical weight are preserved through AI-driven dubbing and lip sync.",
     sort_order: 30,
     created_at: "2026-04-30T06:42:22.766Z",
     updated_at: "2026-04-30T06:42:22.766Z"
@@ -59,7 +59,7 @@ const FALLBACK_DUBBING_VIDEOS: SiteVideo[] = [
     video_url: "https://youtu.be/aaTPdqDnKIc",
     thumbnail_url: null,
     title: "Pixar Compilation",
-    description: "A montage of beloved animated moments—reimagined in Hindi. Demonstrates scalability across multiple clips, voices, and tones with consistent quality.",
+    description: "A montage of beloved animated moments, reimagined in Hindi. Demonstrates scalability across multiple clips, voices, and tones with consistent quality.",
     sort_order: 40,
     created_at: "2026-04-30T06:42:47.273Z",
     updated_at: "2026-04-30T06:42:47.273Z"
@@ -70,7 +70,7 @@ const FALLBACK_DUBBING_VIDEOS: SiteVideo[] = [
     video_url: "https://youtu.be/u0ecqxZ5o_k",
     thumbnail_url: null,
     title: "Scent of a Woman",
-    description: "A legendary monologue delivered in Russian—capturing every beat of conviction and emotion. AI dubbing that respects performance integrity.",
+    description: "A legendary monologue delivered in Russian, capturing every beat of conviction and emotion. AI dubbing that respects performance integrity.",
     sort_order: 50,
     created_at: "2026-04-30T06:43:12.129Z",
     updated_at: "2026-04-30T06:43:12.129Z"
@@ -81,7 +81,7 @@ const FALLBACK_DUBBING_VIDEOS: SiteVideo[] = [
     video_url: "https://youtu.be/EzI5SJxsSng",
     thumbnail_url: null,
     title: "Mad Men",
-    description: "A defining moment of Don Draper—recreated in Spanish with precise emotional carryover and lip-synced delivery. Subtlety, cadence, and performance remain intact.",
+    description: "A defining moment of Don Draper, recreated in Spanish with precise emotional carryover and lip-synced delivery. Subtlety, cadence, and performance remain intact.",
     sort_order: 60,
     created_at: "2026-04-30T06:43:35.673Z",
     updated_at: "2026-04-30T06:43:35.673Z"
@@ -92,7 +92,7 @@ const FALLBACK_DUBBING_VIDEOS: SiteVideo[] = [
     video_url: "https://youtu.be/w2TQbqzIo5c",
     thumbnail_url: null,
     title: "Transformers One",
-    description: "Optimus Prime’s judgment, Megatron’s fall—now in Hindi. This sample demonstrates high-intensity dubbing with synchronized facial animation and emotional continuity.",
+    description: "Optimus Prime’s judgment and Megatron’s fall, now in Hindi. This sample demonstrates high-intensity dubbing with synchronized facial animation and emotional continuity.",
     sort_order: 70,
     created_at: "2026-04-30T06:44:11.007Z",
     updated_at: "2026-04-30T06:44:11.007Z"
@@ -103,7 +103,7 @@ const FALLBACK_DUBBING_VIDEOS: SiteVideo[] = [
     video_url: "https://youtu.be/ROcAiBo4fb4",
     thumbnail_url: null,
     title: "Invincible",
-    description: "A commanding Viltrumite Council sequence—now in Hindi. This sample highlights authoritative dialogue delivery, tonal precision, and clean lip sync across a stylized animated scene.",
+    description: "A commanding Viltrumite Council sequence, now in Hindi. This sample highlights authoritative dialogue delivery, tonal precision, and clean lip sync across a stylized animated scene.",
     sort_order: 80,
     created_at: "2026-04-30T06:46:01.751Z",
     updated_at: "2026-04-30T06:46:01.751Z"

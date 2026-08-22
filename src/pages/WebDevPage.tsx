@@ -602,7 +602,7 @@ export function WebDevPage({ onOpenContactModal, items = [], isLoading = false }
                 <span className="text-[10px] font-mono tracking-[0.3em] text-purple-400 uppercase block font-bold">PHILOSOPHY</span>
                 <h2 className="text-4xl font-medium tracking-tight text-white uppercase">NOT JUST A WEBSITE.</h2>
                 <p className="text-xs text-zinc-500 leading-relaxed font-light pt-2">
-                  We build digital products around the way your business actually works — from the first interface to the systems behind it.
+                  We build digital products around the way your business actually works, from the first interface to the systems behind it.
                 </p>
               </div>
 

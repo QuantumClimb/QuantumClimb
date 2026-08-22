@@ -89,37 +89,37 @@ const COUNTRY_CODES = [
 const SERVICES_CONFIG = [
   {
     id: "dubbing",
-    label: "01 — AI Dubbing & Localization",
+    label: "01. AI Dubbing & Localization",
     desc: "Transform films, videos and digital content for global audiences with AI-powered multilingual dubbing, voice localization, lip-sync and professional audio finishing.",
     icon: <Globe className="w-5 h-5 text-purple-400" />,
   },
   {
     id: "video",
-    label: "02 — AI Video Production",
+    label: "02. AI Video Production",
     desc: "Create cinematic AI-generated videos, advertising content, social campaigns, concept films and branded visual experiences using next-generation generative video technology.",
     icon: <Video className="w-5 h-5 text-purple-400" />,
   },
   {
     id: "web",
-    label: "03 — Web Development",
+    label: "03. Web Development",
     desc: "Premium websites, corporate platforms, landing pages, web applications and digital experiences designed around performance, storytelling and modern technology.",
     icon: <Code className="w-5 h-5 text-purple-400" />,
   },
   {
     id: "mobile",
-    label: "04 — Mobile App Development",
+    label: "04. Mobile App Development",
     desc: "Custom iOS, Android and cross-platform applications built around intuitive user experiences, scalable architecture and intelligent functionality.",
     icon: <Smartphone className="w-5 h-5 text-purple-400" />,
   },
   {
     id: "automation",
-    label: "05 — AI Automation & Agents",
+    label: "05. AI Automation & Agents",
     desc: "Intelligent AI agents, business automation, workflow systems and custom AI solutions designed to reduce repetitive work and improve operational efficiency.",
     icon: <Workflow className="w-5 h-5 text-purple-400" />,
   },
   {
     id: "creative",
-    label: "06 — Creative & Custom Projects",
+    label: "06. Creative & Custom Projects",
     desc: "Have something unconventional in mind? Tell us about your idea and our team will explore the right combination of creative, technical and AI capabilities.",
     icon: <Sparkles className="w-5 h-5 text-purple-400" />,
   }
@@ -381,7 +381,7 @@ export function ContactPage({ onOpenContactModal, onNavigateHome, onNavigatePort
     <div className="space-y-8">
       <div className="flex justify-between items-center">
         <span className="text-[10px] font-mono tracking-[0.35em] text-purple-400 uppercase">STEP 01 // CATEGORIES</span>
-        <span className="text-xs text-zinc-500 font-mono">01 — 05</span>
+        <span className="text-xs text-zinc-500 font-mono">01 / 05</span>
       </div>
       
       <div className="space-y-2">
@@ -443,7 +443,7 @@ export function ContactPage({ onOpenContactModal, onNavigateHome, onNavigatePort
     <div className="space-y-8">
       <div className="flex justify-between items-center">
         <span className="text-[10px] font-mono tracking-[0.35em] text-purple-400 uppercase">STEP 02 // PERSONAL</span>
-        <span className="text-xs text-zinc-500 font-mono">02 — 05</span>
+        <span className="text-xs text-zinc-500 font-mono">02 / 05</span>
       </div>
 
       <div className="space-y-2">
@@ -495,7 +495,7 @@ export function ContactPage({ onOpenContactModal, onNavigateHome, onNavigatePort
               >
                 {COUNTRY_CODES.map(c => (
                   <option key={c.code + c.country} value={c.code}>
-                    {c.code} — {c.country}
+                    {c.code} {c.country}
                   </option>
                 ))}
               </select>
@@ -572,7 +572,7 @@ export function ContactPage({ onOpenContactModal, onNavigateHome, onNavigatePort
       <div className="space-y-10">
         <div className="flex justify-between items-center">
           <span className="text-[10px] font-mono tracking-[0.35em] text-purple-400 uppercase">STEP 03 // REQUIREMENTS</span>
-          <span className="text-xs text-zinc-500 font-mono">03 — 05</span>
+          <span className="text-xs text-zinc-500 font-mono">03 / 05</span>
         </div>
 
         <div className="space-y-2">
@@ -584,7 +584,7 @@ export function ContactPage({ onOpenContactModal, onNavigateHome, onNavigatePort
         {selectedServices.includes("dubbing") && (
           <div className="border border-white/10 bg-zinc-950/20 p-8 space-y-6">
             <h3 className="text-lg font-medium text-purple-400 uppercase tracking-wider border-b border-white/5 pb-3">
-              01 — AI Dubbing & Localization
+              01. AI Dubbing & Localization
             </h3>
             
             <div className="grid md:grid-cols-2 gap-6">
@@ -655,10 +655,10 @@ export function ContactPage({ onOpenContactModal, onNavigateHome, onNavigatePort
                 >
                   <option value="">Select Option</option>
                   <option value="Under 10 minutes">Under 10 minutes</option>
-                  <option value="10–30 minutes">10–30 minutes</option>
-                  <option value="30–60 minutes">30–60 minutes</option>
-                  <option value="1–3 hours">1–3 hours</option>
-                  <option value="3–10 hours">3–10 hours</option>
+                  <option value="10 to 30 minutes">10 to 30 minutes</option>
+                  <option value="30 to 60 minutes">30 to 60 minutes</option>
+                  <option value="1 to 3 hours">1 to 3 hours</option>
+                  <option value="3 to 10 hours">3 to 10 hours</option>
                   <option value="10+ hours">10+ hours</option>
                   <option value="Ongoing project">Ongoing project</option>
                 </select>
@@ -714,7 +714,7 @@ export function ContactPage({ onOpenContactModal, onNavigateHome, onNavigatePort
         {selectedServices.includes("video") && (
           <div className="border border-white/10 bg-zinc-950/20 p-8 space-y-6">
             <h3 className="text-lg font-medium text-purple-400 uppercase tracking-wider border-b border-white/5 pb-3">
-              02 — AI Video Production
+              02. AI Video Production
             </h3>
 
             <div className="grid md:grid-cols-2 gap-6">
@@ -748,10 +748,10 @@ export function ContactPage({ onOpenContactModal, onNavigateHome, onNavigatePort
                 >
                   <option value="">Select Option</option>
                   <option value="Under 15 seconds">Under 15 seconds</option>
-                  <option value="15–30 seconds">15–30 seconds</option>
-                  <option value="30–60 seconds">30–60 seconds</option>
-                  <option value="1–3 minutes">1–3 minutes</option>
-                  <option value="3–10 minutes">3–10 minutes</option>
+                  <option value="15 to 30 seconds">15 to 30 seconds</option>
+                  <option value="30 to 60 seconds">30 to 60 seconds</option>
+                  <option value="1 to 3 minutes">1 to 3 minutes</option>
+                  <option value="3 to 10 minutes">3 to 10 minutes</option>
                   <option value="Long-form">Long-form</option>
                 </select>
               </div>
@@ -822,7 +822,7 @@ export function ContactPage({ onOpenContactModal, onNavigateHome, onNavigatePort
         {selectedServices.includes("web") && (
           <div className="border border-white/10 bg-zinc-950/20 p-8 space-y-6">
             <h3 className="text-lg font-medium text-purple-400 uppercase tracking-wider border-b border-white/5 pb-3">
-              03 — Web Development
+              03. Web Development
             </h3>
 
             <div className="grid md:grid-cols-2 gap-6">
@@ -887,9 +887,9 @@ export function ContactPage({ onOpenContactModal, onNavigateHome, onNavigatePort
               >
                 <option value="">Select Option</option>
                 <option value="1 Page">1 Page</option>
-                <option value="2–5 Pages">2–5 Pages</option>
-                <option value="6–10 Pages">6–10 Pages</option>
-                <option value="10–20 Pages">10–20 Pages</option>
+                <option value="2 to 5 Pages">2 to 5 Pages</option>
+                <option value="6 to 10 Pages">6 to 10 Pages</option>
+                <option value="10 to 20 Pages">10 to 20 Pages</option>
                 <option value="20+ Pages">20+ Pages</option>
                 <option value="Not Sure">Not Sure</option>
               </select>
@@ -931,7 +931,7 @@ export function ContactPage({ onOpenContactModal, onNavigateHome, onNavigatePort
         {selectedServices.includes("mobile") && (
           <div className="border border-white/10 bg-zinc-950/20 p-8 space-y-6">
             <h3 className="text-lg font-medium text-purple-400 uppercase tracking-wider border-b border-white/5 pb-3">
-              04 — Mobile App Development
+              04. Mobile App Development
             </h3>
 
             <div className="grid md:grid-cols-2 gap-6">
@@ -1021,7 +1021,7 @@ export function ContactPage({ onOpenContactModal, onNavigateHome, onNavigatePort
         {selectedServices.includes("automation") && (
           <div className="border border-white/10 bg-zinc-950/20 p-8 space-y-6">
             <h3 className="text-lg font-medium text-purple-400 uppercase tracking-wider border-b border-white/5 pb-3">
-              05 — AI Automation & Agents
+              05. AI Automation & Agents
             </h3>
 
             <div className="space-y-3">
@@ -1081,7 +1081,7 @@ export function ContactPage({ onOpenContactModal, onNavigateHome, onNavigatePort
         {selectedServices.includes("creative") && (
           <div className="border border-white/10 bg-zinc-950/20 p-8 space-y-6">
             <h3 className="text-lg font-medium text-purple-400 uppercase tracking-wider border-b border-white/5 pb-3">
-              06 — Creative & Custom Projects
+              06. Creative & Custom Projects
             </h3>
 
             <div className="space-y-2">
@@ -1089,7 +1089,7 @@ export function ContactPage({ onOpenContactModal, onNavigateHome, onNavigatePort
               <textarea
                 value={requirements.creative.idea}
                 onChange={e => updateServiceRequirement("creative", "idea", e.target.value)}
-                placeholder="Describe your idea, challenge or vision. Don't worry if the technical solution isn't clear yet — tell us what you want to achieve."
+                placeholder="Describe your idea, challenge or vision. If the technical solution is not clear yet, simply tell us what you want to achieve."
                 rows={6}
                 className="w-full border border-white/10 bg-black px-4 py-3 text-white text-sm focus:border-purple-500 focus:outline-none"
               />
@@ -1123,7 +1123,7 @@ export function ContactPage({ onOpenContactModal, onNavigateHome, onNavigatePort
     <div className="space-y-8">
       <div className="flex justify-between items-center">
         <span className="text-[10px] font-mono tracking-[0.35em] text-purple-400 uppercase">STEP 04 // TIMELINE & BUDGET</span>
-        <span className="text-xs text-zinc-500 font-mono">04 — 05</span>
+        <span className="text-xs text-zinc-500 font-mono">04 / 05</span>
       </div>
 
       <div className="space-y-2">
@@ -1152,7 +1152,7 @@ export function ContactPage({ onOpenContactModal, onNavigateHome, onNavigatePort
         <div className="space-y-3">
           <label className="block text-[10px] font-mono uppercase tracking-widest text-zinc-400">When would you like to start?</label>
           <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
-            {["Immediately", "Within 2 weeks", "Within 1 month", "1–3 months", "3–6 months", "Just Exploring"].map(opt => (
+            {["Immediately", "Within 2 weeks", "Within 1 month", "1 to 3 months", "3 to 6 months", "Just Exploring"].map(opt => (
               <button
                 key={opt}
                 type="button"
@@ -1172,8 +1172,8 @@ export function ContactPage({ onOpenContactModal, onNavigateHome, onNavigatePort
           <label className="block text-[10px] font-mono uppercase tracking-widest text-zinc-400">Estimated Project Budget</label>
           <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
             {[
-              "Under USD 1,000", "USD 1,000–5,000", "USD 5,000–10,000", 
-              "USD 10,000–25,000", "USD 25,000–50,000", "USD 50,000+", "Let's Discuss"
+              "Under USD 1,000", "USD 1,000 to 5,000", "USD 5,000 to 10,000", 
+              "USD 10,000 to 25,000", "USD 25,000 to 50,000", "USD 50,000+", "Let's Discuss"
             ].map(opt => (
               <button
                 key={opt}
@@ -1277,7 +1277,7 @@ export function ContactPage({ onOpenContactModal, onNavigateHome, onNavigatePort
     <div className="space-y-8">
       <div className="flex justify-between items-center">
         <span className="text-[10px] font-mono tracking-[0.35em] text-purple-400 uppercase">STEP 05 // REVIEW</span>
-        <span className="text-xs text-zinc-500 font-mono">05 — 05</span>
+        <span className="text-xs text-zinc-500 font-mono">05 / 05</span>
       </div>
 
       <div className="space-y-2">
@@ -1365,7 +1365,7 @@ export function ContactPage({ onOpenContactModal, onNavigateHome, onNavigatePort
         </button>
 
         <p className="text-center text-[10px] text-zinc-500 font-mono uppercase">
-          We usually respond within 1–2 business days.
+          We usually respond within 1 to 2 business days.
         </p>
 
         <p className="text-xs text-zinc-500 leading-relaxed border-t border-white/5 pt-6">
@@ -1465,13 +1465,13 @@ export function ContactPage({ onOpenContactModal, onNavigateHome, onNavigatePort
               <Reveal type="fade-up" delay={0.2}>
                 <div className="flex items-center gap-3 font-mono text-xs text-zinc-500 justify-center xl:justify-start">
                   <span className={currentStep === 1 ? "text-purple-400 font-bold" : currentStep > 1 ? "text-white" : ""}>01</span>
-                  <span>—</span>
+                  <span>/</span>
                   <span className={currentStep === 2 ? "text-purple-400 font-bold" : currentStep > 2 ? "text-white" : ""}>02</span>
-                  <span>—</span>
+                  <span>/</span>
                   <span className={currentStep === 3 ? "text-purple-400 font-bold" : currentStep > 3 ? "text-white" : ""}>03</span>
-                  <span>—</span>
+                  <span>/</span>
                   <span className={currentStep === 4 ? "text-purple-400 font-bold" : currentStep > 4 ? "text-white" : ""}>04</span>
-                  <span>—</span>
+                  <span>/</span>
                   <span className={currentStep === 5 ? "text-purple-400 font-bold" : ""}>05</span>
                 </div>
               </Reveal>

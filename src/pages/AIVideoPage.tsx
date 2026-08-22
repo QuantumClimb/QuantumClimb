@@ -404,7 +404,7 @@ export function AIVideoPage({ onOpenContactModal, siteVideos }: AIVideoPageProps
                 { 
                   title: "I NEED A MUSIC VIDEO", 
                   img: "/images/aivideo/music%20video.png", 
-                  desc: "Build an entire visual world around a song — from live performance concepts to cinematic and surreal storytelling.", 
+                  desc: "Build an entire visual world around a song, from live performance concepts to cinematic and surreal storytelling.", 
                   cta: "CREATE A MUSIC VIDEO →" 
                 },
                 { 
