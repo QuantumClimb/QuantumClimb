@@ -403,23 +403,23 @@ export function ContactPage({ onOpenContactModal, onNavigateHome, onNavigatePort
               key={svc.id}
               type="button"
               onClick={() => handleToggleService(svc.id)}
-              className={`text-left p-6 border transition-all duration-300 flex items-start gap-5 cursor-pointer relative ${
+              className={`text-left p-3.5 sm:p-6 border transition-all duration-300 flex items-start gap-3 sm:gap-5 cursor-pointer relative ${
                 isSelected 
                   ? "border-purple-600 bg-purple-500/5 shadow-[0_0_15px_rgba(124,43,255,0.1)]" 
                   : "border-white/10 bg-zinc-950/40 hover:border-white/20"
               }`}
             >
-              <div className="mt-1 flex items-center justify-center w-10 h-10 border border-white/10 bg-zinc-900/60 rounded-full shrink-0 group-hover:scale-110 transition-transform">
+              <div className="mt-0.5 flex items-center justify-center w-8 h-8 sm:w-10 sm:h-10 border border-white/10 bg-zinc-900/60 rounded-full shrink-0 group-hover:scale-110 transition-transform">
                 {svc.icon}
               </div>
-              <div className="flex-1 space-y-2">
-                <h3 className="text-lg font-medium text-white tracking-tight">{svc.label}</h3>
-                <p className="text-xs text-zinc-500 leading-relaxed max-w-2xl">{svc.desc}</p>
+              <div className="flex-1 space-y-1 sm:space-y-2">
+                <h3 className="text-sm sm:text-lg font-medium text-white tracking-tight">{svc.label}</h3>
+                <p className="text-[11px] sm:text-xs text-zinc-500 leading-relaxed max-w-2xl">{svc.desc}</p>
               </div>
-              <div className={`w-5 h-5 border flex items-center justify-center shrink-0 mt-1 transition-all ${
+              <div className={`w-4 h-4 sm:w-5 h-5 border flex items-center justify-center shrink-0 mt-1 transition-all ${
                 isSelected ? "border-purple-500 bg-purple-600 text-white" : "border-white/20"
               }`}>
-                {isSelected && <Check className="w-3.5 h-3.5" />}
+                {isSelected && <Check className="w-2.5 h-2.5 sm:w-3.5 sm:h-3.5" />}
               </div>
             </button>
           );
