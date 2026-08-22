@@ -216,7 +216,7 @@ export function AIDubbingPage({ onOpenContactModal, onNavigatePortfolio, siteVid
           <img 
             src="/images/Quantum%20Climb%20%20-Hero%20Visual.png" 
             alt="Cinematic Dubbing Background" 
-            className="w-full h-full object-cover opacity-35"
+            className="w-full h-full object-cover opacity-25 brightness-125"
             referrerPolicy="no-referrer"
           />
           {/* Technical grid overlay */}
@@ -361,7 +361,7 @@ export function AIDubbingPage({ onOpenContactModal, onNavigatePortfolio, siteVid
                         <img 
                           src={getYoutubeThumbnail(video.video_url)} 
                           alt={video.title} 
-                          className="w-full h-full object-cover opacity-60 group-hover:scale-105 transition-transform duration-700"
+                          className="w-full h-full object-cover opacity-85 group-hover:opacity-100 group-hover:scale-105 transition duration-700 brightness-125 group-hover:brightness-150"
                         />
                         <div className="absolute inset-0 bg-black/30 flex items-center justify-center opacity-80 group-hover:opacity-100 transition-opacity">
                           <div className="w-10 h-10 border border-white/20 bg-black/60 rounded-full flex items-center justify-center text-white group-hover:bg-purple-600 group-hover:border-purple-600 transition-all">
@@ -524,7 +524,7 @@ export function AIDubbingPage({ onOpenContactModal, onNavigatePortfolio, siteVid
                     <img 
                       src={ind.img} 
                       alt={ind.title} 
-                      className="w-full h-full object-cover opacity-80 group-hover:scale-105 transition-transform duration-700"
+                      className="w-full h-full object-cover opacity-90 group-hover:opacity-100 group-hover:scale-105 transition duration-700 brightness-125 group-hover:brightness-150"
                       referrerPolicy="no-referrer"
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent"></div>
@@ -547,7 +547,7 @@ export function AIDubbingPage({ onOpenContactModal, onNavigatePortfolio, siteVid
           <img 
             src="/images/Quantum%20Climb%20%20-Hero%20Visual.png" 
             alt="Cinematic screening room" 
-            className="w-full h-full object-cover opacity-80"
+            className="w-full h-full object-cover opacity-25 brightness-125"
             referrerPolicy="no-referrer"
           />
           <div className="absolute inset-0 bg-[linear-gradient(to_right,rgba(255,255,255,0.015)_1px,transparent_1px),linear-gradient(to_bottom,rgba(255,255,255,0.015)_1px,transparent_1px)] bg-[size:40px_40px] z-10 opacity-20"></div>

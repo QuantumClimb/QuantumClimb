@@ -140,7 +140,7 @@ export function HomePage({
           <img 
             src="/images/Quantum%20Climb%20%20-Hero%20Visual.png" 
             alt="Quantum Climb Hero Visual Background" 
-            className="w-full h-full object-cover opacity-50"
+            className="w-full h-full object-cover opacity-25 brightness-125"
             referrerPolicy="no-referrer"
           />
           {/* Subtle technical background grid */}
@@ -208,11 +208,11 @@ export function HomePage({
                 >
                   {/* Image Container */}
                   <div className="aspect-video w-full overflow-hidden bg-zinc-900 border-b border-white/5 relative">
-                    <div className="absolute inset-0 bg-black/40 group-hover:bg-black/10 transition-colors duration-500 z-10"></div>
+                    <div className="absolute inset-0 bg-black/20 group-hover:bg-black/0 transition-colors duration-500 z-10"></div>
                     <img 
                       src={project.image} 
                       alt={project.title} 
-                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" 
+                      className="w-full h-full object-cover group-hover:scale-105 transition duration-700 brightness-125 group-hover:brightness-150" 
                       referrerPolicy="no-referrer"
                     />
                   </div>
@@ -266,7 +266,7 @@ export function HomePage({
                 <img 
                   src="/images/AI%20VIDEO1.png" 
                   alt="Generative Film Teaser" 
-                  className="w-full h-full object-cover group-hover:scale-[1.01] transition-transform duration-700" 
+                  className="w-full h-full object-cover group-hover:scale-[1.01] transition duration-700 brightness-125 group-hover:brightness-150" 
                   referrerPolicy="no-referrer"
                 />
                 <div className="absolute top-4 left-4 bg-black/60 backdrop-blur-sm border border-white/10 px-3 py-1 font-mono text-[9px] text-purple-300 uppercase tracking-widest">
@@ -295,7 +295,7 @@ export function HomePage({
                 <img 
                   src="/images/Build%20a%20Website%20CTA..png" 
                   alt="Custom E-Learning Portal" 
-                  className="w-full h-full object-cover group-hover:scale-[1.02] transition-transform duration-700" 
+                  className="w-full h-full object-cover group-hover:scale-[1.02] transition duration-700 brightness-125 group-hover:brightness-150" 
                   referrerPolicy="no-referrer"
                 />
                 <div className="absolute top-4 left-4 bg-black/60 backdrop-blur-sm border border-white/10 px-3 py-1 font-mono text-[9px] text-purple-300 uppercase tracking-widest">
@@ -322,7 +322,7 @@ export function HomePage({
                 <img 
                   src="/images/AI%20AGENT.png" 
                   alt="Autonomous Media Pipeline" 
-                  className="w-full h-full object-cover group-hover:scale-[1.02] transition-transform duration-700" 
+                  className="w-full h-full object-cover group-hover:scale-[1.02] transition duration-700 brightness-125 group-hover:brightness-150" 
                   referrerPolicy="no-referrer"
                 />
                 <div className="absolute top-4 left-4 bg-black/60 backdrop-blur-sm border border-white/10 px-3 py-1 font-mono text-[9px] text-purple-300 uppercase tracking-widest">
@@ -349,7 +349,7 @@ export function HomePage({
                 <img 
                   src="/images/AI%20Dubbing%20-Voice.png" 
                   alt="Voice Cloning Demo" 
-                  className="w-full h-full object-cover group-hover:scale-[1.01] transition-transform duration-700" 
+                  className="w-full h-full object-cover group-hover:scale-[1.01] transition duration-700 brightness-125 group-hover:brightness-150" 
                   referrerPolicy="no-referrer"
                 />
                 <div className="absolute top-4 left-4 bg-black/60 backdrop-blur-sm border border-white/10 px-3 py-1 font-mono text-[9px] text-purple-300 uppercase tracking-widest">

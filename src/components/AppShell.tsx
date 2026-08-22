@@ -1,4 +1,5 @@
 import { ContactModal } from "./ContactModal";
+import { WhatsAppWidget } from "./WhatsAppWidget";
 import { Footer } from "../sections/ClosureSections";
 import { HomePage } from "../pages/HomePage";
 import { AIDubbingPage } from "../pages/AIDubbingPage";
@@ -208,6 +209,7 @@ export function AppShell({
       {isPortfolioPage ? <PortfolioFooter /> : isAdminPage || isLegalPage ? null : <Footer onAdminClick={onNavigateAdmin} onPrivacyClick={onNavigatePrivacy} onTermsClick={onNavigateTerms} onCookiesClick={onNavigateCookies} />}
 
       <ContactModal isOpen={isContactModalOpen} onClose={onCloseContactModal} />
+      {!isAdminPage && <WhatsAppWidget />}
     </div>
   );
 }

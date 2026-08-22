@@ -82,3 +82,28 @@
 .p-16px { padding: 16px; }
 .p-32px { padding: 32px; }
 .p-64px { padding: 64px; }
+
+/* Custom Scrollbar Styles (Quantum Climb Theme) */
+html {
+  scrollbar-color: #4A00E0 #050307;
+  scrollbar-width: thin;
+}
+
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: #050307; /* Dark background matching the page theme */
+}
+
+::-webkit-scrollbar-thumb {
+  background: #4A00E0; /* Quantum Climb primary purple */
+  border-radius: 5px;
+  border: 2px solid #050307; /* Creates spacing inside the track */
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #6200ff; /* Lighter purple accent on hover */
+}
