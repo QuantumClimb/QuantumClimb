@@ -211,7 +211,7 @@ export function AIVideoPage({ onOpenContactModal, siteVideos }: AIVideoPageProps
 
         <div className="container mx-auto px-6 relative z-20 text-center">
           <div className="max-w-4xl mx-auto space-y-8">
-            <Reveal type="mask">
+            <Reveal type="mask" className="flex justify-center">
               <span className="inline-block px-3 py-1 bg-purple-600/10 border border-purple-600/20 text-purple-400 text-[10px] font-mono uppercase tracking-[0.3em] font-bold">
                 AI VIDEO / FILM / GENERATIVE PRODUCTION
               </span>
