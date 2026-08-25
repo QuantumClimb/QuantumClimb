@@ -371,15 +371,15 @@ export function WebDevPage({ onOpenContactModal, items = [], isLoading = false }
                 {/* Left image area */}
                 <div 
                   onClick={() => setSelectedProject(project)}
-                  className="relative border border-white/10 bg-transparent aspect-[16/9] overflow-hidden group cursor-pointer"
+                  className="relative border border-white/10 bg-transparent overflow-hidden group cursor-pointer w-full h-auto"
                 >
                   <img 
                     src={project.thumbnail_url || "/images/webdev/editorial%20image%20placement.png"} 
                     alt={project.title} 
-                    className="w-full h-full object-contain opacity-85 group-hover:opacity-100 group-hover:scale-102 transition-all duration-700"
+                    className="w-full h-auto opacity-85 group-hover:opacity-100 group-hover:scale-102 transition-all duration-700 block"
                     referrerPolicy="no-referrer"
                   />
-                  <div className="absolute inset-0 bg-gradient-to-t from-zinc-950/40 to-transparent"></div>
+                  <div className="absolute inset-0 bg-gradient-to-t from-zinc-950/40 to-transparent pointer-events-none"></div>
                 </div>
 
                 {/* Right project info */}
@@ -465,14 +465,14 @@ export function WebDevPage({ onOpenContactModal, items = [], isLoading = false }
                     >
                       <div>
                         {/* Aspect Image Container */}
-                        <div className={`${getAspectClass(idx)} overflow-hidden relative border-b border-white/5 bg-transparent`}>
+                        <div className="w-full h-auto overflow-hidden relative border-b border-white/5 bg-transparent">
                           <img 
                             src={project.thumbnail_url || "/images/webdev/editorial%20image%20placement.png"} 
                             alt={project.title} 
-                            className="w-full h-full object-contain opacity-85 group-hover:opacity-100 group-hover:scale-102 transition-all duration-700 block"
+                            className="w-full h-auto opacity-85 group-hover:opacity-100 group-hover:scale-102 transition-all duration-700 block"
                             referrerPolicy="no-referrer"
                           />
-                          <div className="absolute inset-0 bg-gradient-to-t from-zinc-950/50 to-transparent"></div>
+                          <div className="absolute inset-0 bg-gradient-to-t from-zinc-950/50 to-transparent pointer-events-none"></div>
                         </div>
 
                         {/* Card metadata */}
@@ -562,15 +562,15 @@ export function WebDevPage({ onOpenContactModal, items = [], isLoading = false }
               {/* Large project image box */}
               <div 
                 onClick={() => setSelectedProject(displayWebsites[1])}
-                className="border border-white/10 bg-transparent overflow-hidden relative h-[50vh] w-full group cursor-pointer"
+                className="border border-white/10 bg-transparent overflow-hidden relative w-full h-auto group cursor-pointer"
               >
                 <img 
                   src={displayWebsites[1].thumbnail_url || "/images/webdev/portfolio%20empty_transition%20image.png"} 
                   alt={displayWebsites[1].title} 
-                  className="w-full h-full object-contain opacity-85 group-hover:opacity-100 group-hover:scale-101 transition-all duration-700 block"
+                  className="w-full h-auto opacity-85 group-hover:opacity-100 group-hover:scale-101 transition-all duration-700 block"
                   referrerPolicy="no-referrer"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent"></div>
+                <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent pointer-events-none"></div>
               </div>
 
               <div className="flex flex-col md:flex-row md:items-start justify-between gap-6 pt-4 w-full">
@@ -654,13 +654,13 @@ export function WebDevPage({ onOpenContactModal, items = [], isLoading = false }
                     className="text-center md:text-left border border-white/5 bg-zinc-950/40 hover:border-white/20 transition-all duration-300 group cursor-pointer flex flex-col justify-between w-full max-w-full mx-auto"
                   >
                     <div>
-                      <div className="aspect-[16/10] overflow-hidden relative border-b border-white/5 bg-transparent">
+                      <div className="w-full h-auto overflow-hidden relative border-b border-white/5 bg-transparent">
                         <img 
                           src={project.thumbnail_url || "/images/webdev/editorial%20image%20placement.png"} 
                           alt={project.title} 
-                          className="w-full h-full object-contain opacity-85 group-hover:scale-102 transition-transform duration-700 block"
+                          className="w-full h-auto opacity-85 group-hover:scale-102 transition-transform duration-700 block"
                         />
-                        <div className="absolute inset-0 bg-gradient-to-t from-zinc-950/50 to-transparent"></div>
+                        <div className="absolute inset-0 bg-gradient-to-t from-zinc-950/50 to-transparent pointer-events-none"></div>
                       </div>
                       <div className="p-6 space-y-2">
                         <span className="text-[9px] font-mono text-zinc-500 uppercase tracking-widest block">{getProjectTag(project).toUpperCase()}</span>
