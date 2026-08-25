@@ -127,7 +127,6 @@ export function AppShell({
   const isWebDevPage = currentPage === "web-dev";
   const isContactPage = currentPage === "contact";
   const isLegalPage = ["privacy", "terms", "cookies"].includes(currentPage);
-  const isSpecialPage = isAIDubbingPage || isAIVideoPage || isWebDevPage;
 
   return (
     <div className="min-h-screen bg-black text-zinc-300 selection:bg-purple-600 selection:text-white">
@@ -136,89 +135,43 @@ export function AppShell({
       </div>
 
       <nav className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 border-b ${isScrolled ? "bg-black/80 backdrop-blur-md py-5 border-white/10" : "bg-transparent py-7 border-transparent"}`}>
-        <div className="container mx-auto px-6">
-          {isSpecialPage ? (
-            <div className="grid grid-cols-3 items-center w-full">
-              {/* Left Column: Navigation links on desktop, empty on mobile */}
-              <div className="flex items-center justify-start">
-                <div className="hidden md:flex items-center gap-6 text-sm text-zinc-300">
-                  <button onClick={onNavigateHome} className={`hover:text-white ${currentPage === "home" ? "text-white font-medium" : ""}`}>Agency</button>
-                  <button onClick={onNavigateAIDubbing} className={`hover:text-white ${isAIDubbingPage ? "text-white font-medium" : ""}`}>AI Dubbing</button>
-                  <button onClick={onNavigateAIVideo} className={`hover:text-white ${isAIVideoPage ? "text-white font-medium" : ""}`}>AI Video</button>
-                  <button onClick={onNavigateWebDev} className={`hover:text-white ${isWebDevPage ? "text-white font-medium" : ""}`}>Web Dev</button>
-                </div>
-              </div>
-
-              {/* Center Column: Logo */}
-              <div className="flex items-center justify-center">
-                <button onClick={onNavigateHome} className="flex items-center cursor-pointer h-16 sm:h-22">
-                  <img 
-                    src="/images/qclogo.png" 
-                    alt="Quantum Climb Logo" 
-                    className="h-14 sm:h-20 w-auto object-contain brightness-110" 
-                    referrerPolicy="no-referrer"
-                  />
-                </button>
-              </div>
-
-              {/* Right Column: CTA on desktop, Hamburger on mobile */}
-              <div className="flex items-center justify-end gap-3">
-                <button 
-                  onClick={onNavigateContact} 
-                  className="hidden md:block px-4 py-2 border border-purple-500/30 bg-purple-500/10 hover:bg-purple-600 hover:border-purple-600 text-white font-semibold text-xs tracking-wider uppercase transition-all duration-300 cursor-pointer"
-                >
-                  Start a Project
-                </button>
-
-                <button
-                  onClick={() => setIsMobileMenuOpen(true)}
-                  className="md:hidden p-2 -mr-2 text-zinc-400 hover:text-white transition-colors cursor-pointer"
-                  aria-label="Open Menu"
-                >
-                  <Menu className="w-6 h-6" />
-                </button>
-              </div>
-            </div>
+        <div className="container mx-auto px-6 flex items-center justify-between gap-4">
+          {currentPage !== "home" ? (
+            <button onClick={onNavigateHome} className="flex items-center cursor-pointer h-16 sm:h-22">
+              <img 
+                src="/images/qclogo.png" 
+                alt="Quantum Climb Logo" 
+                className="h-14 sm:h-20 w-auto object-contain brightness-110" 
+                referrerPolicy="no-referrer"
+              />
+            </button>
           ) : (
-            <div className="flex items-center justify-between gap-4 w-full">
-              {currentPage !== "home" ? (
-                <button onClick={onNavigateHome} className="flex items-center cursor-pointer h-16 sm:h-22">
-                  <img 
-                    src="/images/qclogo.png" 
-                    alt="Quantum Climb Logo" 
-                    className="h-14 sm:h-20 w-auto object-contain brightness-110" 
-                    referrerPolicy="no-referrer"
-                  />
-                </button>
-              ) : (
-                <div className="h-16 sm:h-22" />
-              )}
-
-              <div className="hidden md:flex items-center gap-6 text-sm text-zinc-300">
-                <button onClick={onNavigateHome} className={`hover:text-white ${currentPage === "home" ? "text-white font-medium" : ""}`}>Agency</button>
-                <button onClick={onNavigateAIDubbing} className={`hover:text-white ${isAIDubbingPage ? "text-white font-medium" : ""}`}>AI Dubbing</button>
-                <button onClick={onNavigateAIVideo} className={`hover:text-white ${isAIVideoPage ? "text-white font-medium" : ""}`}>AI Video</button>
-                <button onClick={onNavigateWebDev} className={`hover:text-white ${isWebDevPage ? "text-white font-medium" : ""}`}>Web Dev</button>
-              </div>
-
-              <div className="flex items-center gap-3">
-                <button 
-                  onClick={onNavigateContact} 
-                  className="hidden md:block px-4 py-2 border border-purple-500/30 bg-purple-500/10 hover:bg-purple-600 hover:border-purple-600 text-white font-semibold text-xs tracking-wider uppercase transition-all duration-300 cursor-pointer"
-                >
-                  Start a Project
-                </button>
-
-                <button
-                  onClick={() => setIsMobileMenuOpen(true)}
-                  className="md:hidden p-2 -mr-2 text-zinc-400 hover:text-white transition-colors cursor-pointer"
-                  aria-label="Open Menu"
-                >
-                  <Menu className="w-6 h-6" />
-                </button>
-              </div>
-            </div>
+            <div className="h-16 sm:h-22" />
           )}
+
+          <div className="hidden md:flex items-center gap-6 text-sm text-zinc-300">
+            <button onClick={onNavigateHome} className={`hover:text-white ${currentPage === "home" ? "text-white font-medium" : ""}`}>Agency</button>
+            <button onClick={onNavigateAIDubbing} className={`hover:text-white ${isAIDubbingPage ? "text-white font-medium" : ""}`}>AI Dubbing</button>
+            <button onClick={onNavigateAIVideo} className={`hover:text-white ${isAIVideoPage ? "text-white font-medium" : ""}`}>AI Video</button>
+            <button onClick={onNavigateWebDev} className={`hover:text-white ${isWebDevPage ? "text-white font-medium" : ""}`}>Web Dev</button>
+          </div>
+
+          <div className="flex items-center gap-3">
+            <button 
+              onClick={onNavigateContact} 
+              className="hidden md:block px-4 py-2 border border-purple-500/30 bg-purple-500/10 hover:bg-purple-600 hover:border-purple-600 text-white font-semibold text-xs tracking-wider uppercase transition-all duration-300 cursor-pointer"
+            >
+              Start a Project
+            </button>
+
+            <button
+              onClick={() => setIsMobileMenuOpen(true)}
+              className="md:hidden p-2 -mr-2 text-zinc-400 hover:text-white transition-colors cursor-pointer"
+              aria-label="Open Menu"
+            >
+              <Menu className="w-6 h-6" />
+            </button>
+          </div>
         </div>
       </nav>
 
