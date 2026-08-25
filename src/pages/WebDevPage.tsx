@@ -371,7 +371,7 @@ export function WebDevPage({ onOpenContactModal, items = [], isLoading = false }
                 {/* Left image area */}
                 <div 
                   onClick={() => setSelectedProject(project)}
-                  className="relative border border-white/10 bg-zinc-900 aspect-[16/9] overflow-hidden group cursor-pointer"
+                  className="relative border border-white/10 bg-transparent aspect-[16/9] overflow-hidden group cursor-pointer"
                 >
                   <img 
                     src={project.thumbnail_url || "/images/webdev/editorial%20image%20placement.png"} 
@@ -465,7 +465,7 @@ export function WebDevPage({ onOpenContactModal, items = [], isLoading = false }
                     >
                       <div>
                         {/* Aspect Image Container */}
-                        <div className={`${getAspectClass(idx)} overflow-hidden relative border-b border-white/5 bg-zinc-900`}>
+                        <div className={`${getAspectClass(idx)} overflow-hidden relative border-b border-white/5 bg-transparent`}>
                           <img 
                             src={project.thumbnail_url || "/images/webdev/editorial%20image%20placement.png"} 
                             alt={project.title} 
@@ -562,7 +562,7 @@ export function WebDevPage({ onOpenContactModal, items = [], isLoading = false }
               {/* Large project image box */}
               <div 
                 onClick={() => setSelectedProject(displayWebsites[1])}
-                className="border border-white/10 bg-zinc-950 overflow-hidden relative h-[50vh] w-full group cursor-pointer"
+                className="border border-white/10 bg-transparent overflow-hidden relative h-[50vh] w-full group cursor-pointer"
               >
                 <img 
                   src={displayWebsites[1].thumbnail_url || "/images/webdev/portfolio%20empty_transition%20image.png"} 
@@ -654,7 +654,7 @@ export function WebDevPage({ onOpenContactModal, items = [], isLoading = false }
                     className="text-center md:text-left border border-white/5 bg-zinc-950/40 hover:border-white/20 transition-all duration-300 group cursor-pointer flex flex-col justify-between w-full max-w-full mx-auto"
                   >
                     <div>
-                      <div className="aspect-[16/10] overflow-hidden relative border-b border-white/5 bg-zinc-990">
+                      <div className="aspect-[16/10] overflow-hidden relative border-b border-white/5 bg-transparent">
                         <img 
                           src={project.thumbnail_url || "/images/webdev/editorial%20image%20placement.png"} 
                           alt={project.title} 
@@ -764,7 +764,7 @@ export function WebDevPage({ onOpenContactModal, items = [], isLoading = false }
                   </div>
                   
                   {/* Browser Screen: Contains the image */}
-                  <div className="bg-zinc-950 relative aspect-video md:flex-1 overflow-hidden">
+                  <div className="bg-transparent relative aspect-video md:flex-1 overflow-hidden">
                     <img 
                       src={selectedProject.thumbnail_url || "/images/webdev/editorial%20image%20placement.png"} 
                       alt={selectedProject.title} 
