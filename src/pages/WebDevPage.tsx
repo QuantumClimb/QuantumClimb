@@ -376,7 +376,7 @@ export function WebDevPage({ onOpenContactModal, items = [], isLoading = false }
                   <img 
                     src={project.thumbnail_url || "/images/webdev/editorial%20image%20placement.png"} 
                     alt={project.title} 
-                    className="w-full h-full object-cover opacity-85 group-hover:opacity-100 group-hover:scale-102 transition-all duration-700"
+                    className="w-full h-full object-contain opacity-85 group-hover:opacity-100 group-hover:scale-102 transition-all duration-700"
                     referrerPolicy="no-referrer"
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-zinc-950/40 to-transparent"></div>
@@ -422,14 +422,14 @@ export function WebDevPage({ onOpenContactModal, items = [], isLoading = false }
             
             {/* Header info */}
             <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 border-b border-white/5 pb-8">
-              <div className="space-y-3">
+              <div className="space-y-3 flex flex-col items-center md:items-start text-center md:text-left w-full md:w-auto">
                 <span className="text-[10px] font-mono tracking-[0.3em] text-purple-400 uppercase block">THE WORK</span>
                 <h2 className="text-3xl font-medium tracking-tight text-white uppercase">A selection of digital experiences</h2>
-                <p className="text-xs text-zinc-500 max-w-md font-light">A selection of digital experiences, platforms and products built for ambitious brands, creators and organisations.</p>
+                <p className="text-xs text-zinc-500 max-w-md font-light mx-auto md:mx-0">A selection of digital experiences, platforms and products built for ambitious brands, creators and organisations.</p>
               </div>
 
               {/* Filtering tabs */}
-              <div className="flex flex-wrap gap-x-6 gap-y-2 text-[10px] font-mono uppercase tracking-widest text-zinc-500">
+              <div className="flex flex-wrap justify-center md:justify-start gap-x-6 gap-y-2 text-[10px] font-mono uppercase tracking-widest text-zinc-500 w-full md:w-auto">
                 {["ALL", "WEBSITES", "WEB APPS", "E-COMMERCE", "DIGITAL EXPERIENCES", "PLATFORMS", "CREATIVE TECHNOLOGY"].map((cat) => {
                   const isActive = activeCategory === cat;
                   return (
@@ -461,7 +461,7 @@ export function WebDevPage({ onOpenContactModal, items = [], isLoading = false }
                   >
                     <article
                       onClick={() => setSelectedProject(project)}
-                      className="group border border-white/5 bg-zinc-950/40 hover:border-white/20 transition-all duration-300 flex flex-col flex-1 justify-between overflow-hidden cursor-pointer"
+                      className="group border border-white/5 bg-zinc-950/40 hover:border-white/20 transition-all duration-300 flex flex-col flex-1 justify-between overflow-hidden cursor-pointer w-full max-w-full mx-auto"
                     >
                       <div>
                         {/* Aspect Image Container */}
@@ -469,14 +469,14 @@ export function WebDevPage({ onOpenContactModal, items = [], isLoading = false }
                           <img 
                             src={project.thumbnail_url || "/images/webdev/editorial%20image%20placement.png"} 
                             alt={project.title} 
-                            className="w-full h-full object-cover opacity-85 group-hover:opacity-100 group-hover:scale-102 transition-all duration-700"
+                            className="w-full h-full object-contain opacity-85 group-hover:opacity-100 group-hover:scale-102 transition-all duration-700 block"
                             referrerPolicy="no-referrer"
                           />
                           <div className="absolute inset-0 bg-gradient-to-t from-zinc-950/50 to-transparent"></div>
                         </div>
 
                         {/* Card metadata */}
-                        <div className="p-6 space-y-3">
+                        <div className="p-6 space-y-3 text-center md:text-left">
                           <span className="text-[9px] font-mono text-zinc-500 uppercase tracking-widest block">
                             {getProjectTag(project).toUpperCase()}
                           </span>
@@ -487,7 +487,7 @@ export function WebDevPage({ onOpenContactModal, items = [], isLoading = false }
                         </div>
                       </div>
 
-                      <div className="p-6 pt-2">
+                      <div className="p-6 pt-2 flex justify-center md:justify-start">
                         <span className="text-[10px] font-mono tracking-widest text-purple-400 uppercase font-bold flex items-center gap-1 group-hover:text-white transition-colors">
                           VIEW PROJECT <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-0.5 transition-transform" />
                         </span>
@@ -556,8 +556,8 @@ export function WebDevPage({ onOpenContactModal, items = [], isLoading = false }
       {displayWebsites.length > 1 && (
         <section className="py-16 md:py-24 border-b border-white/5 bg-black">
           <div className="container mx-auto px-6">
-            <div className="max-w-6xl mx-auto space-y-8">
-              <span className="text-[10px] font-mono tracking-[0.3em] text-purple-400 uppercase">PROJECT / DIGITAL EXPERIENCE</span>
+            <div className="max-w-6xl mx-auto space-y-8 flex flex-col items-center md:items-start text-center md:text-left">
+              <span className="text-[10px] font-mono tracking-[0.3em] text-purple-400 uppercase block">PROJECT / DIGITAL EXPERIENCE</span>
               
               {/* Large project image box */}
               <div 
@@ -567,20 +567,20 @@ export function WebDevPage({ onOpenContactModal, items = [], isLoading = false }
                 <img 
                   src={displayWebsites[1].thumbnail_url || "/images/webdev/portfolio%20empty_transition%20image.png"} 
                   alt={displayWebsites[1].title} 
-                  className="w-full h-full object-cover opacity-85 group-hover:opacity-100 group-hover:scale-101 transition-all duration-700"
+                  className="w-full h-full object-contain opacity-85 group-hover:opacity-100 group-hover:scale-101 transition-all duration-700 block"
                   referrerPolicy="no-referrer"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent"></div>
               </div>
 
-              <div className="flex flex-col md:flex-row md:items-start justify-between gap-6 pt-4">
-                <div className="space-y-2">
+              <div className="flex flex-col md:flex-row md:items-start justify-between gap-6 pt-4 w-full">
+                <div className="space-y-2 flex flex-col items-center md:items-start text-center md:text-left w-full md:w-auto">
                   <h3 className="text-2xl font-semibold text-white uppercase tracking-tight">{displayWebsites[1].title}</h3>
-                  <p className="text-xs text-zinc-500 max-w-xl font-light">{getCaseStudy(displayWebsites[1])}</p>
+                  <p className="text-xs text-zinc-500 max-w-xl font-light mx-auto md:mx-0">{getCaseStudy(displayWebsites[1])}</p>
                 </div>
                 <button
                   onClick={() => setSelectedProject(displayWebsites[1])}
-                  className="px-8 py-4 border border-white/25 text-white font-semibold text-xs tracking-wider uppercase hover:border-white transition-all cursor-pointer text-center bg-transparent shrink-0"
+                  className="px-8 py-4 border border-white/25 text-white font-semibold text-xs tracking-wider uppercase hover:border-white transition-all cursor-pointer text-center bg-transparent shrink-0 mx-auto md:mx-0"
                 >
                   VIEW PROJECT →
                 </button>
@@ -641,8 +641,8 @@ export function WebDevPage({ onOpenContactModal, items = [], isLoading = false }
         <section className="py-16 md:py-24 border-b border-white/5 bg-black">
           <div className="container mx-auto px-6">
             <div className="max-w-6xl mx-auto space-y-12">
-              <div className="space-y-2">
-                <span className="text-[10px] font-mono tracking-[0.3em] text-purple-400 uppercase">ADDITIONAL PRODUCTIONS</span>
+              <div className="space-y-2 flex flex-col items-center md:items-start text-center md:text-left">
+                <span className="text-[10px] font-mono tracking-[0.3em] text-purple-400 uppercase block">ADDITIONAL PRODUCTIONS</span>
                 <h2 className="text-3xl font-medium tracking-tight text-white uppercase">MORE WORK</h2>
               </div>
 
@@ -651,25 +651,25 @@ export function WebDevPage({ onOpenContactModal, items = [], isLoading = false }
                   <button
                     key={project.id}
                     onClick={() => setSelectedProject(project)}
-                    className="text-left border border-white/5 bg-zinc-950/40 hover:border-white/20 transition-all duration-300 group cursor-pointer flex flex-col justify-between"
+                    className="text-center md:text-left border border-white/5 bg-zinc-950/40 hover:border-white/20 transition-all duration-300 group cursor-pointer flex flex-col justify-between w-full max-w-full mx-auto"
                   >
                     <div>
                       <div className="aspect-[16/10] overflow-hidden relative border-b border-white/5 bg-zinc-990">
                         <img 
                           src={project.thumbnail_url || "/images/webdev/editorial%20image%20placement.png"} 
                           alt={project.title} 
-                          className="w-full h-full object-cover opacity-85 group-hover:scale-102 transition-transform duration-700"
+                          className="w-full h-full object-contain opacity-85 group-hover:scale-102 transition-transform duration-700 block"
                         />
                         <div className="absolute inset-0 bg-gradient-to-t from-zinc-950/50 to-transparent"></div>
                       </div>
                       <div className="p-6 space-y-2">
-                        <span className="text-[9px] font-mono text-zinc-500 uppercase tracking-widest">{getProjectTag(project).toUpperCase()}</span>
+                        <span className="text-[9px] font-mono text-zinc-500 uppercase tracking-widest block">{getProjectTag(project).toUpperCase()}</span>
                         <h4 className="text-lg font-semibold text-white tracking-tight uppercase leading-tight">{project.title}</h4>
                         <p className="text-xs text-zinc-500 line-clamp-2 leading-relaxed">{project.description}</p>
                       </div>
                     </div>
 
-                    <div className="px-6 pb-6 pt-2">
+                    <div className="px-6 pb-6 pt-2 flex justify-center md:justify-start">
                       <span className="text-[10px] font-mono tracking-widest text-purple-400 uppercase font-bold flex items-center gap-1 group-hover:text-white transition-colors">
                         VIEW PROJECT <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-0.5 transition-transform" />
                       </span>
@@ -768,7 +768,7 @@ export function WebDevPage({ onOpenContactModal, items = [], isLoading = false }
                     <img 
                       src={selectedProject.thumbnail_url || "/images/webdev/editorial%20image%20placement.png"} 
                       alt={selectedProject.title} 
-                      className="w-full h-full object-cover object-top block"
+                      className="w-full h-full object-contain object-top block"
                       referrerPolicy="no-referrer"
                     />
                   </div>
