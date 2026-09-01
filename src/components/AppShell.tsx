@@ -8,6 +8,7 @@ import { HomePage } from "../pages/HomePage";
 import { AIDubbingPage } from "../pages/AIDubbingPage";
 import { AIVideoPage } from "../pages/AIVideoPage";
 import { WebDevPage } from "../pages/WebDevPage";
+import { AudioPluginsPage } from "../pages/AudioPluginsPage";
 import { ContactPage } from "../pages/ContactPage";
 import {
   PrivacyPolicy,
@@ -29,7 +30,7 @@ import {
 import type { PortfolioItem, SiteVideo } from "../lib/supabase";
 
 type AppShellProps = Readonly<{
-  currentPage: "home" | "ai-dubbing" | "ai-video" | "web-dev" | "portfolio" | "admin" | "privacy" | "terms" | "cookies" | "contact";
+  currentPage: "home" | "ai-dubbing" | "ai-video" | "web-dev" | "audio-plugins" | "portfolio" | "admin" | "privacy" | "terms" | "cookies" | "contact";
   isScrolled: boolean;
   isContactModalOpen: boolean;
   isAdmin: boolean;
@@ -44,6 +45,7 @@ type AppShellProps = Readonly<{
   onNavigateAIDubbing: () => void;
   onNavigateAIVideo: () => void;
   onNavigateWebDev: () => void;
+  onNavigateAudioPlugins?: () => void;
   onNavigatePortfolio: () => void;
   onNavigateAdmin: () => void;
   onNavigatePrivacy: () => void;
@@ -89,6 +91,7 @@ export function AppShell({
   onNavigateAIDubbing,
   onNavigateAIVideo,
   onNavigateWebDev,
+  onNavigateAudioPlugins,
   onNavigatePortfolio,
   onNavigateAdmin,
   onNavigatePrivacy,
@@ -125,6 +128,7 @@ export function AppShell({
   const isAIDubbingPage = currentPage === "ai-dubbing";
   const isAIVideoPage = currentPage === "ai-video";
   const isWebDevPage = currentPage === "web-dev";
+  const isAudioPluginsPage = currentPage === "audio-plugins";
   const isContactPage = currentPage === "contact";
   const isLegalPage = ["privacy", "terms", "cookies"].includes(currentPage);
 
@@ -134,32 +138,85 @@ export function AppShell({
         <div className="absolute inset-0" style={{ backgroundImage: "linear-gradient(to right, white 1px, transparent 1px), linear-gradient(to bottom, white 1px, transparent 1px)", backgroundSize: "40px 40px" }}></div>
       </div>
 
-      <nav className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 border-b ${isScrolled ? "bg-black/80 backdrop-blur-md py-5 border-white/10" : "bg-transparent py-7 border-transparent"}`}>
-        <div className="container mx-auto px-6 flex items-center justify-between gap-4">
-          {currentPage !== "home" ? (
-            <button onClick={onNavigateHome} className="flex items-center cursor-pointer h-16 sm:h-22">
+      <nav className={`fixed top-0 left-0 right-0 z-50 transition-colors duration-300 border-b ${isScrolled ? "bg-black/90 backdrop-blur-md border-white/10" : "bg-black/40 backdrop-blur-sm border-white/5"} h-[84px] sm:h-[96px] flex items-center`}>
+        <div className="w-full px-6 sm:px-10 lg:px-12 relative flex items-center justify-between h-full">
+          {/* Left Brand / Logo: Visible on all pages with explicit stable dimensions */}
+          <div className="flex items-center z-10 flex-shrink-0">
+            <button 
+              onClick={onNavigateHome} 
+              className="w-[72px] h-[72px] sm:w-[88px] sm:h-[88px] flex items-center justify-center cursor-pointer transition-opacity hover:opacity-90 flex-shrink-0"
+              aria-label="Quantum Climb Home"
+            >
               <img 
                 src="/images/qclogo.png" 
                 alt="Quantum Climb Logo" 
-                className="h-14 sm:h-20 w-auto object-contain brightness-110" 
+                width={88}
+                height={88}
+                className="w-full h-full object-contain brightness-110 select-none pointer-events-none" 
                 referrerPolicy="no-referrer"
               />
             </button>
-          ) : (
-            <div className="h-16 sm:h-22" />
-          )}
-
-          <div className="hidden md:flex items-center gap-6 text-sm text-zinc-300">
-            <button onClick={onNavigateHome} className={`hover:text-white ${currentPage === "home" ? "text-white font-medium" : ""}`}>Agency</button>
-            <button onClick={onNavigateAIDubbing} className={`hover:text-white ${isAIDubbingPage ? "text-white font-medium" : ""}`}>AI Dubbing</button>
-            <button onClick={onNavigateAIVideo} className={`hover:text-white ${isAIVideoPage ? "text-white font-medium" : ""}`}>AI Video</button>
-            <button onClick={onNavigateWebDev} className={`hover:text-white ${isWebDevPage ? "text-white font-medium" : ""}`}>Web Dev</button>
           </div>
 
-          <div className="flex items-center gap-3">
+          {/* Center Navigation Links: Pure Text Color Transition, No Borders/Boxes */}
+          <div className="hidden md:flex items-center gap-1 sm:gap-1.5 lg:gap-3 absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 z-10 pointer-events-auto">
+            <button 
+              onClick={onNavigateHome} 
+              className={`px-2.5 sm:px-3 lg:px-4 py-1.5 sm:py-2 text-xs sm:text-sm font-medium tracking-wide uppercase cursor-pointer select-none inline-flex items-center justify-center transition-colors duration-200 whitespace-nowrap ${
+                currentPage === "home" 
+                  ? "text-white" 
+                  : "text-white/55 hover:text-white"
+              }`}
+            >
+              Agency
+            </button>
+            <button 
+              onClick={onNavigateAIDubbing} 
+              className={`px-2.5 sm:px-3 lg:px-4 py-1.5 sm:py-2 text-xs sm:text-sm font-medium tracking-wide uppercase cursor-pointer select-none inline-flex items-center justify-center transition-colors duration-200 whitespace-nowrap ${
+                isAIDubbingPage 
+                  ? "text-white" 
+                  : "text-white/55 hover:text-white"
+              }`}
+            >
+              AI Dubbing
+            </button>
+            <button 
+              onClick={onNavigateAIVideo} 
+              className={`px-2.5 sm:px-3 lg:px-4 py-1.5 sm:py-2 text-xs sm:text-sm font-medium tracking-wide uppercase cursor-pointer select-none inline-flex items-center justify-center transition-colors duration-200 whitespace-nowrap ${
+                isAIVideoPage 
+                  ? "text-white" 
+                  : "text-white/55 hover:text-white"
+              }`}
+            >
+              AI Video
+            </button>
+            <button 
+              onClick={onNavigateWebDev} 
+              className={`px-2.5 sm:px-3 lg:px-4 py-1.5 sm:py-2 text-xs sm:text-sm font-medium tracking-wide uppercase cursor-pointer select-none inline-flex items-center justify-center transition-colors duration-200 whitespace-nowrap ${
+                isWebDevPage 
+                  ? "text-white" 
+                  : "text-white/55 hover:text-white"
+              }`}
+            >
+              Web Dev
+            </button>
+            <button 
+              onClick={onNavigateAudioPlugins} 
+              className={`px-2.5 sm:px-3 lg:px-4 py-1.5 sm:py-2 text-xs sm:text-sm font-medium tracking-wide uppercase cursor-pointer select-none inline-flex items-center justify-center transition-colors duration-200 whitespace-nowrap ${
+                isAudioPluginsPage 
+                  ? "text-white" 
+                  : "text-white/55 hover:text-white"
+              }`}
+            >
+              Audio Plugins
+            </button>
+          </div>
+
+          {/* Right Action CTA & Mobile Toggle */}
+          <div className="flex items-center gap-3 z-10 flex-shrink-0">
             <button 
               onClick={onNavigateContact} 
-              className="hidden md:block px-4 py-2 border border-purple-500/30 bg-purple-500/10 hover:bg-purple-600 hover:border-purple-600 text-white font-semibold text-xs tracking-wider uppercase transition-all duration-300 cursor-pointer"
+              className="hidden md:block px-4 py-2 border border-purple-500/30 bg-purple-500/10 hover:bg-purple-600 hover:border-purple-600 text-white font-semibold text-xs tracking-wider uppercase transition-all duration-300 cursor-pointer flex-shrink-0"
             >
               Start a Project
             </button>
@@ -215,6 +272,8 @@ export function AppShell({
             onNavigatePortfolio={onNavigatePortfolio}
             onSubmitInquiry={onSubmitInquiry}
           />
+        ) : isAudioPluginsPage ? (
+          <AudioPluginsPage onOpenContactModal={onNavigateContact} />
         ) : isAIDubbingPage ? (
           <AIDubbingPage 
             onOpenContactModal={onNavigateContact} 
@@ -298,6 +357,15 @@ export function AppShell({
                 className={`text-left py-2 border-b border-white/5 hover:text-purple-400 transition-colors ${isWebDevPage ? "text-purple-400 border-purple-500/20" : ""}`}
               >
                 Web Dev
+              </button>
+              <button
+                onClick={() => {
+                  onNavigateAudioPlugins?.();
+                  setIsMobileMenuOpen(false);
+                }}
+                className={`text-left py-2 border-b border-white/5 hover:text-purple-400 transition-colors ${isAudioPluginsPage ? "text-purple-400 border-purple-500/20" : ""}`}
+              >
+                Audio Plugins
               </button>
               
               <button

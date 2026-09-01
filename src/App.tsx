@@ -13,7 +13,7 @@ import {
 import type { EditablePortfolioItem, EditableSiteVideo } from "./sections/AdminSections";
 import type { InquirySubmissionData } from "./pages/ContactPage";
 
-type PageView = "home" | "ai-dubbing" | "ai-video" | "web-dev" | "portfolio" | "admin" | "privacy" | "terms" | "cookies" | "contact";
+type PageView = "home" | "ai-dubbing" | "ai-video" | "web-dev" | "audio-plugins" | "portfolio" | "admin" | "privacy" | "terms" | "cookies" | "contact";
 
 function getCurrentPage(): PageView {
   if (globalThis.window === undefined) {
@@ -21,8 +21,13 @@ function getCurrentPage(): PageView {
   }
 
   const page = new URLSearchParams(globalThis.location.search).get("page");
-  if (["ai-dubbing", "ai-video", "web-dev", "admin", "privacy", "terms", "cookies", "contact"].includes(page ?? "")) {
+  if (["ai-dubbing", "ai-video", "web-dev", "audio-plugins", "admin", "privacy", "terms", "cookies", "contact"].includes(page ?? "")) {
     return page as PageView;
+  }
+
+  const pathname = globalThis.location.pathname.replace(/^\/+|\/+$/g, "");
+  if (["ai-dubbing", "ai-video", "web-dev", "audio-plugins", "admin", "privacy", "terms", "cookies", "contact"].includes(pathname)) {
+    return pathname as PageView;
   }
 
   return "home";
@@ -660,6 +665,7 @@ export default function App() {
     onNavigateAIDubbing: () => navigateToPage("ai-dubbing"),
     onNavigateAIVideo: () => navigateToPage("ai-video"),
     onNavigateWebDev: () => navigateToPage("web-dev"),
+    onNavigateAudioPlugins: () => navigateToPage("audio-plugins"),
     onNavigatePortfolio: () => navigateToPage("portfolio"),
     onNavigateAdmin: () => navigateToPage("admin"),
     onNavigatePrivacy: () => navigateToPage("privacy"),
