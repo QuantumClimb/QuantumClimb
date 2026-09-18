@@ -9,6 +9,9 @@ import { AIDubbingPage } from "../pages/AIDubbingPage";
 import { AIVideoPage } from "../pages/AIVideoPage";
 import { WebDevPage } from "../pages/WebDevPage";
 import { AudioPluginsPage } from "../pages/AudioPluginsPage";
+import { ProductsPage } from "../pages/ProductsPage";
+import { QFnBPage } from "../pages/QFnBPage";
+import { QFnBDemoPage, type QFnBDemoSubmissionData } from "../pages/QFnBDemoPage";
 import { ContactPage } from "../pages/ContactPage";
 import {
   PrivacyPolicy,
@@ -30,7 +33,7 @@ import {
 import type { PortfolioItem, SiteVideo } from "../lib/supabase";
 
 type AppShellProps = Readonly<{
-  currentPage: "home" | "ai-dubbing" | "ai-video" | "web-dev" | "audio-plugins" | "portfolio" | "admin" | "privacy" | "terms" | "cookies" | "contact";
+  currentPage: "home" | "ai-dubbing" | "ai-video" | "web-dev" | "audio-plugins" | "products" | "q-fnb" | "q-fnb-demo" | "portfolio" | "admin" | "privacy" | "terms" | "cookies" | "contact";
   isScrolled: boolean;
   isContactModalOpen: boolean;
   isAdmin: boolean;
@@ -46,6 +49,9 @@ type AppShellProps = Readonly<{
   onNavigateAIVideo: () => void;
   onNavigateWebDev: () => void;
   onNavigateAudioPlugins?: () => void;
+  onNavigateProducts?: () => void;
+  onNavigateQFnB?: () => void;
+  onNavigateQFnBDemo?: () => void;
   onNavigatePortfolio: () => void;
   onNavigateAdmin: () => void;
   onNavigatePrivacy: () => void;
@@ -73,6 +79,7 @@ type AppShellProps = Readonly<{
     onProgress?: (progress: number) => void,
   ) => Promise<string>;
   onSubmitInquiry: (data: any) => Promise<void>;
+  onSubmitQFnBDemoRequest?: (data: QFnBDemoSubmissionData) => Promise<void>;
 }>;
 
 export function AppShell({
@@ -92,6 +99,9 @@ export function AppShell({
   onNavigateAIVideo,
   onNavigateWebDev,
   onNavigateAudioPlugins,
+  onNavigateProducts,
+  onNavigateQFnB,
+  onNavigateQFnBDemo,
   onNavigatePortfolio,
   onNavigateAdmin,
   onNavigatePrivacy,
@@ -109,6 +119,7 @@ export function AppShell({
   onDeleteSiteVideo,
   onUploadSiteVideo,
   onSubmitInquiry,
+  onSubmitQFnBDemoRequest,
 }: AppShellProps) {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
@@ -129,6 +140,9 @@ export function AppShell({
   const isAIVideoPage = currentPage === "ai-video";
   const isWebDevPage = currentPage === "web-dev";
   const isAudioPluginsPage = currentPage === "audio-plugins";
+  const isProductsPage = currentPage === "products" || currentPage === "q-fnb" || currentPage === "q-fnb-demo";
+  const isQFnBPage = currentPage === "q-fnb";
+  const isQFnBDemoPage = currentPage === "q-fnb-demo";
   const isContactPage = currentPage === "contact";
   const isLegalPage = ["privacy", "terms", "cookies"].includes(currentPage);
 
@@ -201,14 +215,14 @@ export function AppShell({
               Web Dev
             </button>
             <button 
-              onClick={onNavigateAudioPlugins} 
+              onClick={onNavigateProducts} 
               className={`px-2.5 sm:px-3 lg:px-4 py-1.5 sm:py-2 text-xs sm:text-sm font-medium tracking-wide uppercase cursor-pointer select-none inline-flex items-center justify-center transition-colors duration-200 whitespace-nowrap ${
-                isAudioPluginsPage 
+                isProductsPage 
                   ? "text-white" 
                   : "text-white/55 hover:text-white"
               }`}
             >
-              Audio Plugins
+              Products
             </button>
           </div>
 
@@ -274,6 +288,23 @@ export function AppShell({
           />
         ) : isAudioPluginsPage ? (
           <AudioPluginsPage onOpenContactModal={onNavigateContact} />
+        ) : isQFnBDemoPage ? (
+          <QFnBDemoPage
+            onNavigateQFnB={() => onNavigateQFnB?.()}
+            onSubmitDemoRequest={onSubmitQFnBDemoRequest ?? (async () => {})}
+          />
+        ) : isQFnBPage ? (
+          <QFnBPage 
+            onOpenContactModal={onNavigateContact}
+            onNavigateProducts={() => onNavigateProducts?.()}
+            onNavigateQFnBDemo={() => onNavigateQFnBDemo?.()}
+          />
+        ) : currentPage === "products" ? (
+          <ProductsPage 
+            onOpenContactModal={onNavigateContact}
+            onNavigateQFnB={() => onNavigateQFnB?.()}
+            onNavigateAudioPlugins={() => onNavigateAudioPlugins?.()}
+          />
         ) : isAIDubbingPage ? (
           <AIDubbingPage 
             onOpenContactModal={onNavigateContact} 
@@ -360,12 +391,12 @@ export function AppShell({
               </button>
               <button
                 onClick={() => {
-                  onNavigateAudioPlugins?.();
+                  onNavigateProducts?.();
                   setIsMobileMenuOpen(false);
                 }}
-                className={`text-left py-2 border-b border-white/5 hover:text-purple-400 transition-colors ${isAudioPluginsPage ? "text-purple-400 border-purple-500/20" : ""}`}
+                className={`text-left py-2 border-b border-white/5 hover:text-purple-400 transition-colors ${isProductsPage ? "text-purple-400 border-purple-500/20" : ""}`}
               >
-                Audio Plugins
+                Products
               </button>
               
               <button

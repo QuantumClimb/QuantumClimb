@@ -12,8 +12,9 @@ import {
 } from "./lib/supabase";
 import type { EditablePortfolioItem, EditableSiteVideo } from "./sections/AdminSections";
 import type { InquirySubmissionData } from "./pages/ContactPage";
+import type { QFnBDemoSubmissionData } from "./pages/QFnBDemoPage";
 
-type PageView = "home" | "ai-dubbing" | "ai-video" | "web-dev" | "audio-plugins" | "portfolio" | "admin" | "privacy" | "terms" | "cookies" | "contact";
+type PageView = "home" | "ai-dubbing" | "ai-video" | "web-dev" | "audio-plugins" | "products" | "q-fnb" | "q-fnb-demo" | "portfolio" | "admin" | "privacy" | "terms" | "cookies" | "contact";
 
 function getCurrentPage(): PageView {
   if (globalThis.window === undefined) {
@@ -21,13 +22,21 @@ function getCurrentPage(): PageView {
   }
 
   const page = new URLSearchParams(globalThis.location.search).get("page");
-  if (["ai-dubbing", "ai-video", "web-dev", "audio-plugins", "admin", "privacy", "terms", "cookies", "contact"].includes(page ?? "")) {
+  if (["ai-dubbing", "ai-video", "web-dev", "audio-plugins", "products", "q-fnb", "q-fnb-demo", "admin", "privacy", "terms", "cookies", "contact"].includes(page ?? "")) {
     return page as PageView;
   }
 
-  const pathname = globalThis.location.pathname.replace(/^\/+|\/+$/g, "");
-  if (["ai-dubbing", "ai-video", "web-dev", "audio-plugins", "admin", "privacy", "terms", "cookies", "contact"].includes(pathname)) {
+  const pathname = globalThis.location.pathname.replace(/^\/+|\/+$/g, "").toLowerCase();
+  if (["ai-dubbing", "ai-video", "web-dev", "audio-plugins", "products", "q-fnb", "q-fnb-demo", "admin", "privacy", "terms", "cookies", "contact"].includes(pathname)) {
     return pathname as PageView;
+  }
+
+  if (pathname === "products/q-fnb/demo" || pathname === "q-fnb/demo" || pathname === "products/q-fnb-demo") {
+    return "q-fnb-demo";
+  }
+
+  if (pathname === "products/q-fnb") {
+    return "q-fnb";
   }
 
   return "home";
@@ -82,6 +91,38 @@ export default function App() {
       globalThis.removeEventListener("popstate", handleLocationChange);
     };
   }, []);
+
+  useEffect(() => {
+    if (globalThis.document === undefined) return;
+
+    let title = "Quantum Climb | AI-Powered Digital Products, Media & Experiences";
+    let description = "We build AI-powered digital products, media, and experiences. Evolving workflows, synthesizing voices, and programming systems for global leaders.";
+
+    if (currentPage === "products") {
+      title = "Quantum Climb Products | Creative Technology & Digital Products";
+      description = "Explore proprietary Quantum Climb products spanning hospitality technology, AI audio and creative digital systems.";
+    } else if (currentPage === "q-fnb") {
+      title = "Q F&B | Restaurant Operations & Guest Growth by Quantum Climb";
+      description = "Q F&B brings restaurant reservations, guest relationships, offers and business insights into one connected hospitality platform.";
+    } else if (currentPage === "q-fnb-demo") {
+      title = "Q F&B Private Demo Request | Quantum Climb";
+      description = "Request a private demonstration of Q F&B tailored around your restaurant, lounge, bar, or hospitality group.";
+    } else if (currentPage === "ai-dubbing") {
+      title = "AI Dubbing & Voice Synthesis | Quantum Climb";
+    } else if (currentPage === "ai-video") {
+      title = "AI Generated Video & Production | Quantum Climb";
+    } else if (currentPage === "web-dev") {
+      title = "Web Development & Digital Architecture | Quantum Climb";
+    } else if (currentPage === "audio-plugins") {
+      title = "Q HUMAN - Vocal Humanization VST3 | Quantum Climb";
+    }
+
+    document.title = title;
+    const metaDesc = document.querySelector('meta[name="description"]');
+    if (metaDesc) {
+      metaDesc.setAttribute("content", description);
+    }
+  }, [currentPage]);
 
   const refreshPortfolioItems = async (activeSession: Session | null = session) => {
     if (!supabase) {
@@ -649,6 +690,46 @@ export default function App() {
     }
   };
 
+  const submitQFnBDemoRequest = async (data: QFnBDemoSubmissionData) => {
+    if (!supabase) {
+      console.log("Supabase not configured. Mocking Q F&B Demo submission:", data);
+      await new Promise((resolve) => setTimeout(resolve, 1000));
+      return;
+    }
+
+    const { error } = await supabase.from("project_inquiries").insert({
+      name: data.fullName,
+      email: data.workEmail,
+      phone: data.phone,
+      company: data.restaurantName,
+      job_title: data.role,
+      selected_services: ["Q F&B Private Demo"],
+      requirements: {
+        leadType: "q-fnb-demo",
+        source: "Q F&B Private Demo",
+        businessType: data.businessType,
+        outlets: data.outlets,
+        currentReservationMethod: data.currentReservationMethod,
+        interests: data.interests,
+        preferredContactMethod: data.preferredContactMethod,
+        subject: `New Q F&B Demo Request — ${data.restaurantName}`,
+      },
+      description: `[Q F&B PRIVATE DEMO REQUEST]
+Restaurant / Business: ${data.restaurantName}
+Role: ${data.role}
+Business Type: ${data.businessType}
+Outlets: ${data.outlets}
+Current Reservation Method: ${data.currentReservationMethod}
+Interests: ${data.interests.length > 0 ? data.interests.join(", ") : "None selected"}
+Preferred Contact Method: ${data.preferredContactMethod}
+Operation Details: ${data.message || "None provided"}`,
+    });
+
+    if (error) {
+      throw new Error(error.message);
+    }
+  };
+
   return AppShell({
     currentPage,
     isScrolled,
@@ -666,6 +747,9 @@ export default function App() {
     onNavigateAIVideo: () => navigateToPage("ai-video"),
     onNavigateWebDev: () => navigateToPage("web-dev"),
     onNavigateAudioPlugins: () => navigateToPage("audio-plugins"),
+    onNavigateProducts: () => navigateToPage("products"),
+    onNavigateQFnB: () => navigateToPage("q-fnb"),
+    onNavigateQFnBDemo: () => navigateToPage("q-fnb-demo"),
     onNavigatePortfolio: () => navigateToPage("portfolio"),
     onNavigateAdmin: () => navigateToPage("admin"),
     onNavigatePrivacy: () => navigateToPage("privacy"),
@@ -683,5 +767,6 @@ export default function App() {
     onDeleteSiteVideo: deleteSiteVideo,
     onUploadSiteVideo: uploadSiteVideo,
     onSubmitInquiry: submitProjectInquiry,
+    onSubmitQFnBDemoRequest: submitQFnBDemoRequest,
   });
 }
