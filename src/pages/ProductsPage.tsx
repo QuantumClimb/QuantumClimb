@@ -45,32 +45,48 @@ export function ProductsPage({
         />
       </div>
 
-      {/* Hero Section */}
-      <section className="relative px-6 sm:px-10 lg:px-12 py-16 sm:py-24 max-w-7xl mx-auto z-10 border-b border-white/5">
-        <Reveal type="fade-up">
-          <div className="inline-flex items-center gap-2 px-3 py-1 bg-purple-500/10 border border-purple-500/20 text-purple-400 text-xs font-mono tracking-widest uppercase mb-6">
-            <span className="w-1.5 h-1.5 rounded-full bg-purple-400 animate-pulse" />
-            QUANTUM CLIMB / PRODUCTS
-          </div>
-        </Reveal>
+      {/* Hero Section with Futuristic AI Control Room Background */}
+      <section className="relative border-b border-white/10 overflow-hidden bg-black group z-10">
+        {/* Background Banner Image */}
+        <div 
+          className="absolute inset-0 bg-cover bg-center bg-no-repeat transition-transform duration-1000 scale-105 group-hover:scale-100"
+          style={{ backgroundImage: "url('/images/products/products-futuristic-ai-control-room.png')" }}
+        />
+        {/* Refined Layered Overlay System for Enhanced Background Visibility */}
+        {/* Layer 1: Lighter overall vertical gradient allowing screen details to shine through */}
+        <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-zinc-950/35 to-black/80" />
+        {/* Layer 2: Targeted dark radial backdrop behind text area for maximum headline contrast without darkening the entire image */}
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_left_center,_var(--tw-gradient-stops))] from-black/85 via-black/50 to-transparent" />
+        {/* Layer 3: Subtle graphite & soft purple visual tint */}
+        <div className="absolute inset-0 bg-gradient-to-r from-purple-950/20 via-transparent to-zinc-950/20 pointer-events-none" />
 
-        <Reveal type="fade-up" delay={0.1}>
-          <h1 className="text-4xl sm:text-6xl lg:text-7xl font-extrabold tracking-tight text-white uppercase max-w-4xl leading-[1.05] mb-8">
-            WE BUILD THE TOOLS <br />
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-white via-zinc-300 to-purple-400">
-              BEHIND THE EXPERIENCE.
-            </span>
-          </h1>
-        </Reveal>
+        {/* Hero Content Container */}
+        <div className="relative z-10 px-6 sm:px-10 lg:px-12 py-20 sm:py-28 lg:py-36 max-w-7xl mx-auto">
+          <Reveal type="fade-up">
+            <div className="inline-flex items-center gap-2 px-3 py-1 bg-black/60 border border-purple-500/30 backdrop-blur-md text-purple-400 text-xs font-mono tracking-widest uppercase mb-6">
+              <span className="w-1.5 h-1.5 rounded-full bg-purple-400 animate-pulse" />
+              QUANTUM CLIMB / PRODUCTS
+            </div>
+          </Reveal>
 
-        <Reveal type="fade-up" delay={0.2}>
-          <p className="text-lg sm:text-xl text-zinc-400 max-w-2xl leading-relaxed mb-6 font-light">
-            Focused digital products created at the intersection of technology, creativity and real-world workflows.
-          </p>
-          <div className="text-xs font-mono text-zinc-500 uppercase tracking-widest">
-            Built by Quantum Climb
-          </div>
-        </Reveal>
+          <Reveal type="fade-up" delay={0.1}>
+            <h1 className="text-4xl sm:text-6xl lg:text-7xl font-extrabold tracking-tight text-white uppercase max-w-4xl leading-[1.05] mb-8">
+              WE BUILD THE TOOLS <br />
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-white via-zinc-300 to-purple-400">
+                BEHIND THE EXPERIENCE.
+              </span>
+            </h1>
+          </Reveal>
+
+          <Reveal type="fade-up" delay={0.2}>
+            <p className="text-lg sm:text-xl text-zinc-300 max-w-2xl leading-relaxed mb-6 font-light drop-shadow-sm">
+              Focused digital products created at the intersection of technology, creativity and real-world workflows.
+            </p>
+            <div className="text-xs font-mono text-zinc-400 uppercase tracking-widest">
+              Built by Quantum Climb
+            </div>
+          </Reveal>
+        </div>
       </section>
 
       {/* Featured Products Section */}
