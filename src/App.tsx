@@ -14,7 +14,7 @@ import type { EditablePortfolioItem, EditableSiteVideo } from "./sections/AdminS
 import type { InquirySubmissionData } from "./pages/ContactPage";
 import type { QFnBDemoSubmissionData } from "./pages/QFnBDemoPage";
 
-type PageView = "home" | "ai-dubbing" | "ai-video" | "web-dev" | "audio-plugins" | "products" | "q-fnb" | "q-fnb-demo" | "portfolio" | "admin" | "privacy" | "terms" | "cookies" | "contact";
+type PageView = "home" | "services" | "ai-dubbing" | "ai-video" | "web-dev" | "audio-software" | "audio-plugins" | "products" | "q-fnb" | "q-fnb-demo" | "portfolio" | "admin" | "privacy" | "terms" | "cookies" | "contact";
 
 function getCurrentPage(): PageView {
   if (globalThis.window === undefined) {
@@ -22,13 +22,29 @@ function getCurrentPage(): PageView {
   }
 
   const page = new URLSearchParams(globalThis.location.search).get("page");
-  if (["ai-dubbing", "ai-video", "web-dev", "audio-plugins", "products", "q-fnb", "q-fnb-demo", "admin", "privacy", "terms", "cookies", "contact"].includes(page ?? "")) {
+  if (["services", "ai-dubbing", "ai-video", "web-dev", "audio-software", "audio-plugins", "products", "q-fnb", "q-fnb-demo", "admin", "privacy", "terms", "cookies", "contact"].includes(page ?? "")) {
     return page as PageView;
   }
 
   const pathname = globalThis.location.pathname.replace(/^\/+|\/+$/g, "").toLowerCase();
-  if (["ai-dubbing", "ai-video", "web-dev", "audio-plugins", "products", "q-fnb", "q-fnb-demo", "admin", "privacy", "terms", "cookies", "contact"].includes(pathname)) {
+  if (["services", "ai-dubbing", "ai-video", "web-dev", "audio-software", "audio-plugins", "products", "q-fnb", "q-fnb-demo", "admin", "privacy", "terms", "cookies", "contact"].includes(pathname)) {
     return pathname as PageView;
+  }
+
+  if (pathname === "services/audio-software" || pathname === "services/audio-plugins") {
+    return "audio-software";
+  }
+
+  if (pathname === "services/ai-dubbing") {
+    return "ai-dubbing";
+  }
+
+  if (pathname === "services/ai-video") {
+    return "ai-video";
+  }
+
+  if (pathname === "services/web-dev" || pathname === "services/web-development") {
+    return "web-dev";
   }
 
   if (pathname === "products/q-fnb/demo" || pathname === "q-fnb/demo" || pathname === "products/q-fnb-demo") {
@@ -98,7 +114,13 @@ export default function App() {
     let title = "Quantum Climb | AI-Powered Digital Products, Media & Experiences";
     let description = "We build AI-powered digital products, media, and experiences. Evolving workflows, synthesizing voices, and programming systems for global leaders.";
 
-    if (currentPage === "products") {
+    if (currentPage === "services") {
+      title = "Services | AI Dubbing, AI Video, Web & Audio Software | Quantum Climb";
+      description = "Explore specialized Quantum Climb services across AI dubbing & voice localization, AI video production, web development, and audio software & plugin development.";
+    } else if (currentPage === "audio-software") {
+      title = "Audio Software & Plugin Development | Quantum Climb";
+      description = "We build intelligent audio tools: professional audio software, VST3 plugins, DSP systems, and standalone audio applications by Quantum Climb.";
+    } else if (currentPage === "products") {
       title = "Quantum Climb Products | Creative Technology & Digital Products";
       description = "Explore proprietary Quantum Climb products spanning hospitality technology, AI audio and creative digital systems.";
     } else if (currentPage === "q-fnb") {
@@ -743,9 +765,11 @@ Operation Details: ${data.message || "None provided"}`,
     onOpenContactModal: openContactModal,
     onCloseContactModal: closeContactModal,
     onNavigateHome: () => navigateToPage("home"),
+    onNavigateServices: () => navigateToPage("services"),
     onNavigateAIDubbing: () => navigateToPage("ai-dubbing"),
     onNavigateAIVideo: () => navigateToPage("ai-video"),
     onNavigateWebDev: () => navigateToPage("web-dev"),
+    onNavigateAudioSoftware: () => navigateToPage("audio-software"),
     onNavigateAudioPlugins: () => navigateToPage("audio-plugins"),
     onNavigateProducts: () => navigateToPage("products"),
     onNavigateQFnB: () => navigateToPage("q-fnb"),

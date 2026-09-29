@@ -1,10 +1,12 @@
 import { useState, useEffect } from "react";
 import { AnimatePresence, motion } from "motion/react";
-import { Menu, X } from "lucide-react";
+import { Menu, X, ChevronDown, ChevronRight, ArrowRight } from "lucide-react";
 import { ContactModal } from "./ContactModal";
 import { WhatsAppWidget } from "./WhatsAppWidget";
 import { Footer } from "../sections/ClosureSections";
 import { HomePage } from "../pages/HomePage";
+import { ServicesPage } from "../pages/ServicesPage";
+import { AudioSoftwarePage } from "../pages/AudioSoftwarePage";
 import { AIDubbingPage } from "../pages/AIDubbingPage";
 import { AIVideoPage } from "../pages/AIVideoPage";
 import { WebDevPage } from "../pages/WebDevPage";
@@ -33,7 +35,7 @@ import {
 import type { PortfolioItem, SiteVideo } from "../lib/supabase";
 
 type AppShellProps = Readonly<{
-  currentPage: "home" | "ai-dubbing" | "ai-video" | "web-dev" | "audio-plugins" | "products" | "q-fnb" | "q-fnb-demo" | "portfolio" | "admin" | "privacy" | "terms" | "cookies" | "contact";
+  currentPage: "home" | "services" | "ai-dubbing" | "ai-video" | "web-dev" | "audio-software" | "audio-plugins" | "products" | "q-fnb" | "q-fnb-demo" | "portfolio" | "admin" | "privacy" | "terms" | "cookies" | "contact";
   isScrolled: boolean;
   isContactModalOpen: boolean;
   isAdmin: boolean;
@@ -45,9 +47,11 @@ type AppShellProps = Readonly<{
   onOpenContactModal: () => void;
   onCloseContactModal: () => void;
   onNavigateHome: () => void;
+  onNavigateServices?: () => void;
   onNavigateAIDubbing: () => void;
   onNavigateAIVideo: () => void;
   onNavigateWebDev: () => void;
+  onNavigateAudioSoftware?: () => void;
   onNavigateAudioPlugins?: () => void;
   onNavigateProducts?: () => void;
   onNavigateQFnB?: () => void;
@@ -95,9 +99,11 @@ export function AppShell({
   onOpenContactModal,
   onCloseContactModal,
   onNavigateHome,
+  onNavigateServices,
   onNavigateAIDubbing,
   onNavigateAIVideo,
   onNavigateWebDev,
+  onNavigateAudioSoftware,
   onNavigateAudioPlugins,
   onNavigateProducts,
   onNavigateQFnB,
@@ -122,6 +128,8 @@ export function AppShell({
   onSubmitQFnBDemoRequest,
 }: AppShellProps) {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [isServicesDropdownOpen, setIsServicesDropdownOpen] = useState(false);
+  const [isMobileServicesOpen, setIsMobileServicesOpen] = useState(false);
 
   useEffect(() => {
     if (isMobileMenuOpen) {
@@ -136,6 +144,8 @@ export function AppShell({
 
   const isPortfolioPage = currentPage === "portfolio";
   const isAdminPage = currentPage === "admin";
+  const isServicesPage = currentPage === "services";
+  const isAudioSoftwarePage = currentPage === "audio-software";
   const isAIDubbingPage = currentPage === "ai-dubbing";
   const isAIVideoPage = currentPage === "ai-video";
   const isWebDevPage = currentPage === "web-dev";
@@ -145,6 +155,7 @@ export function AppShell({
   const isQFnBDemoPage = currentPage === "q-fnb-demo";
   const isContactPage = currentPage === "contact";
   const isLegalPage = ["privacy", "terms", "cookies"].includes(currentPage);
+  const isAnyServiceActive = isServicesPage || isAIDubbingPage || isAIVideoPage || isWebDevPage || isAudioSoftwarePage;
 
   return (
     <div className="min-h-screen bg-black text-zinc-300 selection:bg-purple-600 selection:text-white">
@@ -184,36 +195,144 @@ export function AppShell({
             >
               Agency
             </button>
-            <button 
-              onClick={onNavigateAIDubbing} 
-              className={`px-2.5 sm:px-3 lg:px-4 py-1.5 sm:py-2 text-xs sm:text-sm font-medium tracking-wide uppercase cursor-pointer select-none inline-flex items-center justify-center transition-colors duration-200 whitespace-nowrap ${
-                isAIDubbingPage 
-                  ? "text-white" 
-                  : "text-white/55 hover:text-white"
-              }`}
+
+            {/* SERVICES Dropdown */}
+            <div 
+              className="relative"
+              onMouseEnter={() => setIsServicesDropdownOpen(true)}
+              onMouseLeave={() => setIsServicesDropdownOpen(false)}
             >
-              AI Dubbing
-            </button>
-            <button 
-              onClick={onNavigateAIVideo} 
-              className={`px-2.5 sm:px-3 lg:px-4 py-1.5 sm:py-2 text-xs sm:text-sm font-medium tracking-wide uppercase cursor-pointer select-none inline-flex items-center justify-center transition-colors duration-200 whitespace-nowrap ${
-                isAIVideoPage 
-                  ? "text-white" 
-                  : "text-white/55 hover:text-white"
-              }`}
-            >
-              AI Video
-            </button>
-            <button 
-              onClick={onNavigateWebDev} 
-              className={`px-2.5 sm:px-3 lg:px-4 py-1.5 sm:py-2 text-xs sm:text-sm font-medium tracking-wide uppercase cursor-pointer select-none inline-flex items-center justify-center transition-colors duration-200 whitespace-nowrap ${
-                isWebDevPage 
-                  ? "text-white" 
-                  : "text-white/55 hover:text-white"
-              }`}
-            >
-              Web Dev
-            </button>
+              <button 
+                onClick={() => {
+                  onNavigateServices?.();
+                  setIsServicesDropdownOpen(false);
+                }} 
+                onFocus={() => setIsServicesDropdownOpen(true)}
+                className={`px-2.5 sm:px-3 lg:px-4 py-1.5 sm:py-2 text-xs sm:text-sm font-medium tracking-wide uppercase cursor-pointer select-none inline-flex items-center gap-1.5 justify-center transition-colors duration-200 whitespace-nowrap ${
+                  isAnyServiceActive
+                    ? "text-white" 
+                    : "text-white/55 hover:text-white"
+                }`}
+                aria-expanded={isServicesDropdownOpen}
+                aria-haspopup="true"
+              >
+                <span>Services</span>
+                <ChevronDown className={`w-3.5 h-3.5 transition-transform duration-200 ${isServicesDropdownOpen ? "rotate-180 text-purple-400" : "opacity-60"}`} />
+              </button>
+
+              {/* Dropdown Menu */}
+              <AnimatePresence>
+                {isServicesDropdownOpen && (
+                  <motion.div
+                    initial={{ opacity: 0, y: 8, scale: 0.98 }}
+                    animate={{ opacity: 1, y: 0, scale: 1 }}
+                    exit={{ opacity: 0, y: 8, scale: 0.98 }}
+                    transition={{ duration: 0.15 }}
+                    className="absolute top-full left-1/2 -translate-x-1/2 pt-2 w-72 sm:w-80 z-50 pointer-events-auto"
+                  >
+                    <div className="bg-zinc-950 border border-white/10 shadow-[0_20px_50px_rgba(0,0,0,0.9)] p-2 relative backdrop-blur-xl">
+                      <div className="absolute top-0 left-0 right-0 h-[2px] bg-gradient-to-r from-transparent via-purple-500 to-transparent opacity-80" />
+
+                      <div className="space-y-1">
+                        <button
+                          onClick={() => {
+                            onNavigateAIDubbing();
+                            setIsServicesDropdownOpen(false);
+                          }}
+                          className={`w-full text-left px-3.5 py-2.5 flex items-center justify-between group/link transition-all border border-transparent hover:border-purple-500/30 hover:bg-white/5 cursor-pointer ${
+                            isAIDubbingPage ? "bg-purple-500/10 border-purple-500/30 text-white" : "text-zinc-300"
+                          }`}
+                        >
+                          <div>
+                            <div className="text-xs font-semibold tracking-wide uppercase group-hover/link:text-white">
+                              AI Dubbing & Localization
+                            </div>
+                            <div className="text-[10px] font-mono text-zinc-500 group-hover/link:text-purple-400 mt-0.5">
+                              Voice synthesis & translation
+                            </div>
+                          </div>
+                          <ChevronRight className="w-3.5 h-3.5 text-zinc-600 group-hover/link:text-purple-400 group-hover/link:translate-x-0.5 transition-all" />
+                        </button>
+
+                        <button
+                          onClick={() => {
+                            onNavigateAIVideo();
+                            setIsServicesDropdownOpen(false);
+                          }}
+                          className={`w-full text-left px-3.5 py-2.5 flex items-center justify-between group/link transition-all border border-transparent hover:border-purple-500/30 hover:bg-white/5 cursor-pointer ${
+                            isAIVideoPage ? "bg-purple-500/10 border-purple-500/30 text-white" : "text-zinc-300"
+                          }`}
+                        >
+                          <div>
+                            <div className="text-xs font-semibold tracking-wide uppercase group-hover/link:text-white">
+                              AI Video
+                            </div>
+                            <div className="text-[10px] font-mono text-zinc-500 group-hover/link:text-purple-400 mt-0.5">
+                              Cinematic & branded media
+                            </div>
+                          </div>
+                          <ChevronRight className="w-3.5 h-3.5 text-zinc-600 group-hover/link:text-purple-400 group-hover/link:translate-x-0.5 transition-all" />
+                        </button>
+
+                        <button
+                          onClick={() => {
+                            onNavigateWebDev();
+                            setIsServicesDropdownOpen(false);
+                          }}
+                          className={`w-full text-left px-3.5 py-2.5 flex items-center justify-between group/link transition-all border border-transparent hover:border-purple-500/30 hover:bg-white/5 cursor-pointer ${
+                            isWebDevPage ? "bg-purple-500/10 border-purple-500/30 text-white" : "text-zinc-300"
+                          }`}
+                        >
+                          <div>
+                            <div className="text-xs font-semibold tracking-wide uppercase group-hover/link:text-white">
+                              Web Development
+                            </div>
+                            <div className="text-[10px] font-mono text-zinc-500 group-hover/link:text-purple-400 mt-0.5">
+                              Platforms, apps & digital solutions
+                            </div>
+                          </div>
+                          <ChevronRight className="w-3.5 h-3.5 text-zinc-600 group-hover/link:text-purple-400 group-hover/link:translate-x-0.5 transition-all" />
+                        </button>
+
+                        <button
+                          onClick={() => {
+                            onNavigateAudioSoftware?.();
+                            setIsServicesDropdownOpen(false);
+                          }}
+                          className={`w-full text-left px-3.5 py-2.5 flex items-center justify-between group/link transition-all border border-transparent hover:border-purple-500/30 hover:bg-white/5 cursor-pointer ${
+                            isAudioSoftwarePage ? "bg-purple-500/10 border-purple-500/30 text-white" : "text-zinc-300"
+                          }`}
+                        >
+                          <div>
+                            <div className="text-xs font-semibold tracking-wide uppercase group-hover/link:text-white">
+                              Audio Software & Plugin Dev
+                            </div>
+                            <div className="text-[10px] font-mono text-zinc-500 group-hover/link:text-purple-400 mt-0.5">
+                              VST3 plugins, DSP & music tech
+                            </div>
+                          </div>
+                          <ChevronRight className="w-3.5 h-3.5 text-zinc-600 group-hover/link:text-purple-400 group-hover/link:translate-x-0.5 transition-all" />
+                        </button>
+                      </div>
+
+                      <div className="border-t border-white/10 mt-2 pt-2">
+                        <button
+                          onClick={() => {
+                            onNavigateServices?.();
+                            setIsServicesDropdownOpen(false);
+                          }}
+                          className="w-full px-3.5 py-2 text-left text-[11px] font-mono uppercase tracking-wider text-purple-400 hover:text-purple-300 hover:bg-purple-500/10 flex items-center justify-between transition-colors cursor-pointer"
+                        >
+                          <span>Services Overview</span>
+                          <ArrowRight className="w-3.5 h-3.5" />
+                        </button>
+                      </div>
+                    </div>
+                  </motion.div>
+                )}
+              </AnimatePresence>
+            </div>
+
             <button 
               onClick={onNavigateProducts} 
               className={`px-2.5 sm:px-3 lg:px-4 py-1.5 sm:py-2 text-xs sm:text-sm font-medium tracking-wide uppercase cursor-pointer select-none inline-flex items-center justify-center transition-colors duration-200 whitespace-nowrap ${
@@ -286,6 +405,20 @@ export function AppShell({
             onNavigatePortfolio={onNavigatePortfolio}
             onSubmitInquiry={onSubmitInquiry}
           />
+        ) : isServicesPage ? (
+          <ServicesPage
+            onOpenContactModal={onNavigateContact}
+            onNavigateAIDubbing={onNavigateAIDubbing}
+            onNavigateAIVideo={onNavigateAIVideo}
+            onNavigateWebDev={onNavigateWebDev}
+            onNavigateAudioSoftware={() => onNavigateAudioSoftware?.()}
+          />
+        ) : isAudioSoftwarePage ? (
+          <AudioSoftwarePage
+            onOpenContactModal={onNavigateContact}
+            onNavigateProducts={() => onNavigateProducts?.()}
+            onNavigateAudioPlugins={() => onNavigateAudioPlugins?.()}
+          />
         ) : isAudioPluginsPage ? (
           <AudioPluginsPage onOpenContactModal={onNavigateContact} />
         ) : isQFnBDemoPage ? (
@@ -352,7 +485,7 @@ export function AppShell({
               <X className="w-6 h-6" />
             </button>
 
-            <div className="flex flex-col gap-6 text-2xl font-bold tracking-tight text-white uppercase mt-8">
+            <div className="flex flex-col gap-5 text-xl sm:text-2xl font-bold tracking-tight text-white uppercase mt-6 overflow-y-auto max-h-[calc(100vh-220px)] pr-2">
               <button
                 onClick={() => {
                   onNavigateHome();
@@ -362,33 +495,88 @@ export function AppShell({
               >
                 Agency
               </button>
-              <button
-                onClick={() => {
-                  onNavigateAIDubbing();
-                  setIsMobileMenuOpen(false);
-                }}
-                className={`text-left py-2 border-b border-white/5 hover:text-purple-400 transition-colors ${isAIDubbingPage ? "text-purple-400 border-purple-500/20" : ""}`}
-              >
-                AI Dubbing
-              </button>
-              <button
-                onClick={() => {
-                  onNavigateAIVideo();
-                  setIsMobileMenuOpen(false);
-                }}
-                className={`text-left py-2 border-b border-white/5 hover:text-purple-400 transition-colors ${isAIVideoPage ? "text-purple-400 border-purple-500/20" : ""}`}
-              >
-                AI Video
-              </button>
-              <button
-                onClick={() => {
-                  onNavigateWebDev();
-                  setIsMobileMenuOpen(false);
-                }}
-                className={`text-left py-2 border-b border-white/5 hover:text-purple-400 transition-colors ${isWebDevPage ? "text-purple-400 border-purple-500/20" : ""}`}
-              >
-                Web Dev
-              </button>
+
+              {/* Mobile Services Accordion */}
+              <div className="border-b border-white/5 pb-2">
+                <button
+                  onClick={() => setIsMobileServicesOpen(prev => !prev)}
+                  className={`w-full text-left py-2 flex items-center justify-between hover:text-purple-400 transition-colors ${
+                    isAnyServiceActive ? "text-purple-400" : ""
+                  }`}
+                >
+                  <span>Services</span>
+                  <ChevronDown className={`w-5 h-5 transition-transform duration-200 ${isMobileServicesOpen ? "rotate-180 text-purple-400" : "text-zinc-500"}`} />
+                </button>
+
+                <AnimatePresence>
+                  {isMobileServicesOpen && (
+                    <motion.div
+                      initial={{ opacity: 0, height: 0 }}
+                      animate={{ opacity: 1, height: "auto" }}
+                      exit={{ opacity: 0, height: 0 }}
+                      transition={{ duration: 0.2 }}
+                      className="overflow-hidden flex flex-col gap-2 pt-2 pb-2 pl-3 border-l-2 border-purple-500/40 ml-1 text-sm font-medium"
+                    >
+                      <button
+                        onClick={() => {
+                          onNavigateServices?.();
+                          setIsMobileMenuOpen(false);
+                        }}
+                        className={`text-left py-1.5 transition-colors uppercase text-xs tracking-wider font-mono ${
+                          isServicesPage ? "text-purple-400 font-bold" : "text-zinc-400 hover:text-white"
+                        }`}
+                      >
+                        Services Overview →
+                      </button>
+                      <button
+                        onClick={() => {
+                          onNavigateAIDubbing();
+                          setIsMobileMenuOpen(false);
+                        }}
+                        className={`text-left py-1.5 transition-colors uppercase text-xs tracking-wide ${
+                          isAIDubbingPage ? "text-purple-400 font-bold" : "text-zinc-300 hover:text-white"
+                        }`}
+                      >
+                        AI Dubbing & Localization
+                      </button>
+                      <button
+                        onClick={() => {
+                          onNavigateAIVideo();
+                          setIsMobileMenuOpen(false);
+                        }}
+                        className={`text-left py-1.5 transition-colors uppercase text-xs tracking-wide ${
+                          isAIVideoPage ? "text-purple-400 font-bold" : "text-zinc-300 hover:text-white"
+                        }`}
+                      >
+                        AI Video
+                      </button>
+                      <button
+                        onClick={() => {
+                          onNavigateWebDev();
+                          setIsMobileMenuOpen(false);
+                        }}
+                        className={`text-left py-1.5 transition-colors uppercase text-xs tracking-wide ${
+                          isWebDevPage ? "text-purple-400 font-bold" : "text-zinc-300 hover:text-white"
+                        }`}
+                      >
+                        Web Development
+                      </button>
+                      <button
+                        onClick={() => {
+                          onNavigateAudioSoftware?.();
+                          setIsMobileMenuOpen(false);
+                        }}
+                        className={`text-left py-1.5 transition-colors uppercase text-xs tracking-wide ${
+                          isAudioSoftwarePage ? "text-purple-400 font-bold" : "text-zinc-300 hover:text-white"
+                        }`}
+                      >
+                        Audio Software & Plugin Dev
+                      </button>
+                    </motion.div>
+                  )}
+                </AnimatePresence>
+              </div>
+
               <button
                 onClick={() => {
                   onNavigateProducts?.();
@@ -404,7 +592,7 @@ export function AppShell({
                   onNavigateContact();
                   setIsMobileMenuOpen(false);
                 }}
-                className="mt-6 w-full py-4 text-center border border-purple-500/30 bg-purple-500/10 hover:bg-purple-600 hover:border-purple-600 text-white font-bold text-sm tracking-wider uppercase transition-all duration-300 cursor-pointer animate-fade-in"
+                className="mt-4 w-full py-4 text-center border border-purple-500/30 bg-purple-500/10 hover:bg-purple-600 hover:border-purple-600 text-white font-bold text-sm tracking-wider uppercase transition-all duration-300 cursor-pointer animate-fade-in"
               >
                 Start a Project
               </button>
