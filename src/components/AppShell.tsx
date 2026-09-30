@@ -187,8 +187,8 @@ export function AppShell({
             </button>
           </div>
 
-          {/* Center Navigation Links: Pure Text Color Transition, No Borders/Boxes */}
-          <div className="hidden md:flex items-center gap-1 sm:gap-1.5 lg:gap-3 absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 z-10 pointer-events-auto">
+          {/* Primary Navigation Links: aligned immediately before the project CTA on desktop/tablet */}
+          <div className="hidden md:flex items-center gap-1 sm:gap-1.5 lg:gap-3 ml-auto mr-3 sm:mr-4 lg:mr-6 z-10 pointer-events-auto">
             <button 
               onClick={onNavigateHome} 
               className={`px-2.5 sm:px-3 lg:px-4 py-1.5 sm:py-2 text-xs sm:text-sm font-medium tracking-wide uppercase cursor-pointer select-none inline-flex items-center justify-center transition-colors duration-200 whitespace-nowrap ${
