@@ -14,6 +14,7 @@ import { AudioPluginsPage } from "../pages/AudioPluginsPage";
 import { ProductsPage } from "../pages/ProductsPage";
 import { QFnBPage } from "../pages/QFnBPage";
 import { QFnBDemoPage, type QFnBDemoSubmissionData } from "../pages/QFnBDemoPage";
+import { QTransitionPage } from "../pages/QTransitionPage";
 import { ContactPage } from "../pages/ContactPage";
 import {
   PrivacyPolicy,
@@ -35,7 +36,7 @@ import {
 import type { PortfolioItem, SiteVideo } from "../lib/supabase";
 
 type AppShellProps = Readonly<{
-  currentPage: "home" | "services" | "ai-dubbing" | "ai-video" | "web-dev" | "audio-software" | "audio-plugins" | "products" | "q-fnb" | "q-fnb-demo" | "portfolio" | "admin" | "privacy" | "terms" | "cookies" | "contact";
+  currentPage: "home" | "services" | "ai-dubbing" | "ai-video" | "web-dev" | "audio-software" | "audio-plugins" | "products" | "q-fnb" | "q-fnb-demo" | "q-transition" | "portfolio" | "admin" | "privacy" | "terms" | "cookies" | "contact";
   isScrolled: boolean;
   isContactModalOpen: boolean;
   isAdmin: boolean;
@@ -56,6 +57,7 @@ type AppShellProps = Readonly<{
   onNavigateProducts?: () => void;
   onNavigateQFnB?: () => void;
   onNavigateQFnBDemo?: () => void;
+  onNavigateQTransition?: () => void;
   onNavigatePortfolio: () => void;
   onNavigateAdmin: () => void;
   onNavigatePrivacy: () => void;
@@ -108,6 +110,7 @@ export function AppShell({
   onNavigateProducts,
   onNavigateQFnB,
   onNavigateQFnBDemo,
+  onNavigateQTransition,
   onNavigatePortfolio,
   onNavigateAdmin,
   onNavigatePrivacy,
@@ -150,9 +153,10 @@ export function AppShell({
   const isAIVideoPage = currentPage === "ai-video";
   const isWebDevPage = currentPage === "web-dev";
   const isAudioPluginsPage = currentPage === "audio-plugins";
-  const isProductsPage = currentPage === "products" || currentPage === "q-fnb" || currentPage === "q-fnb-demo";
+  const isProductsPage = currentPage === "products" || currentPage === "q-fnb" || currentPage === "q-fnb-demo" || currentPage === "q-transition";
   const isQFnBPage = currentPage === "q-fnb";
   const isQFnBDemoPage = currentPage === "q-fnb-demo";
+  const isQTransitionPage = currentPage === "q-transition";
   const isContactPage = currentPage === "contact";
   const isLegalPage = ["privacy", "terms", "cookies"].includes(currentPage);
   const isAnyServiceActive = isServicesPage || isAIDubbingPage || isAIVideoPage || isWebDevPage || isAudioSoftwarePage;
@@ -432,11 +436,16 @@ export function AppShell({
             onNavigateProducts={() => onNavigateProducts?.()}
             onNavigateQFnBDemo={() => onNavigateQFnBDemo?.()}
           />
+        ) : isQTransitionPage ? (
+          <QTransitionPage
+            onNavigateProducts={() => onNavigateProducts?.()}
+          />
         ) : currentPage === "products" ? (
           <ProductsPage 
             onOpenContactModal={onNavigateContact}
             onNavigateQFnB={() => onNavigateQFnB?.()}
             onNavigateAudioPlugins={() => onNavigateAudioPlugins?.()}
+            onNavigateQTransition={() => onNavigateQTransition?.()}
           />
         ) : isAIDubbingPage ? (
           <AIDubbingPage 

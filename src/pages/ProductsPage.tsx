@@ -25,12 +25,14 @@ type ProductsPageProps = Readonly<{
   onOpenContactModal: () => void;
   onNavigateQFnB: () => void;
   onNavigateAudioPlugins: () => void;
+  onNavigateQTransition: () => void;
 }>;
 
 export function ProductsPage({
   onOpenContactModal,
   onNavigateQFnB,
   onNavigateAudioPlugins,
+  onNavigateQTransition,
 }: ProductsPageProps) {
   return (
     <div className="pt-28 sm:pt-36 bg-black min-h-screen">
@@ -282,6 +284,71 @@ export function ProductsPage({
                     className="inline-flex items-center gap-3 px-6 py-3.5 border border-white/20 bg-white/5 hover:bg-white hover:text-black text-white font-bold text-xs tracking-wider uppercase transition-all duration-300 cursor-pointer"
                   >
                     <span>EXPLORE Q HUMAN</span>
+                    <ArrowRight className="w-4 h-4" />
+                  </button>
+                </div>
+
+              </div>
+            </div>
+          </Reveal>
+
+          {/* PRODUCT 03: Q TRANSITION */}
+          <Reveal type="fade-up">
+            <div className="relative border border-white/10 bg-gradient-to-b from-zinc-950/80 to-black p-6 sm:p-10 lg:p-14 group hover:border-purple-500/40 transition-all duration-500 overflow-hidden">
+              <div className="absolute top-0 left-0 right-0 h-[2px] bg-gradient-to-r from-purple-600 via-cyan-500 to-transparent opacity-80" />
+
+              <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-12 items-center">
+
+                {/* Visual Column */}
+                <div className="lg:col-span-5 order-first">
+                  <div className="relative border border-white/10 bg-zinc-950 overflow-hidden">
+                    <img
+                      src="/images/q-transition/1.png"
+                      alt="Q Transition smart music player interface"
+                      className="w-full h-auto object-cover brightness-90 group-hover:brightness-100 transition-all duration-700"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
+                    <div className="absolute bottom-4 left-4 right-4 flex items-center justify-between font-mono text-xs text-zinc-300">
+                      <span className="px-2 py-0.5 bg-black/80 border border-white/10">SMART MUSIC PLAYER</span>
+                      <span className="text-purple-400">WINDOWS STANDALONE</span>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Copy Column */}
+                <div className="lg:col-span-7">
+                  <div className="flex items-center gap-3 mb-4">
+                    <span className="px-2.5 py-1 bg-purple-500/20 text-purple-300 font-mono text-xs uppercase tracking-wider border border-purple-500/30">
+                      NEW RELEASE
+                    </span>
+                    <span className="text-xs font-mono text-zinc-500 uppercase tracking-widest">
+                      INTELLIGENT TRANSITION TECHNOLOGY
+                    </span>
+                  </div>
+
+                  <h2 className="text-3xl sm:text-5xl font-extrabold text-white tracking-tight uppercase mb-4">
+                    Q TRANSITION
+                  </h2>
+
+                  <div className="text-lg sm:text-xl font-bold text-purple-300 tracking-tight uppercase mb-4">
+                    THE SMARTER WAY TO KEEP MUSIC MOVING.
+                  </div>
+
+                  <p className="text-zinc-400 text-base leading-relaxed mb-8 font-light max-w-xl">
+                    A smart desktop music player with intelligent track analysis and Smart Auto Cruise — built for DJs, events, venues and music lovers who want seamless continuous playback.
+                  </p>
+
+                  <div className="grid grid-cols-2 sm:grid-cols-3 gap-2 mb-8">
+                    {["DUAL DECK PLAYBACK", "WAVEFORM DISPLAY", "BPM ANALYSIS", "SMART AUTO CRUISE", "PLAYLIST & BROWSER", "VERSION 0.1"].map((f) => (
+                      <div key={f} className="px-2.5 py-1.5 bg-zinc-900/60 border border-white/5 text-[10px] font-mono text-zinc-400 uppercase tracking-widest">{f}</div>
+                    ))}
+                  </div>
+
+                  <button
+                    onClick={onNavigateQTransition}
+                    className="inline-flex items-center gap-3 px-8 py-4 bg-white text-black hover:bg-purple-500 hover:text-white font-bold text-xs sm:text-sm tracking-wider uppercase transition-all duration-300 cursor-pointer"
+                  >
+                    <span>EXPLORE Q TRANSITION</span>
                     <ArrowRight className="w-4 h-4" />
                   </button>
                 </div>

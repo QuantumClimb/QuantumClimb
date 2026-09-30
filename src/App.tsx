@@ -14,7 +14,7 @@ import type { EditablePortfolioItem, EditableSiteVideo } from "./sections/AdminS
 import type { InquirySubmissionData } from "./pages/ContactPage";
 import type { QFnBDemoSubmissionData } from "./pages/QFnBDemoPage";
 
-type PageView = "home" | "services" | "ai-dubbing" | "ai-video" | "web-dev" | "audio-software" | "audio-plugins" | "products" | "q-fnb" | "q-fnb-demo" | "portfolio" | "admin" | "privacy" | "terms" | "cookies" | "contact";
+type PageView = "home" | "services" | "ai-dubbing" | "ai-video" | "web-dev" | "audio-software" | "audio-plugins" | "products" | "q-fnb" | "q-fnb-demo" | "q-transition" | "portfolio" | "admin" | "privacy" | "terms" | "cookies" | "contact";
 
 function getCurrentPage(): PageView {
   if (globalThis.window === undefined) {
@@ -22,12 +22,12 @@ function getCurrentPage(): PageView {
   }
 
   const page = new URLSearchParams(globalThis.location.search).get("page");
-  if (["services", "ai-dubbing", "ai-video", "web-dev", "audio-software", "audio-plugins", "products", "q-fnb", "q-fnb-demo", "admin", "privacy", "terms", "cookies", "contact"].includes(page ?? "")) {
+  if (["services", "ai-dubbing", "ai-video", "web-dev", "audio-software", "audio-plugins", "products", "q-fnb", "q-fnb-demo", "q-transition", "admin", "privacy", "terms", "cookies", "contact"].includes(page ?? "")) {
     return page as PageView;
   }
 
   const pathname = globalThis.location.pathname.replace(/^\/+|\/+$/g, "").toLowerCase();
-  if (["services", "ai-dubbing", "ai-video", "web-dev", "audio-software", "audio-plugins", "products", "q-fnb", "q-fnb-demo", "admin", "privacy", "terms", "cookies", "contact"].includes(pathname)) {
+  if (["services", "ai-dubbing", "ai-video", "web-dev", "audio-software", "audio-plugins", "products", "q-fnb", "q-fnb-demo", "q-transition", "admin", "privacy", "terms", "cookies", "contact"].includes(pathname)) {
     return pathname as PageView;
   }
 
@@ -53,6 +53,10 @@ function getCurrentPage(): PageView {
 
   if (pathname === "products/q-fnb") {
     return "q-fnb";
+  }
+
+  if (pathname === "products/q-transition" || pathname === "q-transition") {
+    return "q-transition";
   }
 
   return "home";
@@ -774,6 +778,7 @@ Operation Details: ${data.message || "None provided"}`,
     onNavigateProducts: () => navigateToPage("products"),
     onNavigateQFnB: () => navigateToPage("q-fnb"),
     onNavigateQFnBDemo: () => navigateToPage("q-fnb-demo"),
+    onNavigateQTransition: () => navigateToPage("q-transition"),
     onNavigatePortfolio: () => navigateToPage("portfolio"),
     onNavigateAdmin: () => navigateToPage("admin"),
     onNavigatePrivacy: () => navigateToPage("privacy"),
