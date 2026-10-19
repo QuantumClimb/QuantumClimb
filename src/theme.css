@@ -132,6 +132,11 @@
   --color-indigo-950: #eef0ff;
 }
 
+/* Keep the shared header crisp white in light mode at every scroll position. */
+[data-theme="light"] .qc-site-header {
+  background-color: #ffffff;
+}
+
 /* ===========================================================================
    Scoped Dark Zones inside Light Theme (e.g. Cinematic Hero Banners)
    ======================================================================== */

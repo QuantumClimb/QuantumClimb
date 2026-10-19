@@ -168,7 +168,7 @@ export function AppShell({
         <div className="absolute inset-0" style={{ backgroundImage: "linear-gradient(to right, white 1px, transparent 1px), linear-gradient(to bottom, white 1px, transparent 1px)", backgroundSize: "40px 40px" }}></div>
       </div>
 
-      <nav className={`fixed top-0 left-0 right-0 z-50 transition-colors duration-300 border-b ${isScrolled ? "bg-black/90 backdrop-blur-md border-white/10" : "bg-black/40 backdrop-blur-sm border-white/5"} h-[84px] sm:h-[96px] flex items-center`}>
+      <nav className={`qc-site-header fixed top-0 left-0 right-0 z-50 transition-colors duration-300 border-b ${isScrolled ? "bg-black/90 backdrop-blur-md border-white/10" : "bg-black/40 backdrop-blur-sm border-white/5"} h-[84px] sm:h-[96px] flex items-center`}>
         <div className="w-full px-6 sm:px-10 lg:px-12 relative flex items-center justify-between h-full">
           {/* Left Brand / Logo: Visible on all pages with explicit stable dimensions */}
           <div className="flex items-center z-10 flex-shrink-0">

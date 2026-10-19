@@ -157,11 +157,11 @@ export function HomePage({
               </span>
             </Reveal>
 
-            <Reveal type="fade-up" className="mb-8 flex justify-center">
+            <Reveal type="fade-up" className="mb-2 flex justify-center">
               <img 
                 src="/images/qclogo.png" 
                 alt="Quantum Climb Logo" 
-                className="max-w-[320px] md:max-w-[480px] w-full h-auto object-contain mx-auto" 
+                className="max-w-[260px] md:max-w-[360px] w-full h-auto object-contain mx-auto"
                 referrerPolicy="no-referrer"
               />
             </Reveal>

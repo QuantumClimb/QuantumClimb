@@ -78,7 +78,7 @@ export function ServicesPage({
   ];
 
   return (
-    <div className="pt-28 sm:pt-36 bg-black min-h-screen text-zinc-300">
+    <div className="pt-[84px] sm:pt-[96px] bg-black min-h-screen text-zinc-300">
       {/* Background Ambience */}
       <div className="fixed inset-0 pointer-events-none z-0 opacity-[0.03]">
         <div 
