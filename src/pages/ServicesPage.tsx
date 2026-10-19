@@ -91,7 +91,7 @@ export function ServicesPage({
       </div>
 
       {/* Hero Section */}
-      <section className="relative border-b border-white/10 overflow-hidden bg-black group z-10">
+      <section data-theme="dark" className="relative border-b border-white/10 overflow-hidden bg-black group z-10">
         {/* Background Visual and Overlays */}
         <div className="absolute inset-0 z-0">
           <div className="absolute inset-0 bg-gradient-to-b from-black/80 via-zinc-950/60 to-black z-10" />
@@ -198,9 +198,8 @@ export function ServicesPage({
                       <img 
                         src={service.image} 
                         alt={service.title} 
-                        className="w-full h-full object-cover brightness-90 group-hover/img:scale-105 transition-transform duration-700"
+                        className="w-full h-full object-cover group-hover/img:scale-105 transition-transform duration-700"
                       />
-                      <div className="absolute inset-0 bg-gradient-to-t from-black via-black/20 to-transparent opacity-60" />
                       
                       <div className="absolute bottom-4 left-4 right-4 flex items-center justify-between font-mono text-xs text-zinc-300">
                         <span className="px-2 py-0.5 bg-black/80 border border-white/10 flex items-center gap-1.5">

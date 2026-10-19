@@ -61,15 +61,13 @@ export function ProjectModal({ project, onClose }: ProjectModalProps) {
             <img 
               src={project.thumbnail_url} 
               alt={project.title} 
-              className="w-full h-full object-cover opacity-60 group-hover:opacity-80 transition-opacity duration-700" 
+              className="w-full h-full object-cover transition-opacity duration-700" 
             />
           ) : (
             <div className="w-full h-full flex items-center justify-center opacity-30">
               <Globe className="w-24 h-24" />
             </div>
           )}
-          
-          <div className="absolute inset-0 bg-gradient-to-t from-zinc-950 via-zinc-950/20 to-transparent" />
           
           {/* Logo overlay */}
           {logoUrl && (

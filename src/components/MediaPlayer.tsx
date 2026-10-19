@@ -19,7 +19,7 @@ export function MediaPlayer({ videos }: { videos: SiteVideo[] }) {
   const videoId = selectedVideo?.video_url ? extractYouTubeVideoId(selectedVideo.video_url) : null;
 
   return (
-    <div ref={playerRef} className="bg-black border border-white/10 overflow-hidden scroll-mt-24">
+    <div ref={playerRef} data-theme="dark" className="bg-black border border-white/10 overflow-hidden scroll-mt-24">
       <div className="grid grid-cols-1 lg:grid-cols-[1fr_320px] gap-0 h-full">
         {/* Main Video Player */}
         <div className="flex flex-col">

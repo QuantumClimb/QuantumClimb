@@ -42,8 +42,10 @@
   }
 
   body {
-    @apply font-sans bg-white text-text-body antialiased selection:bg-primary selection:text-white;
+    @apply font-sans antialiased;
     line-height: 1.6;
+    background-color: var(--bg-primary);
+    color: var(--text-secondary);
     background-image:
       linear-gradient(to right, rgba(0, 0, 0, 0.02) 1px, transparent 1px),
       linear-gradient(to bottom, rgba(0, 0, 0, 0.02) 1px, transparent 1px);
@@ -131,7 +133,7 @@
 
 /* Custom Scrollbar Styles (Quantum Climb Theme) */
 html {
-  scrollbar-color: #4A00E0 #050307;
+  scrollbar-color: var(--scrollbar-thumb) var(--scrollbar-track);
   scrollbar-width: thin;
 }
 
@@ -141,19 +143,15 @@ html {
 }
 
 ::-webkit-scrollbar-track {
-  background: #050307;
-  /* Dark background matching the page theme */
+  background: var(--scrollbar-track);
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #4A00E0;
-  /* Quantum Climb primary purple */
+  background: var(--scrollbar-thumb);
   border-radius: 5px;
-  border: 2px solid #050307;
-  /* Creates spacing inside the track */
+  border: 2px solid var(--scrollbar-track);
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #6200ff;
-  /* Lighter purple accent on hover */
+  background: var(--scrollbar-thumb-hover);
 }

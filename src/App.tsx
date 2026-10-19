@@ -22,12 +22,12 @@ function getCurrentPage(): PageView {
   }
 
   const page = new URLSearchParams(globalThis.location.search).get("page");
-  if (["services", "ai-dubbing", "ai-video", "web-dev", "audio-software", "audio-plugins", "products", "q-fnb", "q-fnb-demo", "q-transition", "admin", "privacy", "terms", "cookies", "contact"].includes(page ?? "")) {
+  if (["services", "ai-dubbing", "ai-video", "web-dev", "audio-software", "audio-plugins", "products", "q-fnb", "q-fnb-demo", "q-transition", "portfolio", "admin", "privacy", "terms", "cookies", "contact"].includes(page ?? "")) {
     return page as PageView;
   }
 
   const pathname = globalThis.location.pathname.replace(/^\/+|\/+$/g, "").toLowerCase();
-  if (["services", "ai-dubbing", "ai-video", "web-dev", "audio-software", "audio-plugins", "products", "q-fnb", "q-fnb-demo", "q-transition", "admin", "privacy", "terms", "cookies", "contact"].includes(pathname)) {
+  if (["services", "ai-dubbing", "ai-video", "web-dev", "audio-software", "audio-plugins", "products", "q-fnb", "q-fnb-demo", "q-transition", "portfolio", "admin", "privacy", "terms", "cookies", "contact"].includes(pathname)) {
     return pathname as PageView;
   }
 

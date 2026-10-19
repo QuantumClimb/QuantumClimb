@@ -1,15 +1,15 @@
 import { Reveal } from "../components/Reveal";
 import { TechCanvas } from "../components/TechCanvas";
 import { FinalCTA } from "../sections/ClosureSections";
-import { 
-  ArrowRight, 
-  Sliders, 
-  Cpu, 
-  Activity, 
-  Layers, 
-  Music, 
-  Disc, 
-  Sparkles, 
+import {
+  ArrowRight,
+  Sliders,
+  Cpu,
+  Activity,
+  Layers,
+  Music,
+  Disc,
+  Sparkles,
   ArrowUpRight,
   ExternalLink,
   Zap,
@@ -59,24 +59,24 @@ export function AudioSoftwarePage({
     <div className="pt-28 sm:pt-36 bg-black min-h-screen text-zinc-300">
       {/* Background Ambience */}
       <div className="fixed inset-0 pointer-events-none z-0 opacity-[0.03]">
-        <div 
-          className="absolute inset-0" 
-          style={{ 
-            backgroundImage: "linear-gradient(to right, white 1px, transparent 1px), linear-gradient(to bottom, white 1px, transparent 1px)", 
-            backgroundSize: "40px 40px" 
-          }} 
+        <div
+          className="absolute inset-0"
+          style={{
+            backgroundImage: "linear-gradient(to right, white 1px, transparent 1px), linear-gradient(to bottom, white 1px, transparent 1px)",
+            backgroundSize: "40px 40px"
+          }}
         />
       </div>
 
       {/* Hero Section */}
-      <section className="relative border-b border-white/10 overflow-hidden bg-black group z-10">
+      <section data-theme="dark" className="relative border-b border-white/10 overflow-hidden bg-black group z-10">
         <div className="absolute inset-0 z-0">
           <div className="absolute inset-0 bg-gradient-to-b from-black/80 via-zinc-950/60 to-black z-10" />
           <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_left_center,_var(--tw-gradient-stops))] from-black/90 via-black/60 to-transparent z-10" />
           <div className="absolute inset-0 bg-gradient-to-r from-purple-950/20 via-transparent to-zinc-950/20 pointer-events-none z-10" />
-          <img 
-            src="/images/Audio plugins/qhuman_cover1.png" 
-            alt="Audio Software & Plugin Development" 
+          <img
+            src="/images/Audio plugins/qhuman_cover1.png"
+            alt="Audio Software & Plugin Development"
             className="w-full h-full object-cover opacity-20 brightness-110"
             referrerPolicy="no-referrer"
           />
@@ -196,12 +196,11 @@ export function AudioSoftwarePage({
                 {/* Visual */}
                 <div className="lg:col-span-5 order-2 lg:order-1">
                   <div className="relative border border-white/10 bg-zinc-950 overflow-hidden aspect-video sm:aspect-[4/3] flex items-center justify-center">
-                    <img 
-                      src="/images/Audio plugins/qhuman_cover4.png" 
-                      alt="Q HUMAN Vocal Humanization Environment" 
-                      className="w-full h-full object-cover brightness-95 group-hover:scale-105 transition-transform duration-700"
+                    <img
+                      src="/images/Audio plugins/qhuman_cover4.png"
+                      alt="Q HUMAN Vocal Humanization Environment"
+                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
                     />
-                    <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent opacity-60" />
                     <div className="absolute bottom-4 left-4 right-4 flex items-center justify-between font-mono text-xs text-zinc-300">
                       <span className="px-2 py-0.5 bg-black/80 border border-white/10">PROPRIETARY PRODUCT</span>
                       <span className="text-purple-400">VST3 ARCHITECTURE</span>
@@ -290,8 +289,8 @@ export function AudioSoftwarePage({
                         <div className="text-[10px] text-zinc-500 uppercase">SMART TRANSITION MATRIX</div>
                         <div className="h-6 flex items-center gap-1 mt-2">
                           {[40, 65, 80, 100, 75, 90, 85, 95, 60, 70, 85, 95, 80, 60].map((h, i) => (
-                            <span 
-                              key={i} 
+                            <span
+                              key={i}
                               className="flex-1 bg-gradient-to-t from-purple-600 to-indigo-400"
                               style={{ height: `${h}%` }}
                             />

@@ -133,7 +133,7 @@ export function HomePage({
   return (
     <div className="relative overflow-x-hidden">
       {/* 1. HERO SECTION */}
-      <section className="relative min-h-[85vh] flex items-center justify-center overflow-hidden border-b border-white/5 bg-black">
+      <section data-theme="dark" className="relative min-h-[85vh] flex items-center justify-center overflow-hidden border-b border-white/5 bg-black">
         {/* Full-width Background Image */}
         <div className="absolute inset-0 z-0">
           <div className="absolute inset-0 bg-gradient-to-b from-black/80 via-black/20 to-black z-10"></div>
@@ -210,7 +210,6 @@ export function HomePage({
                 >
                   {/* Image Container */}
                   <div className="aspect-video w-full overflow-hidden bg-zinc-900 border-b border-white/5 relative">
-                    <div className="absolute inset-0 bg-black/20 group-hover:bg-black/0 transition-colors duration-500 z-10"></div>
                     <img 
                       src={project.image} 
                       alt={project.title} 

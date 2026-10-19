@@ -289,10 +289,10 @@ export function WebDevPage({ onOpenContactModal, items = [], isLoading = false }
   };
 
   return (
-    <div className="relative overflow-x-hidden bg-[#050307] text-zinc-300">
+    <div className="relative overflow-x-hidden bg-[var(--bg-primary)] text-zinc-300">
       
       {/* 01 — HERO */}
-      <section className="relative min-h-[85vh] flex items-center justify-center overflow-hidden border-b border-white/5 bg-black pt-28 md:pt-0">
+      <section data-theme="dark" className="relative min-h-[85vh] flex items-center justify-center overflow-hidden border-b border-white/5 bg-black pt-28 md:pt-0">
         {/* Full-width Background Image */}
         <div className="absolute inset-0 z-0">
           <div className="absolute inset-0 bg-gradient-to-b from-black/85 via-black/35 to-black z-10"></div>
@@ -350,11 +350,6 @@ export function WebDevPage({ onOpenContactModal, items = [], isLoading = false }
 
       {/* 02 — FEATURED PROJECT */}
       <section id="featured-project" className="py-16 md:py-24 border-b border-white/5 bg-zinc-950/20 relative">
-        {/* Supporting backdrop */}
-        <div className="absolute inset-0 z-0 pointer-events-none opacity-25">
-          <img src="/images/webdev/editorial%20image%20placement.png" alt="Featured workspace preview" className="w-full h-full object-cover" />
-          <div className="absolute inset-0 bg-gradient-to-t from-zinc-950 via-zinc-950 to-transparent"></div>
-        </div>
 
         <div className="container mx-auto px-6 relative z-10">
           <div className="max-w-6xl mx-auto">
@@ -376,10 +371,9 @@ export function WebDevPage({ onOpenContactModal, items = [], isLoading = false }
                   <img 
                     src={project.thumbnail_url || "/images/webdev/editorial%20image%20placement.png"} 
                     alt={project.title} 
-                    className="w-full h-auto opacity-85 group-hover:opacity-100 group-hover:scale-102 transition-all duration-700 block"
+                    className="w-full h-auto group-hover:scale-102 transition-all duration-700 block"
                     referrerPolicy="no-referrer"
                   />
-                  <div className="absolute inset-0 bg-gradient-to-t from-zinc-950/40 to-transparent pointer-events-none"></div>
                 </div>
 
                 {/* Right project info */}
@@ -469,10 +463,9 @@ export function WebDevPage({ onOpenContactModal, items = [], isLoading = false }
                           <img 
                             src={project.thumbnail_url || "/images/webdev/editorial%20image%20placement.png"} 
                             alt={project.title} 
-                            className="w-full h-auto opacity-85 group-hover:opacity-100 group-hover:scale-102 transition-all duration-700 block"
+                            className="w-full h-auto group-hover:scale-102 transition-all duration-700 block"
                             referrerPolicy="no-referrer"
                           />
-                          <div className="absolute inset-0 bg-gradient-to-t from-zinc-950/50 to-transparent pointer-events-none"></div>
                         </div>
 
                         {/* Card metadata */}
@@ -518,10 +511,9 @@ export function WebDevPage({ onOpenContactModal, items = [], isLoading = false }
               <img 
                 src="/images/webdev/what%20we%20build.png" 
                 alt="Capabilities visual artwork" 
-                className="w-full h-full object-cover opacity-85"
+                className="w-full h-full object-cover" 
                 referrerPolicy="no-referrer"
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent"></div>
             </div>
 
             {/* Details details */}
@@ -567,10 +559,9 @@ export function WebDevPage({ onOpenContactModal, items = [], isLoading = false }
                 <img 
                   src={displayWebsites[1].thumbnail_url || "/images/webdev/portfolio%20empty_transition%20image.png"} 
                   alt={displayWebsites[1].title} 
-                  className="w-full h-auto opacity-85 group-hover:opacity-100 group-hover:scale-101 transition-all duration-700 block"
+                  className="w-full h-auto group-hover:scale-101 transition-all duration-700 block"
                   referrerPolicy="no-referrer"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent pointer-events-none"></div>
               </div>
 
               <div className="flex flex-col md:flex-row md:items-start justify-between gap-6 pt-4 w-full">
@@ -626,10 +617,9 @@ export function WebDevPage({ onOpenContactModal, items = [], isLoading = false }
               <img 
                 src="/images/webdev/not%20just%20a%20website.png" 
                 alt="Designed engineered evolving physical system" 
-                className="w-full h-full object-cover opacity-85"
+                className="w-full h-full object-cover" 
                 referrerPolicy="no-referrer"
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent"></div>
             </div>
 
           </div>
@@ -658,9 +648,8 @@ export function WebDevPage({ onOpenContactModal, items = [], isLoading = false }
                         <img 
                           src={project.thumbnail_url || "/images/webdev/editorial%20image%20placement.png"} 
                           alt={project.title} 
-                          className="w-full h-auto opacity-85 group-hover:scale-102 transition-transform duration-700 block"
+                          className="w-full h-auto group-hover:scale-102 transition-transform duration-700 block"
                         />
-                        <div className="absolute inset-0 bg-gradient-to-t from-zinc-950/50 to-transparent pointer-events-none"></div>
                       </div>
                       <div className="p-6 space-y-2">
                         <span className="text-[9px] font-mono text-zinc-500 uppercase tracking-widest block">{getProjectTag(project).toUpperCase()}</span>

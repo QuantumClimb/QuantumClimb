@@ -1,4 +1,4 @@
-﻿import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "motion/react";
 import {
   ArrowRight, Play, ShoppingCart, ChevronDown,
@@ -136,7 +136,7 @@ export function QTransitionPage({ onNavigateProducts }: QTransitionPageProps) {
       <div className="bg-black text-zinc-300 min-h-screen overflow-x-hidden">
 
         {/* S1: HERO */}
-        <section id="qt-hero" className="relative min-h-screen flex items-center justify-center overflow-hidden bg-black" aria-label="Q Transition hero">
+        <section id="qt-hero" data-theme="dark" className="relative min-h-screen flex items-center justify-center overflow-hidden bg-black" aria-label="Q Transition hero">
           <div ref={heroImgRef} className="absolute inset-0 scale-110 will-change-transform">
             <img src="/images/q-transition/qt-hero-windowed.png" alt="Q Transition application interface" className="w-full h-full object-cover object-center" loading="eager" />
             <div className="absolute inset-0 bg-gradient-to-b from-black/80 via-black/55 to-black/95" />
@@ -234,7 +234,7 @@ export function QTransitionPage({ onNavigateProducts }: QTransitionPageProps) {
         </section>
 
         {/* S3: SMART AUTO CRUISE */}
-        <section id="qt-auto-cruise" className="relative py-28 sm:py-40 overflow-hidden bg-zinc-950 border-t border-white/5">
+        <section id="qt-auto-cruise" data-theme="dark" className="relative py-28 sm:py-40 overflow-hidden bg-zinc-950 border-t border-white/5">
           <div className="absolute inset-0 pointer-events-none"><div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[700px] rounded-full bg-purple-600/[0.05] blur-[120px]" /></div>
           <div className="px-6 sm:px-10 lg:px-12 max-w-7xl mx-auto">
             <Reveal type="fade-up"><div className="text-center mb-6"><span className="px-3 py-1 bg-purple-500/10 border border-purple-500/30 text-purple-400 text-xs font-mono tracking-widest uppercase">THE FEATURE THAT CHANGES THE EXPERIENCE</span></div></Reveal>
@@ -328,7 +328,7 @@ export function QTransitionPage({ onNavigateProducts }: QTransitionPageProps) {
         </section>
 
         {/* S5: INTERFACE SHOWCASE */}
-        <section id="qt-interface" className="relative bg-zinc-950 border-t border-white/5 py-28 sm:py-40 overflow-hidden">
+        <section id="qt-interface" data-theme="dark" className="relative bg-zinc-950 border-t border-white/5 py-28 sm:py-40 overflow-hidden">
           <div className="absolute inset-0 pointer-events-none opacity-[0.025]" style={{ backgroundImage: "linear-gradient(to right, white 1px, transparent 1px), linear-gradient(to bottom, white 1px, transparent 1px)", backgroundSize: "40px 40px" }} />
           <div className="px-6 sm:px-10 lg:px-12 max-w-[1600px] mx-auto">
             <Reveal type="fade-up">
@@ -508,7 +508,7 @@ export function QTransitionPage({ onNavigateProducts }: QTransitionPageProps) {
         </section>
 
         {/* S10: VIDEO */}
-        <section id="qt-video" className="relative py-28 sm:py-40 bg-black border-t border-white/5 overflow-hidden">
+        <section id="qt-video" data-theme="dark" className="relative py-28 sm:py-40 bg-black border-t border-white/5 overflow-hidden">
           <div className="absolute inset-0 pointer-events-none"><div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] rounded-full bg-purple-800/[0.06] blur-[100px]" /></div>
           <div className="px-6 sm:px-10 lg:px-12 max-w-5xl mx-auto text-center">
             <Reveal type="fade-up">
@@ -628,7 +628,7 @@ export function QTransitionPage({ onNavigateProducts }: QTransitionPageProps) {
         </section>
 
         {/* S13: FINAL CTA */}
-        <section id="qt-final-cta" className="relative min-h-[85vh] flex flex-col items-center justify-center text-center py-40 border-t border-white/5 overflow-hidden bg-black">
+        <section id="qt-final-cta" data-theme="dark" className="relative min-h-[85vh] flex flex-col items-center justify-center text-center py-40 border-t border-white/5 overflow-hidden bg-black">
           <div className="absolute inset-0 scale-110">
             <img src="/images/q-transition/qt-hero-windowed.png" alt="" aria-hidden="true" className="w-full h-full object-cover object-center opacity-[0.12]" loading="lazy" />
             <div className="absolute inset-0 bg-gradient-to-b from-black/70 via-black/65 to-black" />

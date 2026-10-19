@@ -1428,7 +1428,7 @@ export function ContactPage({ onOpenContactModal, onNavigateHome, onNavigatePort
   );
 
   return (
-    <div className="relative bg-[#050307] min-h-screen pt-24 md:pt-40 pb-16 md:pb-24 overflow-hidden text-zinc-300 selection:bg-purple-600 selection:text-white">
+    <div className="relative bg-[var(--bg-primary)] min-h-screen pt-24 md:pt-40 pb-16 md:pb-24 overflow-hidden text-zinc-300 selection:bg-purple-600 selection:text-white">
       {/* Subtle grid backdrop */}
       <div className="absolute inset-0 pointer-events-none opacity-30 z-0">
         <div className="absolute inset-0" style={{ backgroundImage: "linear-gradient(to right, rgba(255,255,255,0.015) 1px, transparent 1px), linear-gradient(to bottom, rgba(255,255,255,0.015) 1px, transparent 1px)", backgroundSize: "40px 40px" }}></div>

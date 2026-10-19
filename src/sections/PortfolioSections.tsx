@@ -453,14 +453,14 @@ export function WebsiteLinksSection({ items, isLoading }: PortfolioListProps) {
 
 export function PortfolioFooter() {
   return (
-    <footer className="border-t border-white/10 bg-black/70">
-      <div className="mx-auto flex max-w-7xl flex-col gap-4 px-6 py-8 text-sm text-zinc-500 md:flex-row md:items-center md:justify-between">
-        <p>Quantum Climb Portfolio</p>
+    <footer className="border-t border-[var(--border-primary)] bg-[var(--bg-secondary)] transition-colors">
+      <div className="mx-auto flex max-w-7xl flex-col gap-4 px-6 py-8 text-sm text-[var(--text-secondary)] md:flex-row md:items-center md:justify-between">
+        <p className="font-medium text-[var(--text-primary)]">Quantum Climb Portfolio</p>
         <div className="flex flex-wrap gap-4">
-          <a href="#video-gallery" className="hover:text-white">Video</a>
-          <a href="#image-gallery" className="hover:text-white">Images</a>
-          <a href="#music-player" className="hover:text-white">Music</a>
-          <a href="#websites" className="hover:text-white">Websites</a>
+          <a href="#video-gallery" className="text-[var(--text-secondary)] hover:text-[var(--text-primary)] transition-colors">Video</a>
+          <a href="#image-gallery" className="text-[var(--text-secondary)] hover:text-[var(--text-primary)] transition-colors">Images</a>
+          <a href="#music-player" className="text-[var(--text-secondary)] hover:text-[var(--text-primary)] transition-colors">Music</a>
+          <a href="#websites" className="text-[var(--text-secondary)] hover:text-[var(--text-primary)] transition-colors">Websites</a>
         </div>
       </div>
     </footer>

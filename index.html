@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" data-theme="dark">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -16,6 +16,22 @@
     <meta name="author" content="Quantum Climb" />
     <meta name="robots" content="index, follow" />
     <meta name="theme-color" content="#0a0a0a" />
+    <script>
+      /* Resolve the saved theme before first paint (no flash). Default: dark. */
+      (function () {
+        var root = document.documentElement;
+        var theme = "dark";
+        try {
+          var saved = window.localStorage.getItem("theme");
+          if (saved === "light" || saved === "dark") theme = saved;
+        } catch (e) {}
+        root.setAttribute("data-theme", theme);
+        root.style.colorScheme = theme;
+        root.style.backgroundColor = theme === "light" ? "#ffffff" : "#0a0a0a";
+        var meta = document.querySelector('meta[name="theme-color"]');
+        if (meta) meta.setAttribute("content", theme === "light" ? "#ffffff" : "#0a0a0a");
+      })();
+    </script>
     <meta name="application-name" content="Quantum Climb" />
     <link rel="icon" type="image/x-icon" href="/favicon.ico" />
     <link rel="apple-touch-icon" href="/logo.png" />

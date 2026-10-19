@@ -35,7 +35,7 @@ export function ProductsPage({
   onNavigateQTransition,
 }: ProductsPageProps) {
   return (
-    <div className="pt-28 sm:pt-36 bg-black min-h-screen">
+    <div className="bg-[var(--bg-primary)] min-h-screen">
       {/* Background Ambience */}
       <div className="fixed inset-0 pointer-events-none z-0 opacity-[0.03]">
         <div 
@@ -48,7 +48,7 @@ export function ProductsPage({
       </div>
 
       {/* Hero Section with Futuristic AI Control Room Background */}
-      <section className="relative border-b border-white/10 overflow-hidden bg-black group z-10">
+      <section data-theme="dark" className="relative border-b border-white/10 overflow-hidden bg-black group z-10 pt-28 sm:pt-36">
         {/* Background Banner Image */}
         <div 
           className="absolute inset-0 bg-cover bg-center bg-no-repeat transition-transform duration-1000 scale-105 group-hover:scale-100"
@@ -246,9 +246,8 @@ export function ProductsPage({
                     <img 
                       src="/images/Audio plugins/qhuman_cover4.png" 
                       alt="Q HUMAN Vocal Humanization Technology" 
-                      className="w-full h-full object-cover brightness-95 group-hover:scale-105 transition-transform duration-700"
+                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
                     />
-                    <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent opacity-60" />
                     <div className="absolute bottom-4 left-4 right-4 flex items-center justify-between font-mono text-xs text-zinc-300">
                       <span className="px-2 py-0.5 bg-black/80 border border-white/10">VST3 AUDIO PLUGIN</span>
                       <span className="text-purple-400">WINDOWS 64-BIT</span>
@@ -305,9 +304,8 @@ export function ProductsPage({
                     <img
                       src="/images/q-transition/1.png"
                       alt="Q Transition smart music player interface"
-                      className="w-full h-auto object-cover brightness-90 group-hover:brightness-100 transition-all duration-700"
+                      className="w-full h-auto object-cover transition-all duration-700"
                     />
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
                     <div className="absolute bottom-4 left-4 right-4 flex items-center justify-between font-mono text-xs text-zinc-300">
                       <span className="px-2 py-0.5 bg-black/80 border border-white/10">SMART MUSIC PLAYER</span>
                       <span className="text-purple-400">WINDOWS STANDALONE</span>

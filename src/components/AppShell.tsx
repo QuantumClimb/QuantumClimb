@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { AnimatePresence, motion } from "motion/react";
 import { Menu, X, ChevronDown, ChevronRight, ArrowRight } from "lucide-react";
 import { ContactModal } from "./ContactModal";
+import { ThemeToggle } from "./ThemeToggle";
 import { WhatsAppWidget } from "./WhatsAppWidget";
 import { Footer } from "../sections/ClosureSections";
 import { HomePage } from "../pages/HomePage";
@@ -163,7 +164,7 @@ export function AppShell({
 
   return (
     <div className="min-h-screen bg-black text-zinc-300 selection:bg-purple-600 selection:text-white">
-      <div className="fixed inset-0 pointer-events-none z-0 opacity-[0.03]">
+      <div className="qc-grid-overlay fixed inset-0 pointer-events-none z-0 opacity-[0.03]">
         <div className="absolute inset-0" style={{ backgroundImage: "linear-gradient(to right, white 1px, transparent 1px), linear-gradient(to bottom, white 1px, transparent 1px)", backgroundSize: "40px 40px" }}></div>
       </div>
 
@@ -351,12 +352,20 @@ export function AppShell({
 
           {/* Right Action CTA & Mobile Toggle */}
           <div className="flex items-center gap-3 z-10 flex-shrink-0">
+            <div className="hidden md:block flex-shrink-0">
+              <ThemeToggle />
+            </div>
+
             <button 
               onClick={onNavigateContact} 
               className="hidden md:block px-4 py-2 border border-purple-500/30 bg-purple-500/10 hover:bg-purple-600 hover:border-purple-600 text-white font-semibold text-xs tracking-wider uppercase transition-all duration-300 cursor-pointer flex-shrink-0"
             >
               Start a Project
             </button>
+
+            <div className="md:hidden flex-shrink-0">
+              <ThemeToggle variant="compact" />
+            </div>
 
             <button
               onClick={() => setIsMobileMenuOpen(true)}
@@ -607,7 +616,8 @@ export function AppShell({
               </button>
             </div>
 
-            <div className="border-t border-white/5 pt-6 text-center text-xs font-mono text-zinc-500">
+            <div className="flex flex-col items-center gap-4 border-t border-white/5 pt-6 text-center text-xs font-mono text-zinc-500">
+              <ThemeToggle variant="menu" />
               <p className="uppercase tracking-widest mb-1">QUANTUM CLIMB</p>
               <p>AI-Powered Digital Products, Media & Experiences</p>
             </div>

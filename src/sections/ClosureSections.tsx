@@ -86,46 +86,46 @@ export function FinalCTA({ onContactClick }: Readonly<ContactActionProps>) {
 
 export function Footer({ onAdminClick, onPrivacyClick, onTermsClick, onCookiesClick }: { onAdminClick: () => void; onPrivacyClick: () => void; onTermsClick: () => void; onCookiesClick: () => void }) {
   return (
-    <footer className="py-24 bg-black border-t border-white/5">
+    <footer className="py-24 bg-[var(--bg-secondary)] border-t border-[var(--border-primary)] transition-colors">
       <div className="container mx-auto px-6">
         <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-16 mb-24">
           <div>
-            <div className="text-2xl font-bold tracking-tighter text-white mb-8">QUANTUM CLIMB</div>
-            <p className="text-zinc-500 text-sm leading-relaxed mb-10">
+            <div className="text-2xl font-bold tracking-tighter text-[var(--text-primary)] mb-8">QUANTUM CLIMB</div>
+            <p className="text-[var(--text-secondary)] text-sm leading-relaxed mb-10">
               The enterprise standard for AI video localization and interactive conversational humans. Built for scale.
             </p>
             <div className="flex gap-6">
-              <span className="text-zinc-500 transition-colors">X</span>
-              <a href="https://www.linkedin.com/in/quantumclimb/" target="_blank" rel="noreferrer" className="text-zinc-500 hover:text-white transition-colors">LinkedIn</a>
-              <a href="https://www.instagram.com/quantum.climb?igsh=MTNpbmV5OWJrdG84dQ==" target="_blank" rel="noreferrer" className="text-zinc-500 hover:text-white transition-colors">Instagram</a>
+              <span className="text-[var(--text-muted)] transition-colors">X</span>
+              <a href="https://www.linkedin.com/in/quantumclimb/" target="_blank" rel="noreferrer" className="text-[var(--text-muted)] hover:text-[var(--text-primary)] transition-colors">LinkedIn</a>
+              <a href="https://www.instagram.com/quantum.climb?igsh=MTNpbmV5OWJrdG84dQ==" target="_blank" rel="noreferrer" className="text-[var(--text-muted)] hover:text-[var(--text-primary)] transition-colors">Instagram</a>
             </div>
           </div>
           <div>
-            <h4 className="text-white font-medium mb-8">India Office</h4>
-            <ul className="space-y-4 text-xs text-zinc-500 leading-relaxed">
+            <h4 className="text-[var(--text-primary)] font-semibold mb-8">India Office</h4>
+            <ul className="space-y-4 text-xs text-[var(--text-secondary)] leading-relaxed">
               <li>DLF Garden City</li>
-              <li className="text-purple-600 font-medium">+91 98840 50857</li>
+              <li className="text-purple-600 font-semibold">+91 98840 50857</li>
             </ul>
           </div>
           <div>
-            <h4 className="text-white font-medium mb-8">Malaysia Office</h4>
-            <ul className="space-y-2 text-xs text-zinc-500 leading-relaxed">
-              <li className="text-zinc-400 font-medium">RHYTHM HARMONY EMPIRE</li>
-              <li className="text-[10px] font-mono font-bold text-zinc-400">REG NO. 202603217521 (AS0520165-V)</li>
+            <h4 className="text-[var(--text-primary)] font-semibold mb-8">Malaysia Office</h4>
+            <ul className="space-y-2 text-xs text-[var(--text-secondary)] leading-relaxed">
+              <li className="font-semibold text-[var(--text-primary)]">RHYTHM HARMONY EMPIRE</li>
+              <li className="text-[10px] font-mono font-bold text-[var(--text-muted)]">REG NO. 202603217521 (AS0520165-V)</li>
               <li>A-3-10, Koi Kinrara Suites,</li>
               <li>Jalan Pippit, Puchong Jaya,</li>
               <li>47100 Puchong, Selangor</li>
-              <li className="text-purple-600 font-medium pt-1">+60 11-6424 2145</li>
+              <li className="text-purple-600 font-semibold pt-1">+60 11-6424 2145</li>
             </ul>
           </div>
         </div>
-        <div className="flex flex-col md:flex-row justify-between items-center pt-10 border-t border-white/5 text-[10px] font-mono text-zinc-600 uppercase tracking-[0.3em]">
+        <div className="flex flex-col md:flex-row justify-between items-center pt-10 border-t border-[var(--border-primary)] text-[10px] font-mono text-[var(--text-muted)] uppercase tracking-[0.3em]">
           <div>© 2026 QUANTUM CLIMB INC. ALL RIGHTS RESERVED.</div>
           <div className="flex gap-10 mt-6 md:mt-0 items-center">
-            <button onClick={onAdminClick} className="text-zinc-600 hover:text-white transition-colors">Admin</button>
-            <button onClick={onPrivacyClick} className="text-zinc-600 hover:text-white transition-colors">PRIVACY POLICY</button>
-            <button onClick={onTermsClick} className="text-zinc-600 hover:text-white transition-colors">TERMS OF SERVICE</button>
-            <button onClick={onCookiesClick} className="text-zinc-600 hover:text-white transition-colors">COOKIE SETTINGS</button>
+            <button onClick={onAdminClick} className="text-[var(--text-muted)] hover:text-[var(--text-primary)] transition-colors cursor-pointer">Admin</button>
+            <button onClick={onPrivacyClick} className="text-[var(--text-muted)] hover:text-[var(--text-primary)] transition-colors cursor-pointer">PRIVACY POLICY</button>
+            <button onClick={onTermsClick} className="text-[var(--text-muted)] hover:text-[var(--text-primary)] transition-colors cursor-pointer">TERMS OF SERVICE</button>
+            <button onClick={onCookiesClick} className="text-[var(--text-muted)] hover:text-[var(--text-primary)] transition-colors cursor-pointer">COOKIE SETTINGS</button>
           </div>
         </div>
       </div>

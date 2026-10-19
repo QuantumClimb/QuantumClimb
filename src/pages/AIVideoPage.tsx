@@ -190,10 +190,10 @@ export function AIVideoPage({ onOpenContactModal, siteVideos }: AIVideoPageProps
   };
 
   return (
-    <div className="relative overflow-x-hidden bg-[#050307] text-zinc-300">
+    <div className="relative overflow-x-hidden bg-[var(--bg-primary)] text-zinc-300">
       
       {/* 01 — HERO */}
-      <section className="relative min-h-[85vh] flex items-center justify-center overflow-hidden border-b border-white/5 bg-black pt-28 md:pt-0">
+      <section data-theme="dark" className="relative min-h-[85vh] flex items-center justify-center overflow-hidden border-b border-white/5 bg-black pt-28 md:pt-0">
         {/* Full-width Background Image */}
         <div className="absolute inset-0 z-0">
           <div className="absolute inset-0 bg-gradient-to-b from-black/85 via-black/35 to-black z-10"></div>
@@ -340,7 +340,7 @@ export function AIVideoPage({ onOpenContactModal, siteVideos }: AIVideoPageProps
                         <img 
                           src={getYoutubeThumbnail(video.video_url)} 
                           alt={video.title} 
-                          className="w-full h-full object-cover opacity-60 group-hover:scale-105 transition-transform duration-700"
+                          className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
                         />
                         <div className="absolute inset-0 bg-black/40 flex items-center justify-center opacity-85 group-hover:opacity-100 transition-opacity">
                           <div className="w-10 h-10 border border-white/20 bg-black/60 rounded-full flex items-center justify-center text-white group-hover:bg-purple-600 group-hover:border-purple-600 transition-all">
@@ -449,10 +449,9 @@ export function AIVideoPage({ onOpenContactModal, siteVideos }: AIVideoPageProps
                       <img 
                         src={path.img} 
                         alt={path.title} 
-                        className="w-full h-full object-cover opacity-85 group-hover:opacity-100 group-hover:scale-105 transition-all duration-700"
+                        className="w-full h-full object-cover group-hover:scale-105 transition-all duration-700"
                         referrerPolicy="no-referrer"
                       />
-                      <div className="absolute inset-0 bg-gradient-to-t from-zinc-950/50 to-transparent"></div>
                     </div>
                     {/* Visual details */}
                     <div className="p-6 space-y-3">
@@ -484,10 +483,9 @@ export function AIVideoPage({ onOpenContactModal, siteVideos }: AIVideoPageProps
               <img 
                 src="/images/aivideo/generative%20cinema.png" 
                 alt="Generative cinematic landscape creation" 
-                className="w-full h-full object-cover opacity-85"
+                className="w-full h-full object-cover"
                 referrerPolicy="no-referrer"
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent"></div>
             </div>
 
             {/* Content Specifications */}
@@ -556,10 +554,9 @@ export function AIVideoPage({ onOpenContactModal, siteVideos }: AIVideoPageProps
               <img 
                 src="/images/aivideo/global%20campaign.png" 
                 alt="Multi-channel global campaigns asset visual" 
-                className="w-full h-full object-cover opacity-85"
+                className="w-full h-full object-cover"
                 referrerPolicy="no-referrer"
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent"></div>
             </div>
 
           </div>
@@ -576,10 +573,9 @@ export function AIVideoPage({ onOpenContactModal, siteVideos }: AIVideoPageProps
               <img 
                 src="/images/aivideo/post%20production.png" 
                 alt="Cinematic post-production workflow editing" 
-                className="w-full h-full object-cover opacity-85"
+                className="w-full h-full object-cover"
                 referrerPolicy="no-referrer"
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent"></div>
             </div>
 
             {/* Details */}
@@ -636,10 +632,9 @@ export function AIVideoPage({ onOpenContactModal, siteVideos }: AIVideoPageProps
                     <img 
                       src={ind.img} 
                       alt={ind.title} 
-                      className="w-full h-full object-cover opacity-85 group-hover:opacity-100 group-hover:scale-105 transition-transform duration-700"
+                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
                       referrerPolicy="no-referrer"
                     />
-                    <div className="absolute inset-0 bg-gradient-to-t from-zinc-950/50 to-transparent"></div>
                   </div>
                   <div className="p-6 space-y-2">
                     <h3 className="text-xs font-semibold text-white uppercase tracking-wider">{ind.title}</h3>
@@ -683,10 +678,9 @@ export function AIVideoPage({ onOpenContactModal, siteVideos }: AIVideoPageProps
               <img 
                 src="/images/aivideo/post%20production.png" 
                 alt="Sound engineering post-production finish" 
-                className="w-full h-full object-cover opacity-85"
+                className="w-full h-full object-cover"
                 referrerPolicy="no-referrer"
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent"></div>
             </div>
 
           </div>

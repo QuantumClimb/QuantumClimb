@@ -400,8 +400,6 @@ export function AudioPluginsPage({ onOpenContactModal }: AudioPluginsPageProps) 
             {/* Hero Product Visual Display */}
             <Reveal type="fade-up" delay={0.4} className="relative max-w-4xl mx-auto">
               <div className="relative rounded-sm overflow-hidden border border-white/10 shadow-[0_20px_80px_-15px_rgba(147,51,234,0.25)] group bg-zinc-950">
-                {/* Purple to Amber Ambient Halo Edge */}
-                <div className="absolute inset-0 bg-gradient-to-r from-purple-600/10 via-transparent to-amber-500/10 opacity-70 pointer-events-none" />
                 <img
                   src="/images/Audio plugins/qhuman_cover1.png"
                   alt="Q HUMAN Vocal Processing VST3 Plugin by Quantum Climb"
@@ -703,7 +701,6 @@ export function AudioPluginsPage({ onOpenContactModal }: AudioPluginsPageProps) 
           {/* Large Cinematic Studio Visual */}
           <Reveal type="fade-up" delay={0.3} className="relative max-w-6xl mx-auto">
             <div className="relative rounded-sm overflow-hidden border border-white/10 shadow-[0_20px_80px_-15px_rgba(147,51,234,0.2)] group bg-zinc-950">
-              <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent opacity-60 pointer-events-none z-10" />
               <img
                 src="/images/Audio plugins/qhuman_cover4.png"
                 alt="Q HUMAN vocal humanization plugin in a professional music production studio"

@@ -124,7 +124,7 @@ export function QFnBPage({
                 <img 
                   src="/images/q-fnb/1restaurant_host_station_dashboard.png" 
                   alt="Q F&B Host Station in Premium Restaurant Environment" 
-                  className="w-full h-auto object-cover brightness-95 group-hover:scale-103 transition-transform duration-700"
+                  className="w-full h-auto object-cover group-hover:scale-103 transition-transform duration-700"
                 />
                 <div className="absolute top-3 left-3 px-2.5 py-1 bg-black/80 border border-white/10 text-[10px] font-mono text-purple-300 uppercase">
                   OPERATIONAL ENVIRONMENT
@@ -252,7 +252,7 @@ export function QFnBPage({
                   <img 
                     src="/images/q-fnb/qrestobar_reference_preview.png" 
                     alt="Q RESTOBAR Live Customer Portal Preview" 
-                    className="w-full h-auto object-cover brightness-95"
+                    className="w-full h-auto object-cover"
                     loading="lazy"
                   />
 
@@ -327,7 +327,7 @@ export function QFnBPage({
                   <img 
                     src="/images/q-fnb/1restaurant_host_station_dashboard.png" 
                     alt="Q F&B Restaurant Host Station Dashboard" 
-                    className="w-full h-auto object-cover brightness-95"
+                    className="w-full h-auto object-cover"
                     loading="lazy"
                   />
                   <div className="absolute bottom-2 right-2 px-2 py-0.5 bg-black/80 border border-white/10 text-[9px] font-mono text-purple-300">
@@ -484,7 +484,7 @@ export function QFnBPage({
                 <img 
                   src="/images/q-fnb/2candlelit_dining_reservation_experience.png" 
                   alt="Candlelit Dining Reservation Experience in Q F&B" 
-                  className="w-full h-auto object-cover brightness-95 group-hover:scale-105 transition-transform duration-700"
+                  className="w-full h-auto object-cover group-hover:scale-105 transition-transform duration-700"
                   loading="lazy"
                 />
                 <div className="absolute top-3 right-3 px-2.5 py-1 bg-black/80 border border-white/10 text-[10px] font-mono text-purple-300 uppercase">
@@ -568,7 +568,7 @@ export function QFnBPage({
       {/* ==================================================================== */}
       {/* CINEMATIC BREAK 1: HOSPITALITY ATMOSPHERE STATEMENT                   */}
       {/* ==================================================================== */}
-      <section className="relative py-28 sm:py-36 lg:py-40 border-y border-white/10 overflow-hidden text-center bg-zinc-950 group">
+      <section data-theme="dark" className="relative py-28 sm:py-36 lg:py-40 border-y border-white/10 overflow-hidden text-center bg-zinc-950 group">
         {/* Background Banner Image */}
         <div 
           className="absolute inset-0 bg-cover bg-center bg-no-repeat transition-transform duration-1000 scale-105 group-hover:scale-100"
@@ -728,7 +728,7 @@ export function QFnBPage({
                 <img 
                   src="/images/q-fnb/3welcoming_returning_guests_at_q_f_b.png" 
                   alt="Welcoming Returning Guests at Q F&B Restaurant" 
-                  className="w-full h-auto object-cover brightness-95 group-hover:scale-105 transition-transform duration-700"
+                  className="w-full h-auto object-cover group-hover:scale-105 transition-transform duration-700"
                   loading="lazy"
                 />
                 <div className="absolute top-3 left-3 px-2.5 py-1 bg-black/80 border border-white/10 text-[10px] font-mono text-purple-300 uppercase">
@@ -840,10 +840,9 @@ export function QFnBPage({
             <img 
               src="/images/q-fnb/4upscale_dining_campaigns_at_night.png" 
               alt="Upscale Dining Campaigns & Special Events at Night" 
-              className="w-full h-80 sm:h-96 lg:h-[480px] object-cover brightness-90 group-hover:scale-102 transition-transform duration-700"
+              className="w-full h-80 sm:h-96 lg:h-[480px] object-cover group-hover:scale-102 transition-transform duration-700"
               loading="lazy"
             />
-            <div className="absolute inset-0 bg-gradient-to-t from-black via-black/40 to-transparent" />
             
             <div className="absolute bottom-6 left-6 right-6 sm:bottom-10 sm:left-10 sm:right-10 flex flex-col md:flex-row md:items-end justify-between gap-6">
               <div className="max-w-2xl space-y-2">
@@ -955,7 +954,7 @@ export function QFnBPage({
                 <img 
                   src="/images/q-fnb/5luxury_private_dining_birthday_celebration.png" 
                   alt="Luxury Private Dining & Birthday Celebration Experience" 
-                  className="w-full h-auto object-cover brightness-95 group-hover:scale-105 transition-transform duration-700"
+                  className="w-full h-auto object-cover group-hover:scale-105 transition-transform duration-700"
                   loading="lazy"
                 />
                 <div className="absolute top-3 right-3 px-2.5 py-1 bg-purple-950 border border-purple-800 text-[10px] font-mono text-purple-300 uppercase">
@@ -974,7 +973,7 @@ export function QFnBPage({
       {/* ==================================================================== */}
       {/* CINEMATIC BREAK 2: BETTER CONTEXT STATEMENT                          */}
       {/* ==================================================================== */}
-      <section className="relative py-28 sm:py-36 lg:py-40 border-y border-white/10 overflow-hidden text-center bg-black group">
+      <section data-theme="dark" className="relative py-28 sm:py-36 lg:py-40 border-y border-white/10 overflow-hidden text-center bg-black group">
         {/* Background Banner Image */}
         <div 
           className="absolute inset-0 bg-cover bg-center bg-no-repeat transition-transform duration-1000 scale-105 group-hover:scale-100"
@@ -1025,7 +1024,7 @@ export function QFnBPage({
                 <img 
                   src="/images/q-fnb/6restaurant_insights_after_dark.png" 
                   alt="Restaurant Insights Review After Dark" 
-                  className="w-full h-auto object-cover brightness-95 group-hover:scale-105 transition-transform duration-700"
+                  className="w-full h-auto object-cover group-hover:scale-105 transition-transform duration-700"
                   loading="lazy"
                 />
                 <div className="absolute top-3 left-3 px-2.5 py-1 bg-black/80 border border-white/10 text-[10px] font-mono text-purple-300 uppercase">
