@@ -2,7 +2,7 @@ import { ArrowRight, ArrowUpRight, ChevronRight, Facebook, HeartPulse, Instagram
 import { BannerImage } from "../components/BannerImage";
 import { CatalogueDownloadLink } from "../components/CatalogueDownloadLink";
 import { Reveal } from "../components/Reveal";
-import { SOCIAL_APPROACH, SOCIAL_CATALOGUE, SOCIAL_IMAGES } from "./social-media/socialMediaContent";
+import { SOCIAL_APPROACH, SOCIAL_CATALOGUE } from "./social-media/socialMediaContent";
 
 const PLATFORMS = [
   { label: "LinkedIn", Icon: Linkedin },
@@ -17,13 +17,6 @@ const HERO_IMAGE = {
   alt: "Laptop with campaign analytics surrounded by floating social media platform icons",
   position: "center",
 };
-
-/** Shown side by side beneath the hero image. */
-const SUPPORT_IMAGES = [
-  { ...SOCIAL_IMAGES.platforms, position: "60% 30%" },
-  { ...SOCIAL_IMAGES.services, position: "55% 30%" },
-];
-
 type HomeMarketingSectionProps = Readonly<{
   onNavigateSocialMedia: () => void;
   onNavigateHealthcare: () => void;
@@ -92,12 +85,7 @@ export function HomeMarketingSection({ onNavigateSocialMedia, onNavigateHealthca
           </div>
 
           <Reveal type="fade-up" delay={0.1} className="lg:col-span-6">
-            <div className="grid grid-cols-2 gap-3 sm:gap-4">
-              <BannerImage {...HERO_IMAGE} className="col-span-2" imgClassName="aspect-[2/1] h-auto" />
-              {SUPPORT_IMAGES.map((image) => (
-                <BannerImage key={image.src} {...image} imgClassName="aspect-[4/3] h-auto" />
-              ))}
-            </div>
+            <BannerImage {...HERO_IMAGE} imgClassName="aspect-[16/10] h-auto" />
           </Reveal>
         </div>
 
