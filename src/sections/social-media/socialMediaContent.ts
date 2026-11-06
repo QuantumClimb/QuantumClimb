@@ -10,6 +10,30 @@ export const SOCIAL_CATALOGUE = {
   meta: "PDF · 12 PAGES",
 } as const;
 
+/** Section imagery (public/images/social). `position` sets the crop focus. */
+export const SOCIAL_IMAGES = {
+  platforms: {
+    src: "/images/social/sm-short-form-creator.jpg",
+    alt: "Creator filming short-form social video with a phone and ring light",
+    position: "60% 35%",
+  },
+  services: {
+    src: "/images/social/sm-product-creator.jpg",
+    alt: "Presenter showcasing a skincare product to camera for branded content",
+    position: "50% 35%",
+  },
+  approach: {
+    src: "/images/social/sm-analytics-team.jpg",
+    alt: "Marketing team reviewing campaign analytics and global audience data",
+    position: "50% 30%",
+  },
+  industries: {
+    src: "/images/social/sm-video-strategist.jpg",
+    alt: "Marketing strategist reviewing video content performance dashboards",
+    position: "70% center",
+  },
+} as const;
+
 export const SOCIAL_PLATFORMS = [
   {
     id: "linkedin",

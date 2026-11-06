@@ -1,6 +1,7 @@
 import { ArrowUpRight } from "lucide-react";
 import { Reveal } from "../../components/Reveal";
-import { SOCIAL_INDUSTRIES } from "./socialMediaContent";
+import { BannerImage } from "../../components/BannerImage";
+import { SOCIAL_IMAGES, SOCIAL_INDUSTRIES } from "./socialMediaContent";
 
 export function SocialIndustries({ onNavigateHealthcare }: Readonly<{ onNavigateHealthcare: () => void }>) {
   return (
@@ -16,6 +17,7 @@ export function SocialIndustries({ onNavigateHealthcare }: Readonly<{ onNavigate
           <p className="text-zinc-400 text-base leading-relaxed font-light">
             Whether you&apos;re building a professional identity, launching a product, promoting a service or expanding into new markets, Quantum Climb helps you turn your digital presence into a powerful business asset.
           </p>
+          <BannerImage {...SOCIAL_IMAGES.industries} className="mt-8" imgClassName="aspect-[2/1] h-auto" />
         </Reveal>
 
         <Reveal type="fade-up" delay={0.1} className="lg:col-span-7">

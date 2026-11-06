@@ -1,5 +1,6 @@
 import { Reveal } from "../../components/Reveal";
-import { SOCIAL_SERVICES } from "./socialMediaContent";
+import { BannerImage } from "../../components/BannerImage";
+import { SOCIAL_IMAGES, SOCIAL_SERVICES } from "./socialMediaContent";
 
 export function SocialServices() {
   return (
@@ -11,6 +12,10 @@ export function SocialServices() {
         <h2 className="text-3xl sm:text-5xl font-extrabold text-white tracking-tight uppercase">
           Strategy, content & campaigns
         </h2>
+      </Reveal>
+
+      <Reveal type="fade-up" className="mb-6 sm:mb-8">
+        <BannerImage {...SOCIAL_IMAGES.services} imgClassName="h-48 sm:h-64 lg:h-80" />
       </Reveal>
 
       <ol className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 border-t border-l border-white/10">

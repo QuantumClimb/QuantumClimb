@@ -1,6 +1,7 @@
 import { Facebook, Instagram, Linkedin, Music2, type LucideIcon } from "lucide-react";
 import { Reveal } from "../../components/Reveal";
-import { SOCIAL_PLATFORMS } from "./socialMediaContent";
+import { BannerImage } from "../../components/BannerImage";
+import { SOCIAL_IMAGES, SOCIAL_PLATFORMS } from "./socialMediaContent";
 
 const ICONS: Record<string, LucideIcon> = {
   linkedin: Linkedin,
@@ -19,6 +20,10 @@ export function SocialPlatforms() {
         <h2 className="text-3xl sm:text-5xl font-extrabold text-white tracking-tight uppercase">
           The platforms that matter to your business
         </h2>
+      </Reveal>
+
+      <Reveal type="fade-up" className="mb-6 sm:mb-8">
+        <BannerImage {...SOCIAL_IMAGES.platforms} imgClassName="h-48 sm:h-64 lg:h-80" />
       </Reveal>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-5">

@@ -1,6 +1,7 @@
 import { ChevronRight } from "lucide-react";
 import { Reveal } from "../../components/Reveal";
-import { SOCIAL_APPROACH } from "./socialMediaContent";
+import { BannerImage } from "../../components/BannerImage";
+import { SOCIAL_APPROACH, SOCIAL_IMAGES } from "./socialMediaContent";
 
 export function SocialApproach() {
   return (
@@ -15,6 +16,10 @@ export function SocialApproach() {
         <p className="text-zinc-400 text-base leading-relaxed font-light">
           We bring strategy, creative production, technology and marketing together to build a consistent digital presence across the platforms that matter to your business.
         </p>
+      </Reveal>
+
+      <Reveal type="fade-up" className="mb-6 sm:mb-8">
+        <BannerImage {...SOCIAL_IMAGES.approach} imgClassName="h-48 sm:h-64 lg:h-80" />
       </Reveal>
 
       <Reveal type="fade-up" delay={0.1}>
