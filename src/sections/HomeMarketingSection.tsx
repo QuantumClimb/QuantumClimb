@@ -2,7 +2,7 @@ import { ArrowRight, ArrowUpRight, ChevronRight, Facebook, HeartPulse, Instagram
 import { BannerImage } from "../components/BannerImage";
 import { CatalogueDownloadLink } from "../components/CatalogueDownloadLink";
 import { Reveal } from "../components/Reveal";
-import { SOCIAL_APPROACH, SOCIAL_CATALOGUE } from "./social-media/socialMediaContent";
+import { SOCIAL_APPROACH, SOCIAL_CATALOGUE, SOCIAL_IMAGES } from "./social-media/socialMediaContent";
 
 const PLATFORMS = [
   { label: "LinkedIn", Icon: Linkedin },
@@ -12,17 +12,16 @@ const PLATFORMS = [
 ];
 
 /** Agency-page imagery (public/images/agency). */
-const GALLERY = [
-  {
-    src: "/images/agency/social-media-ecosystem.jpg",
-    alt: "Laptop with campaign analytics surrounded by floating social media platform icons",
-    position: "center",
-  },
-  {
-    src: "/images/agency/content-creator-studio.jpg",
-    alt: "Content creator filming a video with camera, phone and ring light in a purple studio",
-    position: "center 35%",
-  },
+const HERO_IMAGE = {
+  src: "/images/agency/social-media-ecosystem.jpg",
+  alt: "Laptop with campaign analytics surrounded by floating social media platform icons",
+  position: "center",
+};
+
+/** Shown side by side beneath the hero image. */
+const SUPPORT_IMAGES = [
+  { ...SOCIAL_IMAGES.platforms, position: "60% 30%" },
+  { ...SOCIAL_IMAGES.services, position: "55% 30%" },
 ];
 
 type HomeMarketingSectionProps = Readonly<{
@@ -93,9 +92,10 @@ export function HomeMarketingSection({ onNavigateSocialMedia, onNavigateHealthca
           </div>
 
           <Reveal type="fade-up" delay={0.1} className="lg:col-span-6">
-            <div className="grid grid-cols-1 gap-3 sm:gap-4">
-              {GALLERY.map((image) => (
-                <BannerImage key={image.src} {...image} imgClassName="aspect-[2/1] h-auto" />
+            <div className="grid grid-cols-2 gap-3 sm:gap-4">
+              <BannerImage {...HERO_IMAGE} className="col-span-2" imgClassName="aspect-[2/1] h-auto" />
+              {SUPPORT_IMAGES.map((image) => (
+                <BannerImage key={image.src} {...image} imgClassName="aspect-[4/3] h-auto" />
               ))}
             </div>
           </Reveal>
