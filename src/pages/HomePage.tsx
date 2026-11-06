@@ -7,8 +7,8 @@ import {
   Code, 
   Mic, 
   Gamepad2, 
-  Sparkles, 
-  Workflow, 
+  Megaphone,
+  Workflow,
   BrainCircuit, 
   Globe, 
   Terminal,
@@ -16,19 +16,24 @@ import {
 } from "lucide-react";
 import { SectionHeader } from "../components/SectionHeader";
 import { FinalCTA } from "../sections/ClosureSections";
+import { HomeMarketingSection } from "../sections/HomeMarketingSection";
 
 type HomePageProps = Readonly<{
   onOpenContactModal: () => void;
   onNavigateAIDubbing: () => void;
   onNavigateAIVideo: () => void;
   onNavigateWebDev: () => void;
+  onNavigateSocialMedia: () => void;
+  onNavigateHealthcare: () => void;
 }>;
 
-export function HomePage({ 
-  onOpenContactModal, 
-  onNavigateAIDubbing, 
-  onNavigateAIVideo, 
-  onNavigateWebDev 
+export function HomePage({
+  onOpenContactModal,
+  onNavigateAIDubbing,
+  onNavigateAIVideo,
+  onNavigateWebDev,
+  onNavigateSocialMedia,
+  onNavigateHealthcare,
 }: HomePageProps) {
   
   // What Can We Build projects
@@ -115,11 +120,12 @@ export function HomePage({
       title: "Gamification", 
       desc: "Transform standard interactions into engaging digital experiences with AI-driven gamification strategies." 
     },
-    { 
-      id: "studiofication", 
-      icon: <Sparkles className="w-5 h-5 text-purple-400" />, 
-      title: "Studiofication", 
-      desc: "Elevate your brand with studio-quality assets, branding, and content powered by intelligent generative models." 
+    {
+      id: "social-marketing",
+      icon: <Megaphone className="w-5 h-5 text-purple-400" />,
+      title: "Social & Digital Marketing",
+      desc: "Social media strategy, content creation, paid campaigns and performance reporting across LinkedIn, Instagram, TikTok and Facebook.",
+      action: onNavigateSocialMedia,
     }
   ];
 
@@ -168,7 +174,7 @@ export function HomePage({
 
             <Reveal type="fade-up" delay={0.2} className="mb-12">
               <p className="text-xl text-zinc-400 max-w-3xl mx-auto leading-relaxed font-light">
-                We build AI-powered digital products, media, and experiences. Evolving workflows, synthesizing voices, and programming systems for global leaders.
+                We build AI-powered digital products, media, experiences and marketing that help brands grow. Evolving workflows, synthesizing voices, and programming systems for global leaders.
               </p>
             </Reveal>
             
@@ -250,6 +256,9 @@ export function HomePage({
           </div>
         </div>
       </section>
+
+      {/* 2b. SOCIAL MEDIA & DIGITAL MARKETING + HEALTHCARE LINK */}
+      <HomeMarketingSection onNavigateSocialMedia={onNavigateSocialMedia} onNavigateHealthcare={onNavigateHealthcare} />
 
       {/* 3. BUILT WITH INTELLIGENCE SECTION */}
       <section className="py-16 md:py-32 bg-black border-b border-white/5">
@@ -388,7 +397,12 @@ export function HomePage({
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-16">
             {capabilities.map((service, index) => (
               <Reveal key={service.id} type="fade-up" delay={0.05 * index} className="group relative">
-                <div className="bg-black border border-white/10 p-8 hover:border-purple-600/30 transition-all duration-300 flex flex-col justify-between h-full">
+                <div
+                  {...("action" in service
+                    ? { onClick: service.action, role: "link", tabIndex: 0, onKeyDown: (e: React.KeyboardEvent) => { if (e.key === "Enter") service.action(); } }
+                    : {})}
+                  className={`bg-black border border-white/10 p-8 hover:border-purple-600/30 transition-all duration-300 flex flex-col justify-between h-full ${"action" in service ? "cursor-pointer" : ""}`}
+                >
                   <div>
                     <div className="flex items-center gap-3 mb-6">
                       <span className="w-10 h-10 rounded-full bg-zinc-900 border border-white/5 flex items-center justify-center">

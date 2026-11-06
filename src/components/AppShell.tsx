@@ -454,6 +454,8 @@ export function AppShell({
             onNavigateAIDubbing={onNavigateAIDubbing} 
             onNavigateAIVideo={onNavigateAIVideo}
             onNavigateWebDev={onNavigateWebDev}
+            onNavigateSocialMedia={onNavigateSocialMedia}
+            onNavigateHealthcare={onNavigateHealthcare}
           />
         )}
       </main>
