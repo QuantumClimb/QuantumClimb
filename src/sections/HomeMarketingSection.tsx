@@ -2,7 +2,7 @@ import { ArrowRight, ArrowUpRight, ChevronRight, Facebook, HeartPulse, Instagram
 import { BannerImage } from "../components/BannerImage";
 import { CatalogueDownloadLink } from "../components/CatalogueDownloadLink";
 import { Reveal } from "../components/Reveal";
-import { SOCIAL_APPROACH, SOCIAL_CATALOGUE, SOCIAL_IMAGES } from "./social-media/socialMediaContent";
+import { SOCIAL_APPROACH, SOCIAL_CATALOGUE } from "./social-media/socialMediaContent";
 
 const PLATFORMS = [
   { label: "LinkedIn", Icon: Linkedin },
@@ -11,7 +11,19 @@ const PLATFORMS = [
   { label: "Facebook", Icon: Facebook },
 ];
 
-const GALLERY = [SOCIAL_IMAGES.platforms, SOCIAL_IMAGES.services, SOCIAL_IMAGES.approach, SOCIAL_IMAGES.industries];
+/** Agency-page imagery (public/images/agency). */
+const GALLERY = [
+  {
+    src: "/images/agency/social-media-ecosystem.jpg",
+    alt: "Laptop with campaign analytics surrounded by floating social media platform icons",
+    position: "center",
+  },
+  {
+    src: "/images/agency/content-creator-studio.jpg",
+    alt: "Content creator filming a video with camera, phone and ring light in a purple studio",
+    position: "center 35%",
+  },
+];
 
 type HomeMarketingSectionProps = Readonly<{
   onNavigateSocialMedia: () => void;
@@ -81,9 +93,9 @@ export function HomeMarketingSection({ onNavigateSocialMedia, onNavigateHealthca
           </div>
 
           <Reveal type="fade-up" delay={0.1} className="lg:col-span-6">
-            <div className="grid grid-cols-2 gap-3 sm:gap-4">
+            <div className="grid grid-cols-1 gap-3 sm:gap-4">
               {GALLERY.map((image) => (
-                <BannerImage key={image.src} {...image} imgClassName="aspect-[4/3] h-auto" />
+                <BannerImage key={image.src} {...image} imgClassName="aspect-[2/1] h-auto" />
               ))}
             </div>
           </Reveal>
