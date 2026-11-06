@@ -13,6 +13,7 @@ import { AIVideoPage } from "../pages/AIVideoPage";
 import { WebDevPage } from "../pages/WebDevPage";
 import { AudioPluginsPage } from "../pages/AudioPluginsPage";
 import { HealthcareDigitalGrowthPage } from "../pages/HealthcareDigitalGrowthPage";
+import { SocialMediaMarketingPage } from "../pages/SocialMediaMarketingPage";
 import { ProductsPage } from "../pages/ProductsPage";
 import { QFnBPage } from "../pages/QFnBPage";
 import { QFnBDemoPage, type QFnBDemoSubmissionData } from "../pages/QFnBDemoPage";
@@ -38,7 +39,7 @@ import {
 import type { PortfolioItem, SiteVideo } from "../lib/supabase";
 
 type AppShellProps = Readonly<{
-  currentPage: "home" | "services" | "ai-dubbing" | "ai-video" | "web-dev" | "audio-software" | "audio-plugins" | "healthcare" | "products" | "q-fnb" | "q-fnb-demo" | "q-transition" | "portfolio" | "admin" | "privacy" | "terms" | "cookies" | "contact";
+  currentPage: "home" | "services" | "ai-dubbing" | "ai-video" | "web-dev" | "audio-software" | "audio-plugins" | "healthcare" | "social-media" | "products" | "q-fnb" | "q-fnb-demo" | "q-transition" | "portfolio" | "admin" | "privacy" | "terms" | "cookies" | "contact";
   isScrolled: boolean;
   isContactModalOpen: boolean;
   isAdmin: boolean;
@@ -57,6 +58,7 @@ type AppShellProps = Readonly<{
   onNavigateAudioSoftware?: () => void;
   onNavigateAudioPlugins?: () => void;
   onNavigateHealthcare?: () => void;
+  onNavigateSocialMedia?: () => void;
   onNavigateProducts?: () => void;
   onNavigateQFnB?: () => void;
   onNavigateQFnBDemo?: () => void;
@@ -113,6 +115,7 @@ export function AppShell({
   onNavigateAudioSoftware,
   onNavigateAudioPlugins,
   onNavigateHealthcare,
+  onNavigateSocialMedia,
   onNavigateProducts,
   onNavigateQFnB,
   onNavigateQFnBDemo,
@@ -162,13 +165,14 @@ export function AppShell({
   const isWebDevPage = currentPage === "web-dev";
   const isAudioPluginsPage = currentPage === "audio-plugins";
   const isHealthcarePage = currentPage === "healthcare";
+  const isSocialMediaPage = currentPage === "social-media";
   const isProductsPage = currentPage === "products" || currentPage === "q-fnb" || currentPage === "q-fnb-demo" || currentPage === "q-transition";
   const isQFnBPage = currentPage === "q-fnb";
   const isQFnBDemoPage = currentPage === "q-fnb-demo";
   const isQTransitionPage = currentPage === "q-transition";
   const isContactPage = currentPage === "contact";
   const isLegalPage = ["privacy", "terms", "cookies"].includes(currentPage);
-  const isAnyServiceActive = isServicesPage || isAIDubbingPage || isAIVideoPage || isWebDevPage || isAudioSoftwarePage || isHealthcarePage;
+  const isAnyServiceActive = isServicesPage || isAIDubbingPage || isAIVideoPage || isWebDevPage || isAudioSoftwarePage || isHealthcarePage || isSocialMediaPage;
 
   // Single source for the Services menu — rendered by both the desktop dropdown
   // and the mobile accordion so the two lists cannot drift apart.
@@ -178,6 +182,7 @@ export function AppShell({
     { id: "web-dev", label: "Web Development", detail: "Platforms, apps & digital solutions", isActive: isWebDevPage, onSelect: onNavigateWebDev },
     { id: "audio-software", label: "Audio Software & Plugin Dev", detail: "VST3 plugins, DSP & music tech", isActive: isAudioSoftwarePage, onSelect: () => onNavigateAudioSoftware?.() },
     { id: "healthcare", label: "Healthcare Digital Growth", detail: "Doctors, clinics & medical platforms", isActive: isHealthcarePage, onSelect: () => onNavigateHealthcare?.() },
+    { id: "social-media", label: "Social Media & Digital Marketing", detail: "LinkedIn, Instagram, TikTok & Facebook", isActive: isSocialMediaPage, onSelect: () => onNavigateSocialMedia?.() },
   ];
 
   return (
@@ -388,10 +393,16 @@ export function AppShell({
             onNavigateWebDev={onNavigateWebDev}
             onNavigateAudioSoftware={() => onNavigateAudioSoftware?.()}
             onNavigateHealthcare={() => onNavigateHealthcare?.()}
+            onNavigateSocialMedia={() => onNavigateSocialMedia?.()}
           />
         ) : isHealthcarePage ? (
           <HealthcareDigitalGrowthPage
             onOpenContactModal={() => (onNavigateContactWithServices ? onNavigateContactWithServices(["healthcare"]) : onNavigateContact())}
+          />
+        ) : isSocialMediaPage ? (
+          <SocialMediaMarketingPage
+            onOpenContactModal={() => (onNavigateContactWithServices ? onNavigateContactWithServices(["marketing"]) : onNavigateContact())}
+            onNavigateHealthcare={() => onNavigateHealthcare?.()}
           />
         ) : isAudioSoftwarePage ? (
           <AudioSoftwarePage

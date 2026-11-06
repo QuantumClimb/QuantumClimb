@@ -1,7 +1,7 @@
 import { BookOpen, CreditCard, Layers, Repeat, Users } from "lucide-react";
 import type { HealthcareCategory } from "./healthcareContent";
-import { HealthcareFeatureList } from "./HealthcareFeatureList";
-import { HealthcareJourney } from "./HealthcareJourney";
+import { FeatureList } from "../../components/FeatureList";
+import { JourneySteps } from "../../components/JourneySteps";
 
 const MODULES = [
   { title: "Module 01 · Foundations", progress: 100 },
@@ -104,7 +104,7 @@ export function HealthcareEducationSpotlight({ category }: Readonly<{ category: 
             ))}
           </ul>
 
-          {category.journey && <HealthcareJourney label={category.journey.label} steps={category.journey.steps} />}
+          {category.journey && <JourneySteps label={category.journey.label} steps={category.journey.steps} />}
         </div>
 
         <div className="lg:col-span-5 min-h-[340px]">
@@ -113,7 +113,7 @@ export function HealthcareEducationSpotlight({ category }: Readonly<{ category: 
       </div>
 
       <div className="mt-10 pt-8 border-t border-white/10">
-        <HealthcareFeatureList features={category.features} />
+        <FeatureList features={category.features} />
       </div>
     </div>
   );

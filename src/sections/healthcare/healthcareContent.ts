@@ -22,7 +22,9 @@ export const HEALTHCARE_AUDIENCES = [
   "Medical education organisations",
 ];
 
-export type HealthcareFeature = Readonly<{ label: string; key?: boolean }>;
+import type { Feature } from "../../components/FeatureList";
+
+export type HealthcareFeature = Feature;
 
 export type HealthcareCategory = Readonly<{
   id: string;

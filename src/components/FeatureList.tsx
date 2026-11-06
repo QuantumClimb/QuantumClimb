@@ -1,7 +1,7 @@
-import type { HealthcareFeature } from "./healthcareContent";
+export type Feature = Readonly<{ label: string; key?: boolean }>;
 
 /** Capability list; `key` features are highlighted with the QC accent. */
-export function HealthcareFeatureList({ features }: Readonly<{ features: HealthcareFeature[] }>) {
+export function FeatureList({ features }: Readonly<{ features: Feature[] }>) {
   return (
     <ul className="grid grid-cols-1 sm:grid-cols-2 gap-2">
       {features.map((feature) => (

@@ -1,8 +1,8 @@
 import { Reveal } from "../../components/Reveal";
 import { HEALTHCARE_CATEGORIES, type HealthcareCategory } from "./healthcareContent";
 import { HealthcareEducationSpotlight } from "./HealthcareEducationSpotlight";
-import { HealthcareFeatureList } from "./HealthcareFeatureList";
-import { HealthcareJourney } from "./HealthcareJourney";
+import { FeatureList } from "../../components/FeatureList";
+import { JourneySteps } from "../../components/JourneySteps";
 
 function CategoryPanel({ category }: Readonly<{ category: HealthcareCategory }>) {
   return (
@@ -23,10 +23,10 @@ function CategoryPanel({ category }: Readonly<{ category: HealthcareCategory }>)
             <h3 className="text-2xl sm:text-3xl font-extrabold text-white tracking-tight uppercase mb-4">{category.title}</h3>
             <p className="text-zinc-400 text-base leading-relaxed font-light">{category.summary}</p>
           </div>
-          {category.journey && <HealthcareJourney label={category.journey.label} steps={category.journey.steps} />}
+          {category.journey && <JourneySteps label={category.journey.label} steps={category.journey.steps} />}
         </div>
         <div className="lg:col-span-7">
-          <HealthcareFeatureList features={category.features} />
+          <FeatureList features={category.features} />
         </div>
       </div>
     </div>

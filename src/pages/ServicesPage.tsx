@@ -2,6 +2,7 @@ import { Reveal } from "../components/Reveal";
 import { TechCanvas } from "../components/TechCanvas";
 import { FinalCTA } from "../sections/ClosureSections";
 import { HealthcareSignalVisual } from "../sections/healthcare/HealthcareSignalVisual";
+import { SocialSignalVisual } from "../sections/social-media/SocialSignalVisual";
 import { 
   ArrowRight, 
   Mic, 
@@ -10,7 +11,8 @@ import {
   Sliders, 
   Sparkles,
   ChevronRight,
-  HeartPulse
+  HeartPulse,
+  Megaphone
 } from "lucide-react";
 
 type ServicesPageProps = Readonly<{
@@ -20,6 +22,7 @@ type ServicesPageProps = Readonly<{
   onNavigateWebDev: () => void;
   onNavigateAudioSoftware: () => void;
   onNavigateHealthcare: () => void;
+  onNavigateSocialMedia: () => void;
 }>;
 
 export function ServicesPage({
@@ -29,6 +32,7 @@ export function ServicesPage({
   onNavigateWebDev,
   onNavigateAudioSoftware,
   onNavigateHealthcare,
+  onNavigateSocialMedia,
 }: ServicesPageProps) {
   const services = [
     {
@@ -89,7 +93,21 @@ export function ServicesPage({
       action: onNavigateHealthcare,
       buttonText: "EXPLORE HEALTHCARE DIGITAL GROWTH",
       image: null,
+      visual: <HealthcareSignalVisual compact />,
       tags: ["Doctor Branding", "Clinic Websites", "Medical LMS", "CRM & Automation"]
+    },
+    {
+      id: "social-media",
+      number: "06",
+      title: "SOCIAL MEDIA & DIGITAL MARKETING",
+      category: "BRAND, CONTENT & CAMPAIGNS",
+      description: "Strategic social media marketing, compelling content and targeted campaigns across LinkedIn, Instagram, TikTok and Facebook.",
+      icon: <Megaphone className="w-5 h-5 text-purple-400" />,
+      action: onNavigateSocialMedia,
+      buttonText: "EXPLORE SOCIAL MEDIA MARKETING",
+      image: null,
+      visual: <SocialSignalVisual compact />,
+      tags: ["Social Strategy", "Content & Reels", "Paid Campaigns", "Analytics"]
     },
   ];
 
@@ -142,7 +160,7 @@ export function ServicesPage({
 
           <Reveal type="fade-up" delay={0.2}>
             <p className="text-lg sm:text-xl text-zinc-300 max-w-2xl leading-relaxed mb-6 font-light drop-shadow-sm">
-              Specialized services delivering AI dubbing and voice localization, AI video production, modern web architecture, custom audio software engineering, and healthcare digital growth.
+              Specialized services delivering AI dubbing and voice localization, AI video production, modern web architecture, custom audio software engineering, healthcare digital growth, and social media & digital marketing.
             </p>
             <div className="text-xs font-mono text-zinc-400 uppercase tracking-widest">
               End-to-End Creative Technology & Engineering
@@ -219,7 +237,7 @@ export function ServicesPage({
                         />
                       ) : (
                         <div className="absolute inset-0 pb-12">
-                          <HealthcareSignalVisual compact />
+                          {"visual" in service ? service.visual : null}
                         </div>
                       )}
                       

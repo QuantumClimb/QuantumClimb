@@ -1,12 +1,12 @@
 import { ChevronRight } from "lucide-react";
 
-type HealthcareJourneyProps = Readonly<{
+type JourneyStepsProps = Readonly<{
   label: string;
   steps: string[];
 }>;
 
 /** Step-by-step journey strip, e.g. DISCOVER → EXPLORE → ENQUIRE → FOLLOW UP. */
-export function HealthcareJourney({ label, steps }: HealthcareJourneyProps) {
+export function JourneySteps({ label, steps }: JourneyStepsProps) {
   return (
     <div className="border border-white/10 bg-black/40 p-4 sm:p-5">
       <div className="text-[10px] font-mono uppercase tracking-[0.25em] text-zinc-500 mb-3">{label}</div>

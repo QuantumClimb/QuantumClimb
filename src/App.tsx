@@ -14,10 +14,13 @@ import type { EditablePortfolioItem, EditableSiteVideo } from "./sections/AdminS
 import type { InquirySubmissionData } from "./pages/ContactPage";
 import type { QFnBDemoSubmissionData } from "./pages/QFnBDemoPage";
 
-type PageView = "home" | "services" | "ai-dubbing" | "ai-video" | "web-dev" | "audio-software" | "audio-plugins" | "healthcare" | "products" | "q-fnb" | "q-fnb-demo" | "q-transition" | "portfolio" | "admin" | "privacy" | "terms" | "cookies" | "contact";
+type PageView = "home" | "services" | "ai-dubbing" | "ai-video" | "web-dev" | "audio-software" | "audio-plugins" | "healthcare" | "social-media" | "products" | "q-fnb" | "q-fnb-demo" | "q-transition" | "portfolio" | "admin" | "privacy" | "terms" | "cookies" | "contact";
 
-// Clean public URL for the Healthcare Digital Growth service page.
-const HEALTHCARE_PATH = "/services/healthcare-digital-growth";
+// Pages served on a clean public URL. Every other page keeps ?page= navigation.
+const CLEAN_PATHS: Partial<Record<PageView, string>> = {
+  healthcare: "/services/healthcare-digital-growth",
+  "social-media": "/services/social-media-marketing",
+};
 
 function getCurrentPage(): PageView {
   if (globalThis.window === undefined) {
@@ -25,7 +28,7 @@ function getCurrentPage(): PageView {
   }
 
   const page = new URLSearchParams(globalThis.location.search).get("page");
-  if (["services", "ai-dubbing", "ai-video", "web-dev", "audio-software", "audio-plugins", "healthcare", "products", "q-fnb", "q-fnb-demo", "q-transition", "portfolio", "admin", "privacy", "terms", "cookies", "contact"].includes(page ?? "")) {
+  if (["services", "ai-dubbing", "ai-video", "web-dev", "audio-software", "audio-plugins", "healthcare", "social-media", "products", "q-fnb", "q-fnb-demo", "q-transition", "portfolio", "admin", "privacy", "terms", "cookies", "contact"].includes(page ?? "")) {
     return page as PageView;
   }
 
@@ -36,6 +39,10 @@ function getCurrentPage(): PageView {
 
   if (pathname === "services/healthcare-digital-growth" || pathname === "healthcare-digital-growth" || pathname === "services/healthcare") {
     return "healthcare";
+  }
+
+  if (pathname === "services/social-media-marketing" || pathname === "social-media-marketing" || pathname === "services/digital-marketing" || pathname === "services/social-media") {
+    return "social-media";
   }
 
   if (pathname === "services/audio-software" || pathname === "services/audio-plugins") {
@@ -129,7 +136,7 @@ export default function App() {
 
     if (currentPage === "services") {
       title = "Services | AI Dubbing, AI Video, Web & Audio Software | Quantum Climb";
-      description = "Explore specialized Quantum Climb services across AI dubbing & voice localization, AI video production, web development, audio software & plugin development, and healthcare digital growth.";
+      description = "Explore specialized Quantum Climb services across AI dubbing & voice localization, AI video production, web development, audio software & plugin development, healthcare digital growth, and social media & digital marketing.";
     } else if (currentPage === "audio-software") {
       title = "Audio Software & Plugin Development | Quantum Climb";
       description = "We build intelligent audio tools: professional audio software, VST3 plugins, DSP systems, and standalone audio applications by Quantum Climb.";
@@ -150,6 +157,9 @@ export default function App() {
       title = "Web Development & Digital Architecture | Quantum Climb";
     } else if (currentPage === "audio-plugins") {
       title = "Q HUMAN - Vocal Humanization VST3 | Quantum Climb";
+    } else if (currentPage === "social-media") {
+      title = "Social Media & Digital Marketing | LinkedIn, Instagram, TikTok & Facebook | Quantum Climb";
+      description = "Strategic social media marketing, content, AI-powered video and paid campaigns across LinkedIn, Instagram, TikTok and Facebook — strengthen your brand presence and grow your business with Quantum Climb.";
     } else if (currentPage === "healthcare") {
       title = "Healthcare Digital Growth | Doctor Branding, Clinic Websites & Medical LMS | Quantum Climb";
       description = "Quantum Climb helps doctors, clinics, healthcare entrepreneurs and product businesses grow digitally — doctor branding, clinic websites, healthcare e-commerce, medical learning platforms, international patient engagement, AI video and CRM automation.";
@@ -265,11 +275,12 @@ export default function App() {
     setContactPresetServices([]);
     const url = new URL(globalThis.location.href);
 
-    // The healthcare page uses its clean path; every other page keeps the
-    // existing ?page= navigation. Reset a deep path when leaving it so a
+    // Pages in CLEAN_PATHS use their clean path; every other page keeps the
+    // existing ?page= navigation. Reset a clean path when leaving it so a
     // reload resolves to the page actually being shown.
-    if (page === "healthcare") {
-      url.pathname = HEALTHCARE_PATH;
+    const cleanPath = CLEAN_PATHS[page];
+    if (cleanPath) {
+      url.pathname = cleanPath;
       url.searchParams.delete("page");
       url.hash = "";
       globalThis.history.pushState({}, "", url);
@@ -278,7 +289,7 @@ export default function App() {
       return;
     }
 
-    if (url.pathname.replace(/\/+$/, "").toLowerCase() === HEALTHCARE_PATH) {
+    if (Object.values(CLEAN_PATHS).includes(url.pathname.replace(/\/+$/, "").toLowerCase())) {
       url.pathname = "/";
     }
 
@@ -806,6 +817,7 @@ Operation Details: ${data.message || "None provided"}`,
     onNavigateAudioSoftware: () => navigateToPage("audio-software"),
     onNavigateAudioPlugins: () => navigateToPage("audio-plugins"),
     onNavigateHealthcare: () => navigateToPage("healthcare"),
+    onNavigateSocialMedia: () => navigateToPage("social-media"),
     onNavigateProducts: () => navigateToPage("products"),
     onNavigateQFnB: () => navigateToPage("q-fnb"),
     onNavigateQFnBDemo: () => navigateToPage("q-fnb-demo"),

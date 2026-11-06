@@ -16,7 +16,8 @@ import {
   Users, 
   PhoneCall, 
   Layers,
-  HeartPulse
+  HeartPulse,
+  Megaphone
 } from "lucide-react";
 
 type ContactPageProps = Readonly<{
@@ -127,8 +128,14 @@ const SERVICES_CONFIG = [
     icon: <HeartPulse className="w-5 h-5 text-purple-400" />,
   },
   {
+    id: "marketing",
+    label: "07. Social Media & Digital Marketing",
+    desc: "Social media strategy, content, short-form and AI-powered video, paid campaigns and account management across LinkedIn, Instagram, TikTok and Facebook.",
+    icon: <Megaphone className="w-5 h-5 text-purple-400" />,
+  },
+  {
     id: "creative",
-    label: "07. Creative & Custom Projects",
+    label: "08. Creative & Custom Projects",
     desc: "Have something unconventional in mind? Tell us about your idea and our team will explore the right combination of creative, technical and AI capabilities.",
     icon: <Sparkles className="w-5 h-5 text-purple-400" />,
   }
@@ -196,6 +203,11 @@ export function ContactPage({ onOpenContactModal, onNavigateHome, onNavigatePort
       areas: [] as string[],
       currentWebsite: "",
       targetMarkets: ""
+    },
+    marketing: {
+      platforms: [] as string[],
+      services: [] as string[],
+      currentHandles: ""
     },
     creative: {
       idea: ""
@@ -389,6 +401,7 @@ export function ContactPage({ onOpenContactModal, onNavigateHome, onNavigatePort
       case "mobile": return "Mobile App Development";
       case "automation": return "AI Automation & Agents";
       case "healthcare": return "Healthcare Digital Growth";
+      case "marketing": return "Social Media & Digital Marketing";
       case "creative": return "Creative & Custom Project";
       default: return key;
     }
@@ -1175,11 +1188,69 @@ export function ContactPage({ onOpenContactModal, onNavigateHome, onNavigatePort
           </div>
         )}
 
+        {/* Dynamic Section: Social Media & Digital Marketing */}
+        {selectedServices.includes("marketing") && (
+          <div className="border border-white/10 bg-zinc-950/20 p-8 space-y-6">
+            <h3 className="text-lg font-medium text-purple-400 uppercase tracking-wider border-b border-white/5 pb-3">
+              07. Social Media & Digital Marketing
+            </h3>
+
+            {[
+              { field: "platforms", label: "Which platforms? (Select Multiple)", options: ["LinkedIn", "Instagram", "TikTok", "Facebook", "Not sure yet"] },
+              {
+                field: "services",
+                label: "What do you need? (Select Multiple)",
+                options: [
+                  "Strategy & Positioning", "Account Setup & Optimisation", "Content Calendar", "Graphic Design",
+                  "Reels / Short-Form Video", "AI Video & Localisation", "Copywriting & Captions",
+                  "Account Management", "Paid Advertising", "Lead Generation", "Analytics & Reporting"
+                ]
+              },
+            ].map(({ field, label, options }) => (
+              <div key={field} className="space-y-3">
+                <label className="block text-[10px] font-mono uppercase tracking-widest text-zinc-400">{label}</label>
+                <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
+                  {options.map(option => {
+                    const isChecked = (requirements.marketing[field] as string[]).includes(option);
+                    return (
+                      <label key={option} className={`flex items-center gap-2 border p-3 text-xs select-none cursor-pointer transition-colors ${
+                        isChecked ? "border-purple-600 bg-purple-500/5 text-white" : "border-white/10 bg-black text-zinc-400"
+                      }`}>
+                        <input
+                          type="checkbox"
+                          checked={isChecked}
+                          onChange={() => toggleRequirementArrayItem("marketing", field, option)}
+                          className="hidden"
+                        />
+                        <span className={`w-3.5 h-3.5 shrink-0 border flex items-center justify-center ${isChecked ? "border-purple-500 bg-purple-600" : "border-white/20"}`}>
+                          {isChecked && <Check className="w-2.5 h-2.5 text-white" />}
+                        </span>
+                        {option}
+                      </label>
+                    );
+                  })}
+                </div>
+              </div>
+            ))}
+
+            <div className="space-y-2">
+              <label className="block text-[10px] font-mono uppercase tracking-widest text-zinc-400">Current social media accounts (if any)</label>
+              <input
+                type="text"
+                value={requirements.marketing.currentHandles}
+                onChange={e => updateServiceRequirement("marketing", "currentHandles", e.target.value)}
+                placeholder="Links or handles, e.g. instagram.com/yourbrand"
+                className="w-full border border-white/10 bg-black px-4 py-3 text-white text-sm focus:border-purple-500 focus:outline-none"
+              />
+            </div>
+          </div>
+        )}
+
         {/* Dynamic Section: Creative & Custom Projects */}
         {selectedServices.includes("creative") && (
           <div className="border border-white/10 bg-zinc-950/20 p-8 space-y-6">
             <h3 className="text-lg font-medium text-purple-400 uppercase tracking-wider border-b border-white/5 pb-3">
-              07. Creative & Custom Projects
+              08. Creative & Custom Projects
             </h3>
 
             <div className="space-y-2">
