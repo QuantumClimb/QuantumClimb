@@ -3,6 +3,13 @@
  * A core Quantum Climb service across industries (not sector-specific).
  */
 
+export const SOCIAL_CATALOGUE = {
+  href: "/docs/digital-marketing-services-catalogue.pdf",
+  downloadName: "Quantum_Climb_Digital_Marketing_Services_Catalogue.pdf",
+  label: "DOWNLOAD SERVICES CATALOGUE (PDF)",
+  meta: "PDF · 12 PAGES",
+} as const;
+
 export const SOCIAL_PLATFORMS = [
   {
     id: "linkedin",

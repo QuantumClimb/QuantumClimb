@@ -1,7 +1,9 @@
 import { ArrowDown, ArrowRight } from "lucide-react";
 import { Reveal } from "../../components/Reveal";
 import { TechCanvas } from "../../components/TechCanvas";
+import { CatalogueDownloadLink } from "../../components/CatalogueDownloadLink";
 import { SocialSignalVisual } from "./SocialSignalVisual";
+import { SOCIAL_CATALOGUE } from "./socialMediaContent";
 
 export function SocialHero({ onStartProject }: Readonly<{ onStartProject: () => void }>) {
   return (
@@ -56,6 +58,7 @@ export function SocialHero({ onStartProject }: Readonly<{ onStartProject: () => 
                 <span>EXPLORE THE PLATFORMS</span>
                 <ArrowDown className="w-4 h-4" />
               </button>
+              <CatalogueDownloadLink catalogue={SOCIAL_CATALOGUE} className="sm:whitespace-nowrap" />
             </div>
           </Reveal>
         </div>

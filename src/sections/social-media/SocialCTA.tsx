@@ -1,5 +1,7 @@
 import { ArrowRight } from "lucide-react";
+import { CatalogueDownloadLink } from "../../components/CatalogueDownloadLink";
 import { Reveal } from "../../components/Reveal";
+import { SOCIAL_CATALOGUE } from "./socialMediaContent";
 
 export function SocialCTA({ onStartProject }: Readonly<{ onStartProject: () => void }>) {
   return (
@@ -21,13 +23,19 @@ export function SocialCTA({ onStartProject }: Readonly<{ onStartProject: () => v
             digital presence.
           </span>
         </h2>
-        <button
-          onClick={onStartProject}
-          className="inline-flex items-center justify-center gap-2 px-10 py-4 bg-white text-black font-semibold text-xs uppercase tracking-wider hover:bg-purple-600 hover:text-white transition-all duration-300 cursor-pointer border border-white hover:border-purple-600"
-        >
-          <span>START A PROJECT</span>
-          <ArrowRight className="w-4 h-4" />
-        </button>
+        <div className="flex flex-col sm:flex-row gap-3 justify-center items-stretch sm:items-center">
+          <button
+            onClick={onStartProject}
+            className="inline-flex items-center justify-center gap-2 px-10 py-4 bg-white text-black font-semibold text-xs uppercase tracking-wider hover:bg-purple-600 hover:text-white transition-all duration-300 cursor-pointer border border-white hover:border-purple-600"
+          >
+            <span>START A PROJECT</span>
+            <ArrowRight className="w-4 h-4" />
+          </button>
+          <CatalogueDownloadLink catalogue={SOCIAL_CATALOGUE} />
+        </div>
+        <p className="mt-4 text-[10px] font-mono uppercase tracking-widest text-zinc-500">
+          Digital Marketing Services Catalogue · {SOCIAL_CATALOGUE.meta}
+        </p>
         <p className="mt-12 text-[11px] font-mono uppercase tracking-[0.3em] text-zinc-500">
           Quantum Climb · Build once. Access anywhere.
         </p>
