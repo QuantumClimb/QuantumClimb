@@ -35,11 +35,13 @@ export type HealthcareCategory = Readonly<{
   features: HealthcareFeature[];
   journey?: { label: string; steps: string[] };
   spotlight?: boolean;
+  image: { src: string; alt: string };
 }>;
 
 export const HEALTHCARE_CATEGORIES: HealthcareCategory[] = [
   {
     id: "doctor-branding",
+    image: { src: "/images/healthcare/hc-doctor-social.jpg", alt: "Doctor presenting educational video content across YouTube, Instagram and LinkedIn" },
     number: "01",
     title: "Doctor & Specialist Branding",
     tag: "PERSONAL AUTHORITY",
@@ -62,6 +64,7 @@ export const HEALTHCARE_CATEGORIES: HealthcareCategory[] = [
   },
   {
     id: "clinic-growth",
+    image: { src: "/images/healthcare/hc-clinic-touch.jpg", alt: "Hand selecting digital healthcare services in front of a modern clinic building" },
     number: "02",
     title: "Clinic & Speciality Centre Growth",
     tag: "CLINIC DIGITAL GROWTH",
@@ -85,6 +88,7 @@ export const HEALTHCARE_CATEGORIES: HealthcareCategory[] = [
   },
   {
     id: "products-commerce",
+    image: { src: "/images/healthcare/hc-market-screens.jpg", alt: "Healthcare professional reviewing product, market and growth dashboards" },
     number: "03",
     title: "Healthcare Products & Commerce",
     tag: "BRANDS & E-COMMERCE",
@@ -106,6 +110,7 @@ export const HEALTHCARE_CATEGORIES: HealthcareCategory[] = [
   },
   {
     id: "medical-education",
+    image: { src: "/images/healthcare/hc-education-laptop.jpg", alt: "Laptop showing an online medical course beside a stethoscope" },
     number: "04",
     title: "Medical Education & Knowledge Platforms",
     tag: "DEDICATED LMS DEVELOPMENT",
@@ -132,6 +137,7 @@ export const HEALTHCARE_CATEGORIES: HealthcareCategory[] = [
   },
   {
     id: "international-patients",
+    image: { src: "/images/healthcare/hc-international.jpg", alt: "Hospital interior with a world map of international patient connections" },
     number: "05",
     title: "International Patient Engagement",
     tag: "GLOBAL REACH",
@@ -152,6 +158,7 @@ export const HEALTHCARE_CATEGORIES: HealthcareCategory[] = [
   },
   {
     id: "content-marketing",
+    image: { src: "/images/healthcare/hc-doctor-hologram.jpg", alt: "Doctor interacting with a holographic anatomy and health data display" },
     number: "06",
     title: "AI-Powered Healthcare Content & Marketing",
     tag: "AI VIDEO & MULTILINGUAL MEDIA",
@@ -176,6 +183,7 @@ export const HEALTHCARE_CATEGORIES: HealthcareCategory[] = [
   },
   {
     id: "technology-integrations",
+    image: { src: "/images/healthcare/hc-connected-icons.jpg", alt: "Connected healthcare system icons linked to a hospital building" },
     number: "07",
     title: "Healthcare Technology & Integrations",
     tag: "CRM, AUTOMATION & INFRASTRUCTURE",

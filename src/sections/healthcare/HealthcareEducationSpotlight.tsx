@@ -2,6 +2,7 @@ import { BookOpen, CreditCard, Layers, Repeat, Users } from "lucide-react";
 import type { HealthcareCategory } from "./healthcareContent";
 import { FeatureList } from "../../components/FeatureList";
 import { JourneySteps } from "../../components/JourneySteps";
+import { HealthcareCategoryImage } from "./HealthcareCategoryImage";
 
 const MODULES = [
   { title: "Module 01 · Foundations", progress: 100 },
@@ -78,7 +79,11 @@ export function HealthcareEducationSpotlight({ category }: Readonly<{ category: 
       id={category.id}
       className="relative border border-purple-500/30 bg-gradient-to-br from-purple-950/40 via-zinc-950/90 to-black p-6 sm:p-10 lg:p-12 scroll-mt-32 overflow-hidden"
     >
-      <div className="absolute top-0 left-0 right-0 h-[2px] bg-gradient-to-r from-purple-500 via-indigo-400 to-purple-500" />
+      <div className="absolute top-0 left-0 right-0 h-[2px] bg-gradient-to-r from-purple-500 via-indigo-400 to-purple-500 z-10" />
+      <HealthcareCategoryImage
+        image={category.image}
+        className="-mx-6 -mt-6 mb-8 sm:-mx-10 sm:-mt-10 sm:mb-10 lg:-mx-12 lg:-mt-12"
+      />
 
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-12">
         <div className="lg:col-span-7 flex flex-col gap-6">

@@ -1,6 +1,7 @@
 import { Reveal } from "../../components/Reveal";
 import { HEALTHCARE_CATEGORIES, type HealthcareCategory } from "./healthcareContent";
 import { HealthcareEducationSpotlight } from "./HealthcareEducationSpotlight";
+import { HealthcareCategoryImage } from "./HealthcareCategoryImage";
 import { FeatureList } from "../../components/FeatureList";
 import { JourneySteps } from "../../components/JourneySteps";
 
@@ -10,7 +11,8 @@ function CategoryPanel({ category }: Readonly<{ category: HealthcareCategory }>)
       id={category.id}
       className="relative border border-white/10 bg-gradient-to-b from-zinc-950/80 to-black p-6 sm:p-10 hover:border-purple-500/30 transition-colors duration-500 scroll-mt-32"
     >
-      <div className="absolute top-0 left-0 right-0 h-[2px] bg-gradient-to-r from-purple-600 via-indigo-500 to-transparent opacity-70" />
+      <div className="absolute top-0 left-0 right-0 h-[2px] bg-gradient-to-r from-purple-600 via-indigo-500 to-transparent opacity-70 z-10" />
+      <HealthcareCategoryImage image={category.image} className="-mx-6 -mt-6 mb-8 sm:-mx-10 sm:-mt-10 sm:mb-10" />
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12">
         <div className="lg:col-span-5 flex flex-col gap-6">
           <div>
