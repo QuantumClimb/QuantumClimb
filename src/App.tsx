@@ -14,7 +14,10 @@ import type { EditablePortfolioItem, EditableSiteVideo } from "./sections/AdminS
 import type { InquirySubmissionData } from "./pages/ContactPage";
 import type { QFnBDemoSubmissionData } from "./pages/QFnBDemoPage";
 
-type PageView = "home" | "services" | "ai-dubbing" | "ai-video" | "web-dev" | "audio-software" | "audio-plugins" | "products" | "q-fnb" | "q-fnb-demo" | "q-transition" | "portfolio" | "admin" | "privacy" | "terms" | "cookies" | "contact";
+type PageView = "home" | "services" | "ai-dubbing" | "ai-video" | "web-dev" | "audio-software" | "audio-plugins" | "healthcare" | "products" | "q-fnb" | "q-fnb-demo" | "q-transition" | "portfolio" | "admin" | "privacy" | "terms" | "cookies" | "contact";
+
+// Clean public URL for the Healthcare Digital Growth service page.
+const HEALTHCARE_PATH = "/services/healthcare-digital-growth";
 
 function getCurrentPage(): PageView {
   if (globalThis.window === undefined) {
@@ -22,13 +25,17 @@ function getCurrentPage(): PageView {
   }
 
   const page = new URLSearchParams(globalThis.location.search).get("page");
-  if (["services", "ai-dubbing", "ai-video", "web-dev", "audio-software", "audio-plugins", "products", "q-fnb", "q-fnb-demo", "q-transition", "portfolio", "admin", "privacy", "terms", "cookies", "contact"].includes(page ?? "")) {
+  if (["services", "ai-dubbing", "ai-video", "web-dev", "audio-software", "audio-plugins", "healthcare", "products", "q-fnb", "q-fnb-demo", "q-transition", "portfolio", "admin", "privacy", "terms", "cookies", "contact"].includes(page ?? "")) {
     return page as PageView;
   }
 
   const pathname = globalThis.location.pathname.replace(/^\/+|\/+$/g, "").toLowerCase();
   if (["services", "ai-dubbing", "ai-video", "web-dev", "audio-software", "audio-plugins", "products", "q-fnb", "q-fnb-demo", "q-transition", "portfolio", "admin", "privacy", "terms", "cookies", "contact"].includes(pathname)) {
     return pathname as PageView;
+  }
+
+  if (pathname === "services/healthcare-digital-growth" || pathname === "healthcare-digital-growth" || pathname === "services/healthcare") {
+    return "healthcare";
   }
 
   if (pathname === "services/audio-software" || pathname === "services/audio-plugins") {
@@ -93,6 +100,8 @@ export default function App() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isContactModalOpen, setIsContactModalOpen] = useState(false);
   const [currentPage, setCurrentPage] = useState<PageView>(getCurrentPage);
+  // Services to pre-select when a page opens Start a Project (e.g. from the healthcare page).
+  const [contactPresetServices, setContactPresetServices] = useState<string[]>([]);
   const [session, setSession] = useState<Session | null>(null);
   const [isAdmin, setIsAdmin] = useState(false);
   const [portfolioItems, setPortfolioItems] = useState<PortfolioItem[]>([]);
@@ -120,7 +129,7 @@ export default function App() {
 
     if (currentPage === "services") {
       title = "Services | AI Dubbing, AI Video, Web & Audio Software | Quantum Climb";
-      description = "Explore specialized Quantum Climb services across AI dubbing & voice localization, AI video production, web development, and audio software & plugin development.";
+      description = "Explore specialized Quantum Climb services across AI dubbing & voice localization, AI video production, web development, audio software & plugin development, and healthcare digital growth.";
     } else if (currentPage === "audio-software") {
       title = "Audio Software & Plugin Development | Quantum Climb";
       description = "We build intelligent audio tools: professional audio software, VST3 plugins, DSP systems, and standalone audio applications by Quantum Climb.";
@@ -141,6 +150,9 @@ export default function App() {
       title = "Web Development & Digital Architecture | Quantum Climb";
     } else if (currentPage === "audio-plugins") {
       title = "Q HUMAN - Vocal Humanization VST3 | Quantum Climb";
+    } else if (currentPage === "healthcare") {
+      title = "Healthcare Digital Growth | Doctor Branding, Clinic Websites & Medical LMS | Quantum Climb";
+      description = "Quantum Climb helps doctors, clinics, healthcare entrepreneurs and product businesses grow digitally — doctor branding, clinic websites, healthcare e-commerce, medical learning platforms, international patient engagement, AI video and CRM automation.";
     }
 
     document.title = title;
@@ -250,7 +262,25 @@ export default function App() {
   const closeContactModal = () => setIsContactModalOpen(false);
 
   const navigateToPage = (page: PageView) => {
+    setContactPresetServices([]);
     const url = new URL(globalThis.location.href);
+
+    // The healthcare page uses its clean path; every other page keeps the
+    // existing ?page= navigation. Reset a deep path when leaving it so a
+    // reload resolves to the page actually being shown.
+    if (page === "healthcare") {
+      url.pathname = HEALTHCARE_PATH;
+      url.searchParams.delete("page");
+      url.hash = "";
+      globalThis.history.pushState({}, "", url);
+      setCurrentPage(page);
+      globalThis.scrollTo({ top: 0, behavior: "smooth" });
+      return;
+    }
+
+    if (url.pathname.replace(/\/+$/, "").toLowerCase() === HEALTHCARE_PATH) {
+      url.pathname = "/";
+    }
 
     if (page === "home") {
       url.searchParams.delete("page");
@@ -775,6 +805,7 @@ Operation Details: ${data.message || "None provided"}`,
     onNavigateWebDev: () => navigateToPage("web-dev"),
     onNavigateAudioSoftware: () => navigateToPage("audio-software"),
     onNavigateAudioPlugins: () => navigateToPage("audio-plugins"),
+    onNavigateHealthcare: () => navigateToPage("healthcare"),
     onNavigateProducts: () => navigateToPage("products"),
     onNavigateQFnB: () => navigateToPage("q-fnb"),
     onNavigateQFnBDemo: () => navigateToPage("q-fnb-demo"),
@@ -785,6 +816,11 @@ Operation Details: ${data.message || "None provided"}`,
     onNavigateTerms: () => navigateToPage("terms"),
     onNavigateCookies: () => navigateToPage("cookies"),
     onNavigateContact: () => navigateToPage("contact"),
+    onNavigateContactWithServices: (services: string[]) => {
+      navigateToPage("contact");
+      setContactPresetServices(services);
+    },
+    contactPresetServices,
     onSignIn: signIn,
     onSignOut: signOut,
     onClaimAdmin: claimAdminAccess,

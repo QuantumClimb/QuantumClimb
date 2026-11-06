@@ -1,6 +1,7 @@
 import { Reveal } from "../components/Reveal";
 import { TechCanvas } from "../components/TechCanvas";
 import { FinalCTA } from "../sections/ClosureSections";
+import { HealthcareSignalVisual } from "../sections/healthcare/HealthcareSignalVisual";
 import { 
   ArrowRight, 
   Mic, 
@@ -8,7 +9,8 @@ import {
   Code, 
   Sliders, 
   Sparkles,
-  ChevronRight
+  ChevronRight,
+  HeartPulse
 } from "lucide-react";
 
 type ServicesPageProps = Readonly<{
@@ -17,6 +19,7 @@ type ServicesPageProps = Readonly<{
   onNavigateAIVideo: () => void;
   onNavigateWebDev: () => void;
   onNavigateAudioSoftware: () => void;
+  onNavigateHealthcare: () => void;
 }>;
 
 export function ServicesPage({
@@ -25,6 +28,7 @@ export function ServicesPage({
   onNavigateAIVideo,
   onNavigateWebDev,
   onNavigateAudioSoftware,
+  onNavigateHealthcare,
 }: ServicesPageProps) {
   const services = [
     {
@@ -74,6 +78,18 @@ export function ServicesPage({
       buttonText: "EXPLORE AUDIO SOFTWARE",
       image: "/images/Audio plugins/qhuman_cover4.png",
       tags: ["VST3 Architecture", "DSP Algorithms", "Vocal Humanization", "Music Intelligence"]
+    },
+    {
+      id: "healthcare",
+      number: "05",
+      title: "HEALTHCARE DIGITAL GROWTH",
+      category: "DOCTORS, CLINICS & MEDICAL PLATFORMS",
+      description: "Doctor branding, clinic websites, healthcare e-commerce, medical learning platforms and international patient engagement.",
+      icon: <HeartPulse className="w-5 h-5 text-purple-400" />,
+      action: onNavigateHealthcare,
+      buttonText: "EXPLORE HEALTHCARE DIGITAL GROWTH",
+      image: null,
+      tags: ["Doctor Branding", "Clinic Websites", "Medical LMS", "CRM & Automation"]
     },
   ];
 
@@ -126,7 +142,7 @@ export function ServicesPage({
 
           <Reveal type="fade-up" delay={0.2}>
             <p className="text-lg sm:text-xl text-zinc-300 max-w-2xl leading-relaxed mb-6 font-light drop-shadow-sm">
-              Specialized services delivering AI dubbing and voice localization, AI video production, modern web architecture, and custom audio software engineering.
+              Specialized services delivering AI dubbing and voice localization, AI video production, modern web architecture, custom audio software engineering, and healthcare digital growth.
             </p>
             <div className="text-xs font-mono text-zinc-400 uppercase tracking-widest">
               End-to-End Creative Technology & Engineering
@@ -195,11 +211,17 @@ export function ServicesPage({
                       onClick={service.action}
                       className="relative border border-white/10 bg-zinc-950 overflow-hidden aspect-video sm:aspect-[4/3] flex items-center justify-center cursor-pointer group/img"
                     >
-                      <img 
-                        src={service.image} 
-                        alt={service.title} 
-                        className="w-full h-full object-cover group-hover/img:scale-105 transition-transform duration-700"
-                      />
+                      {service.image ? (
+                        <img 
+                          src={service.image} 
+                          alt={service.title} 
+                          className="w-full h-full object-cover group-hover/img:scale-105 transition-transform duration-700"
+                        />
+                      ) : (
+                        <div className="absolute inset-0 pb-12">
+                          <HealthcareSignalVisual compact />
+                        </div>
+                      )}
                       
                       <div className="absolute bottom-4 left-4 right-4 flex items-center justify-between font-mono text-xs text-zinc-300">
                         <span className="px-2 py-0.5 bg-black/80 border border-white/10 flex items-center gap-1.5">

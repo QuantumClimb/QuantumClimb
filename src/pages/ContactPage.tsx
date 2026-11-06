@@ -15,7 +15,8 @@ import {
   MessageSquare, 
   Users, 
   PhoneCall, 
-  Layers
+  Layers,
+  HeartPulse
 } from "lucide-react";
 
 type ContactPageProps = Readonly<{
@@ -23,6 +24,8 @@ type ContactPageProps = Readonly<{
   onNavigateHome: () => void;
   onNavigatePortfolio: () => void;
   onSubmitInquiry: (data: InquirySubmissionData) => Promise<void>;
+  /** Service ids to pre-select in step 1 (e.g. ["healthcare"]). */
+  initialServices?: string[];
 }>;
 
 export type InquirySubmissionData = {
@@ -118,21 +121,29 @@ const SERVICES_CONFIG = [
     icon: <Workflow className="w-5 h-5 text-purple-400" />,
   },
   {
+    id: "healthcare",
+    label: "06. Healthcare Digital Growth",
+    desc: "Doctor and specialist branding, clinic websites, healthcare e-commerce, medical learning platforms, international patient engagement and connected CRM and automation.",
+    icon: <HeartPulse className="w-5 h-5 text-purple-400" />,
+  },
+  {
     id: "creative",
-    label: "06. Creative & Custom Projects",
+    label: "07. Creative & Custom Projects",
     desc: "Have something unconventional in mind? Tell us about your idea and our team will explore the right combination of creative, technical and AI capabilities.",
     icon: <Sparkles className="w-5 h-5 text-purple-400" />,
   }
 ];
 
-export function ContactPage({ onOpenContactModal, onNavigateHome, onNavigatePortfolio, onSubmitInquiry }: ContactPageProps) {
+export function ContactPage({ onOpenContactModal, onNavigateHome, onNavigatePortfolio, onSubmitInquiry, initialServices }: ContactPageProps) {
   const [currentStep, setCurrentStep] = useState(1);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
   const [errors, setErrors] = useState<Record<string, string>>({});
 
   // Step 1 State: Services Selected
-  const [selectedServices, setSelectedServices] = useState<string[]>([]);
+  const [selectedServices, setSelectedServices] = useState<string[]>(() =>
+    (initialServices ?? []).filter((id) => SERVICES_CONFIG.some((svc) => svc.id === id))
+  );
 
   // Step 2 State: Personal Info
   const [personalInfo, setPersonalInfo] = useState({
@@ -179,6 +190,12 @@ export function ContactPage({ onOpenContactModal, onNavigateHome, onNavigatePort
       areas: [] as string[],
       currentSystems: "",
       goals: ""
+    },
+    healthcare: {
+      organisationType: "",
+      areas: [] as string[],
+      currentWebsite: "",
+      targetMarkets: ""
     },
     creative: {
       idea: ""
@@ -371,6 +388,7 @@ export function ContactPage({ onOpenContactModal, onNavigateHome, onNavigatePort
       case "web": return "Web Development";
       case "mobile": return "Mobile App Development";
       case "automation": return "AI Automation & Agents";
+      case "healthcare": return "Healthcare Digital Growth";
       case "creative": return "Creative & Custom Project";
       default: return key;
     }
@@ -1077,11 +1095,91 @@ export function ContactPage({ onOpenContactModal, onNavigateHome, onNavigatePort
           </div>
         )}
 
+        {/* Dynamic Section: Healthcare Digital Growth */}
+        {selectedServices.includes("healthcare") && (
+          <div className="border border-white/10 bg-zinc-950/20 p-8 space-y-6">
+            <h3 className="text-lg font-medium text-purple-400 uppercase tracking-wider border-b border-white/5 pb-3">
+              06. Healthcare Digital Growth
+            </h3>
+
+            <div className="space-y-2">
+              <label className="block text-[10px] font-mono uppercase tracking-widest text-zinc-400">Which best describes you?</label>
+              <select
+                value={requirements.healthcare.organisationType}
+                onChange={e => updateServiceRequirement("healthcare", "organisationType", e.target.value)}
+                className="w-full border border-white/10 bg-black text-white text-sm px-4 py-3 focus:outline-none cursor-pointer"
+              >
+                <option value="">Select Option</option>
+                <option value="Independent Doctor / Specialist">Independent Doctor / Specialist</option>
+                <option value="Clinic / Speciality Centre">Clinic / Speciality Centre</option>
+                <option value="Healthcare Entrepreneur">Healthcare Entrepreneur</option>
+                <option value="Doctor-Founded Product Brand">Doctor-Founded Product Brand</option>
+                <option value="Healthcare Manufacturer">Healthcare Manufacturer</option>
+                <option value="Medical Education Organisation">Medical Education Organisation</option>
+                <option value="Other">Other</option>
+              </select>
+            </div>
+
+            <div className="space-y-3">
+              <label className="block text-[10px] font-mono uppercase tracking-widest text-zinc-400">Areas of interest (Select Multiple)</label>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                {[
+                  "Doctor & Specialist Branding", "Clinic & Speciality Centre Growth",
+                  "Healthcare Products & Commerce", "Medical Education / LMS",
+                  "International Patient Engagement", "AI Healthcare Content & Marketing",
+                  "Healthcare Technology & Integrations"
+                ].map(area => {
+                  const isChecked = requirements.healthcare.areas.includes(area);
+                  return (
+                    <label key={area} className={`flex items-center gap-2 border p-3 text-xs select-none cursor-pointer transition-colors ${
+                      isChecked ? "border-purple-600 bg-purple-500/5 text-white" : "border-white/10 bg-black text-zinc-400"
+                    }`}>
+                      <input
+                        type="checkbox"
+                        checked={isChecked}
+                        onChange={() => toggleRequirementArrayItem("healthcare", "areas", area)}
+                        className="hidden"
+                      />
+                      <span className={`w-3.5 h-3.5 shrink-0 border flex items-center justify-center ${isChecked ? "border-purple-500 bg-purple-600" : "border-white/20"}`}>
+                        {isChecked && <Check className="w-2.5 h-2.5 text-white" />}
+                      </span>
+                      {area}
+                    </label>
+                  );
+                })}
+              </div>
+            </div>
+
+            <div className="grid md:grid-cols-2 gap-6">
+              <div className="space-y-2">
+                <label className="block text-[10px] font-mono uppercase tracking-widest text-zinc-400">Current website (if any)</label>
+                <input
+                  type="text"
+                  value={requirements.healthcare.currentWebsite}
+                  onChange={e => updateServiceRequirement("healthcare", "currentWebsite", e.target.value)}
+                  placeholder="https://"
+                  className="w-full border border-white/10 bg-black px-4 py-3 text-white text-sm focus:border-purple-500 focus:outline-none"
+                />
+              </div>
+              <div className="space-y-2">
+                <label className="block text-[10px] font-mono uppercase tracking-widest text-zinc-400">Target countries / languages</label>
+                <input
+                  type="text"
+                  value={requirements.healthcare.targetMarkets}
+                  onChange={e => updateServiceRequirement("healthcare", "targetMarkets", e.target.value)}
+                  placeholder="e.g. Malaysia, India, Middle East · English, Arabic"
+                  className="w-full border border-white/10 bg-black px-4 py-3 text-white text-sm focus:border-purple-500 focus:outline-none"
+                />
+              </div>
+            </div>
+          </div>
+        )}
+
         {/* Dynamic Section: Creative & Custom Projects */}
         {selectedServices.includes("creative") && (
           <div className="border border-white/10 bg-zinc-950/20 p-8 space-y-6">
             <h3 className="text-lg font-medium text-purple-400 uppercase tracking-wider border-b border-white/5 pb-3">
-              06. Creative & Custom Projects
+              07. Creative & Custom Projects
             </h3>
 
             <div className="space-y-2">
